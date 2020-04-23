@@ -22,7 +22,7 @@ order by sid, id, positie
 Stap 3: voeg de pt van woorden per iets samen
 
 <pre><code class="text">
-<span class="prediff">select sid, id, json_agg(pt) as ptlist
+<span class="prediff">select sid, id, json_agg(pt) as pt_list
 from (</span>
   match (n:node{_deste: true})
   match (n)-[:rel*]->(w:word)
@@ -36,7 +36,7 @@ order by sid, id</span>
 Stap 3a: maak het wat leesbaarder
 
 <pre><code class="text">
-select sid, id, <span class="prediff">string_agg(trim(both '"' from pt::text), ' ')</span> as ptlist
+select sid, id, <span class="prediff">string_agg(trim(both '"' from pt::text), ' ')</span> as pt_list
 from (
   match (n:node{_deste: true})
   match (n)-[:rel*]->(w:word)
@@ -50,7 +50,7 @@ order by sid, id
 Stap 3b: variant om te kijken of de woorden wel direct achter elkaar staan
 
 <pre><code class="text">
-select sid, id, string_agg(trim(both '"' from pt::text), ' ') as ptlist
+select sid, id, string_agg(trim(both '"' from pt::text), ' ') as pt_list
 from (
   match (n:node{_deste: true})
   match (n)-[:rel*]->(w:word)
@@ -64,9 +64,9 @@ order by sid, id
 Stap 4: tel de frequenties van pt van woorden onder iets
 
 <pre><code class="text">
-<span class="prediff">select count(ptlist) as aantal, ptlist
+<span class="prediff">select count(pt_list) as aantal, pt_list
 from (</span>
-  select string_agg(trim(both '"' from pt::text), ' ') as ptlist
+  select string_agg(trim(both '"' from pt::text), ' ') as pt_list
   from (
     match (n:node{_deste: true})
     match (n)-[:rel*]->(w:word)
@@ -75,6 +75,6 @@ from (</span>
   ) as foo
   group by sid, id
 <span class="prediff">) as bar
-group by ptlist
-order by aantal desc, ptlist</span>
+group by pt_list
+order by aantal desc, pt_list</span>
 </code></pre>
