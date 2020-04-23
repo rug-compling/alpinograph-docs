@@ -16,7 +16,7 @@ Stap 2: zoek de pt van woorden onder iets
 match (n:node{_deste: true})
 <span class="prediff">match (n)-[:rel*]->(w:word)</span>
 return distinct n.sentid as sid, n.id<span class="prediff">, w.end as positie, w.pt as pt</span>
-order by sid, id, positie
+order by sid, id<span class="prediff">, positie</span>
 </code></pre>
 
 Stap 3: voeg de pt van woorden per iets samen
