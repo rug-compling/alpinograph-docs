@@ -13,6 +13,7 @@ lang: ['nl']
 
 nav:
     - Inleiding: 'index.md'
+    - Receptenboek: 'recepten.md'
     - 'Alpino in AgensGraph': 'alpinoagens.md'
     - Links: 'links.md'
 
