@@ -70,8 +70,8 @@ from (</span>
   from (
     match (n:node{_deste: true})
     match (n)-[:rel*]->(w:word)
-    return distinct n.sentid as sid, n.id as id, w.end as nummer, w.pt as pt
-    order by sid, id, nummer
+    return distinct n.sentid as sid, n.id as id, w.end as positie, w.pt as pt
+    order by sid, id, positie
   ) as foo
   group by sid, id
 <span class="prediff">) as bar
