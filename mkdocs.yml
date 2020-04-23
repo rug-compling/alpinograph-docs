@@ -1,0 +1,17 @@
+site_name: AlpinoGraph
+
+theme:
+    name: readthedocs
+
+extra_css:
+    - css/extra.css
+
+markdown_extensions:
+    - smarty
+
+lang: ['nl']
+
+nav:
+    - Inleiding: 'index.md'
+    - 'Alpino in AgensGraph': 'alpinoagens.md'
+
