@@ -8,4 +8,4 @@
 
 ## Broncode
 
- * [Deze documentatie](https://git.webhosting.rug.nl/p209327/alpinograph-docs)
+ * [Deze documentatie](https://github.com/rug-compling/alpinograph-docs)
