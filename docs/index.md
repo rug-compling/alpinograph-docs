@@ -1,7 +1,5 @@
 # AlpinoGraph
 
-dit is een test
-
 ## Externe links
 
  * [Alpino](https://www.let.rug.nl/vannoord/alp/Alpino/)
