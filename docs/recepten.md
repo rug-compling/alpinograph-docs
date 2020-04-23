@@ -54,7 +54,7 @@ select sid, id, string_agg(trim(both '"' from pt::text), ' ') as pt_list
 from (
   match (n:node{_deste: true})
   match (n)-[:rel*]->(w:word)
-  return distinct n.sentid as sid, n.id, w.end as positie, <span class="prediff">w.end + ' ' + w.pt</span> as pt
+  return distinct n.sentid as sid, n.id, w.end as positie, <span class="prediff">w.end + ':' + w.pt</span> as pt
   order by sid, id, positie
 ) as foo
 group by sid, id
