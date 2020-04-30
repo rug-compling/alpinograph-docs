@@ -156,6 +156,7 @@ attribuut   | type   | opmerkingen
 `_vorfeld`  | bool   | word is een vorfeld
 ...         | string | alle overige attributen uit de Alpino-node behalve `rel` en `index`
 `upos`      | string | het veld `UPOS` van CoNLL-U
+`nospaceafter` | bool | `true` als CoNLL-U het extra attribuut `SpaceAfter=No` heeft
 ...         | string | alle features uit het veld `FEATS` van CoNLL-U, met hoofdletters
 
 Bij het zoeken naar CoNLL-U-features dubbele aanhalingstekens
