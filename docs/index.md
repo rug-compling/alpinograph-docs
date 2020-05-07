@@ -189,6 +189,16 @@ order by aantal desc, woord
 
 ### TODO meer SQL trucjes
 
+- optional match voor negatie
+- where exists
+
+
 ## Geavanceerd zoeken met CYPHER
+
+- 0..1* 
+
+## Berekende attributen (of ergens anders)
+
+- attributen zoals '_vorfeld', documenteer hoe die zijn gevonden
 
 TODO
