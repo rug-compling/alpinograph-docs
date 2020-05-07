@@ -2,7 +2,8 @@
 
 AgensGraph is gebouwd op PostgreSQL. Hierdoor kun je Cypher combineren
 met SQL. Maar door de eigenaardigheden van SQL (zoals geïmplementeerd
-in PostgreSQL) wijkt de syntax voor Cypher op een paar punten af.
+in PostgreSQL) wijkt de syntax voor Cypher op een paar punten af van
+de standaard [openCypher](https://www.opencypher.org/).
 
 Hoofdletters in labels spelen geen rol. Alle hoofdletters worden omgezet naar
 kleine letters, tenzij het label tussen **dubbele**
