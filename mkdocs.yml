@@ -15,5 +15,6 @@ nav:
     - Inleiding: 'index.md'
     - Receptenboek: 'recepten.md'
     - 'Alpino in AgensGraph': 'alpinoagens.md'
+    - 'Cypher in AgensGraph: 'agensgraph.md'
     - Links: 'links.md'
 
