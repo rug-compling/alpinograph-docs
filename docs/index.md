@@ -163,6 +163,32 @@ TODO: liever hier een voorbeeld waar dit ook zinvol is.
 
 Hierboven waren de voorbeelden steeds van het type: match een bepaald patroon, en geef een of meerdere delen van de match terug als resultaat. Door gebruik te maken van SQL is hier veel meer mogelijk. Hieronder tonen we een paar veelgebruikte technieken, zonder de ambitie een tutorial voor SQL te verzorgen.
 
+### distinct
+
+Bij sommige queries kan dezelfde knoop op meerdere manieren gevonden worden. Meestal geeft dat geen extra informatie. Met "distinct" kunnen zulke dubbele hits verwijderd worden.
+
+```text
+match (n:node{cat:'mwu'}) -[:rel{rel:'mwp'}]-> (p:word{postag:'SPEC(deeleigen)'})
+return n
+```
+
+In bovenstaand voorbeeld zoek je mwu's waarvoor geldt dat één van de delen de postag "SPEC(deeleigen)" heeft. Indien een mwu nu meerdere van zulke delen heeft, levert dat ook meerdere hits op. Die dubbelen verwijder je met het keyword "distinct" als volgt:
+
+```text
+match (n:node{cat:'mwu'}) -[:rel{rel:'mwp'}]-> (p:word{postag:'SPEC(deeleigen)'})
+return distinct n
+```
+
+Als je in de output kijkt naar de zinnen kan het nog steeds zo zijn dat een zin meerdere keren voorkomt, indien die zin meerdere mwu's bevat die aan deze eisen voldoet. Als je elke zin slechts één keer terug wilt krijgen kun je expliciet naar zinnen zoeken. Dat gaat dan als volgt:
+
+```text
+match (sen:sentence)-[:rel*]-> (:node{cat:'mwu'}) -[:rel{rel:'mwp'}]-> (p:word{postag:'SPEC(deeleigen)'})
+return distinct sen
+```
+
+
+
+
 ### where clause
 
 Verdere condities aan een patroon kun je (ook) specificeren met behulp van een "where"-clause. Bijvoorbeeld, de query die naar lijdend voorwerpen van "drinken" zoekt kun je uitbreiden door ook varianten van "drinken" toe te staan:
