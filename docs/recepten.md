@@ -1,5 +1,72 @@
 # Receptenboek
 
+## Ngram
+
+De beschikbaarheid van de relatie :next maakt het zeer eenvoudig om naar specifieke woord-sequenties te zoeken. De volgende query vindt het trigram "in elk geval":
+
+```text
+match p = (:word{lemma:'in'})-[:next]->(:word{lemma:'elk'})-[:next]->(:word{lemma:'geval'})
+return p
+```
+
+En het is niet veel ingewikkelder om naar woorden in de context van een Ngram te zoeken. Welke woorden treden op na het trigram "in elk geval":
+
+```text
+match (:word{lemma:'in'})-[:next]->(:word{lemma:'elk'})-[:next]->(:word{lemma:'geval'})-[:next]->(p)
+return p
+```
+
+Het volgende voorbeeld zoekt naar adjectieven die in het patroon "vinden het ADJ dat" voorkomen:
+
+```text
+match (:word{lemma:'vinden'})-[:next]->(:word{lemma:'het'})-[:next]->(adj:word{pt:'adj'})-[:next]->(:word{lemma:'dat'})
+return adj
+```
+
+De beschikbaarheid van de :next relatie zorgt ervoor dat deze voorbeelden heel eenvoudig zijn. In vergelijking hiermee zijn voorbeelden met XPath in PaQu erg omslachtig.
+
+
+## Multi-word Units
+
+Multi-word units (mwu) worden steeds gerepresenteerd als een knoop direct boven de woorden waaruit de mwu bestaat. Als extraatje heeft deze niet-lexicale knoop toch een waarde voor de attributen 'word' en 'lemma'. Je kunt dus eenvoudig zoeken naar een specifieke mwu:
+
+```text
+match (p:node{word:'ten opzichte van'})
+return p
+```
+
+Bovendien kun je dus queries formuleren zonder dat je een verschil moet maken tussen mwu en woorden, indien je de lemma of het woord van een gevonden knoop terug wilt geven:
+
+```text
+match  (:node)-[:rel{rel:'svp'}]->(p:nw)
+return p.word
+```
+Dit levert een tabel op waarin zowel woorden als mwu terecht komen.
+
+Je kunt natuurlijk ook specifiek naar een deel van een mwu zoeken. De volgende query geeft mwu terug waarbij een van de onderdelen het woord "van" is:
+
+```text
+match (n:node{cat:'mwu'})-[:rel{rel:'mwp'}]->(:word{lemma:'van'})
+return n
+```
+
+Het is iets ingewikkelder om te formuleren dat het woord "van" het laatste woord van de mwu moet zijn:
+
+```text
+match (n:node{cat:'mwu'})-[:rel{rel:'mwp'}]->(w:word{lemma:'van'})
+where n.end = w.end
+return n
+```
+
+Of waarbij "van" het derde woord moet zijn:
+
+```text
+match (n:node{cat:'mwu'})-[:rel{rel:'mwp'}]->(w:word{lemma:'van'})
+where w.begin = n.begin + 2
+return n
+```
+
+
 ## Tellen van reeksen
 
 Stap 1: zoek iets
