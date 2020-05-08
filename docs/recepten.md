@@ -66,6 +66,19 @@ where w.begin = n.begin + 2
 return n
 ```
 
+Een lastiger vraagstuk is een query waarbij je eisen wilt stellen aan de attributen van een woord, ofwel aan de attributen van een mwu. Bijvoorbeeld: geef me elke naam, waarbij een naam een mwu is waarvoor geldt dat een van de delen van de mwu de postag 'SPEC(deeleigen)' heeft, ofwel het is geen mwu maar een woord waarvoor geldt dat het attribuut 'ntype' de waarde 'eigen' heeft.
+
+```text
+match (w:word)<-[:rel*0..1{rel: 'mwp'}]-(n:nw)<-[r:rel]-()
+where (     ( w.postag = 'SPEC(deeleigen)' or w.ntype = 'eigen') 
+        and  ( n.cat='mwu'or w.id = n.id )
+         and r.rel != 'mwp'
+)
+return distinct n
+```
+TODO: can this be done simpler?
+
+
 
 ## Tellen van reeksen
 
