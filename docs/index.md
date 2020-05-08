@@ -90,7 +90,7 @@ match (n:node{cat:'pp'})-[:rel{rel:'hdf'}]->(:nw)
 return n
 ```
 
-We specificeren hier dus eerst via ":rel" dat het gaat om de Alpino relaties. En daarbinnen geven we aan dat de waarde van het "rel"-attribuut de waarde "hdf" heeft. Een edge met als type :rel vertrekt altijd vanuit een node en eindigt bij een :node of een :word.
+We specificeren hier dus eerst via ":rel" dat het gaat om de Alpino relaties. En daarbinnen geven we aan dat de waarde van het "rel"-attribuut de waarde "hdf" heeft. Een edge met als type :rel vertrekt altijd vanuit een :node en eindigt bij een :node of een :word.
 
 #### :ud
 
