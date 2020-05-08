@@ -196,7 +196,7 @@ order by aantal desc, woord
 
 In het algemeen levert elke query een tabel op. Maar AlpinoGraph behandelt niet elke tabel op dezelfde wijze. In de gevallen waarbij de query een knoop in de graaf oplevert, kiest AlpinoGraph ervoor om de zin die hoort bij die knoop als resultaat te presenteren. Als je vervolgens op een zin klikt krijg je de visualizatie van de graaf te zien, in meerdere varianten.
 
-Indien gewenst kun je alsnog de resultaten in tabelvorm bekijken door op de betreffende button te klikken. Twee andere opties zijn "woorden" en "lemma's". In die laatste gevallen wordt per hit de deelzin (in woorden dan wel in lemma's) opgehaald die door de matchende knoop wordt gedomineerd. Van al die deelzinnen wordt vervolgens een frequentieoverzicht gemaakt.
+Indien gewenst kun je alsnog de resultaten in tabelvorm bekijken door op de betreffende button te klikken. Twee andere opties zijn "woorden" en "lemma's". In die laatste gevallen wordt per hit de woordgroep (in woorden dan wel in lemma's) opgehaald die door de matchende knoop wordt gedomineerd. Van al die woordgroepen wordt vervolgens een frequentieoverzicht gemaakt.
 
 Dus voor deze query:
 
@@ -227,7 +227,7 @@ Dit levert dus alle zinnen op waarin "eten" een lijdend voorwerp heeft. En als j
 In bovenstaande gevallen zijn de matchende knopen steeds woorden, maar dit werkt dus op vergelijkbare wijze voor hogere knopen. De volgende query vindt alle hogere knopen die in relatie "svp" met een werkwoord staan:
 
 ```text
-match (:node)-[rel{rel:'svp'}]->(w2:node)
+match (:node)-[:rel{rel:'svp'}]->(w2:node)
 return w2
 ```
 
@@ -236,7 +236,7 @@ Omdat de query een node oplevert krijg je per default de zinnen te zien waarin e
 In sommige gevallen bevatten die woordgroepen gaten (discontinue woordgroepen). Een typisch voorbeeld hiervan levert de volgende query:
 
 ```text
-match (:node)-[rel{rel:'pc'}]->(w2:node)
+match (:node)-[:rel{rel:'pc'}]->(w2:node)
 return w2
 ```
 
