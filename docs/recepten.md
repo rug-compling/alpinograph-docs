@@ -5,21 +5,28 @@
 De beschikbaarheid van de relatie :next maakt het zeer eenvoudig om naar specifieke woord-sequenties te zoeken. De volgende query vindt het trigram "in elk geval":
 
 ```text
-match p = (:word{lemma:'in'})-[:next]->(:word{lemma:'elk'})-[:next]->(:word{lemma:'geval'})
+match p = (:word{lemma:'in'})-[:next]->
+          (:word{lemma:'elk'})-[:next]->
+          (:word{lemma:'geval'})
 return p
 ```
 
 En het is niet veel ingewikkelder om naar woorden in de context van een Ngram te zoeken. Welke woorden treden op na het trigram "in elk geval":
 
 ```text
-match (:word{lemma:'in'})-[:next]->(:word{lemma:'elk'})-[:next]->(:word{lemma:'geval'})-[:next]->(p)
+match (:word{lemma:'in'})-[:next]->
+      (:word{lemma:'elk'})-[:next]->
+      (:word{lemma:'geval'})-[:next]->(p)
 return p
 ```
 
 Het volgende voorbeeld zoekt naar adjectieven die in het patroon "vinden het ADJ dat" voorkomen:
 
 ```text
-match (:word{lemma:'vinden'})-[:next]->(:word{lemma:'het'})-[:next]->(adj:word{pt:'adj'})-[:next]->(:word{lemma:'dat'})
+match (:word{lemma:'vinden'})-[:next]->
+      (:word{lemma:'het'})-[:next]->
+      (adj:word{pt:'adj'})-[:next]->
+      (:word{lemma:'dat'})
 return adj
 ```
 
@@ -70,10 +77,10 @@ Een lastiger vraagstuk is een query waarbij je eisen wilt stellen aan de attribu
 
 ```text
 match (w:word)<-[:rel*0..1{rel: 'mwp'}]-(n:nw)<-[r:rel]-()
-where (     ( w.postag = 'SPEC(deeleigen)' or w.ntype = 'eigen') 
-        and  ( n.cat='mwu'or w.id = n.id )
+where (      ( w.postag = 'SPEC(deeleigen)' or w.ntype = 'eigen') 
+         and ( n.cat='mwu'or w.id = n.id )
          and r.rel != 'mwp'
-)
+      )
 return distinct n
 ```
 TODO: can this be done simpler?
