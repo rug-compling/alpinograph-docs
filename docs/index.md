@@ -4,7 +4,7 @@ AlpinoGraph is een tool om syntactisch geannoteerde corpora te doorzoeken. De to
 
 De combinatie van databasetechnologie en graaf-gebaseerde zoektechnologie zorgt voor een erg flexibele en relatief efficiënte zoekmachine. Deze flexibiliteit betekent bijvoorbeeld dat je patronen kunt definiëren om zinnen die aan het patroon te voldoen terug te vinden. Maar je kunt ook woorden of woordgroepen terugvinden en aggregeren over de informatie van die woorden of woordgroepen (bijvoorbeeld voor het maken van frequentieoverzichten) door middel van de database-primitieven van SQL. 
 
-Niet alleen is de zoekmachne veel flexibeler dan bijvoorbeeld XPath (zoals beschikbaar in PaQu), ook is het relatief makkelijk om verschillende annotatielagen te combineren. In AlpinoGraph zijn drie van zulke lagen beschikbaar:
+Niet alleen is de zoekmachne veel flexibeler dan bijvoorbeeld XPath (zoals beschikbaar in PaQu), ook is het relatief makkelijk om verschillende annotatielagen te combineren. In AlpinoGraph zijn meerdere annotatielagen beschikbaar:
 
 - de CGN/Lassy/Alpino dependentiestructuren
 - de hieruit automatisch afgeleide Universal Dependency structuren (zowel de standaard als de "enhanced" variant)
@@ -18,7 +18,7 @@ In AlpinoGraph zijn een aantal syntactisch geannoteerde corpora beschikbaar. Alp
 
 ### Woorden
 
-De syntactische analyse van een zin is beschikbaar, zoals hierboven al genoemd, in meerdere lagen: de dependentiestructuur zoals bekend van CGN/Lassy/Alpino, de Universal Dependency-structuur (zowel standaard als enhanced), en de woord-paren structuur van PaQu. Deze vier lagen zijn allemaal gebaseerd op de woorden van de zin. Deze woorden zijn de bouwstenen van de graaf die al deze annotatielagen combineert. De volgende query zoekt alle woorden waarvoor het lemma de waarde "fiets" heeft: 
+De syntactische analyse van een zin is beschikbaar, zoals hierboven al genoemd, in meerdere lagen: de dependentiestructuur zoals bekend van CGN/Lassy/Alpino, de Universal Dependency-structuur (zowel standaard als enhanced), en de woord-paren structuur van PaQu. Deze lagen zijn allemaal gebaseerd op de woorden van de zin. Deze woorden zijn de bouwstenen van de graaf die al deze annotatielagen combineert. De volgende query zoekt alle woorden waarvoor het lemma de waarde "fiets" heeft: 
 
 ```text
 match (n:word{lemma: 'fiets'}) 
@@ -78,7 +78,7 @@ Er zijn meerdere soorten relaties beschikbaar, waaronder:
 - :rel (zoals het @rel attribuut in Alpino)
 - :ud (voor standaard universal dependencies)
 - :eud (voor enhanced universal dependencies)
-- :pair (voor de PaQu relaties tussen woorden)
+- :pair (voor de PaQu woordpaarrelaties)
 - :next (voor het volgende woord in de zin)
 
 #### :rel
@@ -90,11 +90,11 @@ match (n:node{cat:'pp'})-[:rel{rel:'hdf'}]->(:nw)
 return n
 ```
 
-We specificeren hier dus eerst via ":rel" dat het gaat om de Alpino relaties. En daarbinnen geven we aan dat de waarde van het "rel"-attribuut de waarde "hdf" heeft. Een edge met als type :rel vertrekt vanuit een :node en eindigt bij een :node of een :word.
+We specificeren hier dus eerst via ":rel" dat het gaat om de Alpino relaties. En daarbinnen geven we aan dat de waarde van het "rel"-attribuut de waarde "hdf" heeft. Een edge met als type :rel vertrekt altijd vanuit een node en eindigt bij een :node of een :word.
 
 #### :ud
 
-Een universal dependency edge wordt gerepresenteert met het ud: type. Zulke edges bestaan alleen tussen woorden. De volgende query vindt alle lijdend voorwerpen met de waarde "NOUN" voor het attribuut UPOS van "drinken":
+Een universal dependency relatie wordt gerepresenteert met het :ud type. Zulke relaties bestaan alleen tussen woorden. De volgende query vindt alle lijdend voorwerpen van 'drinken' waarbij het attribuut UPOS de waarde 'NOUN' heeft:
 
 ```text
 match (:word{lemma:'drinken'})-[:ud{main:'obj'}]->(o:word{upos:'NOUN'})
@@ -103,7 +103,7 @@ return o
 
 #### :next
 
-Een woord heeft altijd een edge met als type :next naar het volgende woord. Het is dus erg eenvoudig om te zoeken naar een bigram, bijvoorbeeld: "in geval":
+Een woord heeft altijd een relatie met als type :next naar het volgende woord. Het is dus erg eenvoudig om te zoeken naar een bigram, bijvoorbeeld: "in geval":
 
 ```text
 match (w1:word{lemma:'in'})-[:next]->(w2:word{lemma:'geval'})
@@ -112,13 +112,12 @@ return w1,w2
 
 Dit voorbeeld toont ook aan dat het heel wel mogelijk is om als resultaat van een query meerdere knopen terug te geven: in dit geval de variabelen w1 en w2.
 
-Het is ook mogelijk om patronen te maken waarbij meerdere nodes en edges tegelijk voorkomen. De volgende query identificeert woorden die direct volgen op de bigram "in geval":
+Het is ook mogelijk om patronen te maken waarbij meerdere knopen en relaties tegelijk voorkomen. De volgende query identificeert woorden die direct volgen op "in geval":
 
 ```text
 match (:word{lemma:'in'})-[:next]->(:word{lemma:'geval'})-[:next]->(w:word)
 return w
 ```
-
 
 ## Flexibel zoeken met SQL 
 
@@ -191,7 +190,57 @@ order by aantal desc, woord
 
 - optional match voor negatie
 - where exists
+- ...
 
+## Resultaten van een query in AlpinoGraph
+
+In het algemeen levert elke query een tabel op. Maar AlpinoGraph behandelt niet elke tabel op dezelfde wijze. In de gevallen waarbij de query een knoop in de graaf oplevert, kiest AlpinoGraph ervoor om de zin die hoort bij die knoop als resultaat te presenteren. Als je vervolgens op een zin klikt krijg je de visualizatie van de graaf te zien, in meerdere varianten.
+
+Indien gewenst kun je alsnog de resultaten in tabelvorm bekijken door op de betreffende button te klikken. Twee andere opties zijn "woorden" en "lemma's". In die laatste gevallen wordt per hit de deelzin (in woorden dan wel in lemma's) opgehaald die door de matchende knoop wordt gedomineerd. Van al die deelzinnen wordt vervolgens een frequentieoverzicht gemaakt.
+
+Dus voor deze query:
+
+```text
+match (w:word{lemma:'zijn'})
+return w.word
+```
+
+krijg je alleen een tabel te zien, terwijl je voor de volgende query de zinnen terug krijgt:
+
+
+```text
+match (w:word{lemma:'zijn'})
+return w
+```
+
+Je kunt hier dus nu kiezen voor de andere opties. Als je nu voor "tabel" kiest, krijg je erg veel informatie: alle attributen van elke matchende knoop. Kies je voor "woorden", dan krijg je een mooi frequentie-overzicht van alle vormen van het werkwoord 'zijn'. In dit specifieke geval is het niet erg inzichtelijk om te kiezen voor "lemma's". 
+
+Het volgende voorbeeld suggereert wanneer het nuttig kan zijn om voor "lemma's" te kiezen:
+
+```text
+match (:word{lemma:'eten'})-[:ud{main:'obj'}]->(w2:word)
+return w2
+```
+
+Dit levert dus alle zinnen op waarin "eten" een lijdend voorwerp heeft. En als je op "lemma's" klikt krijg je een mooi frequentieoverzicht van al de (hoofden van) die lijdend voorwerpen.
+
+In bovenstaande gevallen zijn de matchende knopen steeds woorden, maar dit werkt dus op vergelijkbare wijze voor hogere knopen. De volgende query vindt alle hogere knopen die in relatie "svp" met een werkwoord staan:
+
+```text
+match (:node)-[rel{rel:'svp'}]->(w2:node)
+return w2
+```
+
+Omdat de query een node oplevert krijg je per default de zinnen te zien waarin een match voorkomt. Als je kiest voor "lemma's" levert dat dus een frequentieoverzicht op van de betreffende woordgroepen.
+
+In sommige gevallen bevatten die woordgroepen gaten (discontinue woordgroepen). Een typisch voorbeeld hiervan levert de volgende query:
+
+```text
+match (:node)-[rel{rel:'pc'}]->(w2:node)
+return w2
+```
+
+Je ziet dat dan in het frequentieoverzicht van de woorden of de lemma's met "..." de gaten in de woordgroepen worden aangegeven.
 
 ## Geavanceerd zoeken met CYPHER
 
