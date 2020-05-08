@@ -119,6 +119,46 @@ match (:word{lemma:'in'})-[:next]->(:word{lemma:'geval'})-[:next]->(w:word)
 return w
 ```
 
+### Wat geeft de query als resultaat terug?
+
+In veel gevallen wordt een query gedefinieerd waarbij een knoop wordt gespecificeerd die je als resultaat terug wilt krijgen.  Zo'n typisch geval is de volgende query, waarbij we via de Alpino relaties zoeken naar lijdend voorwerpen van een werkwoord:
+
+```text
+match (:word{pt:'ww'})<-[:rel{rel:'hd'}]-(:node)-[:rel{rel:'obj1'}]->(w:node)
+return w
+```
+
+Een voordeel in vergelijking met XPath is, dat je indien je dezelfde hierarchische relatie wilt beschrijven, maar een andere knoop als resultaat terug wilt krijgen, slechts de variabele op een andere plek in het patroon kunt plaatsen. In XPath moet je in zulke gevallen de query herschrijven. Hier wordt het:
+
+```text
+match (w:word{pt:'ww'})<-[:rel{rel:'hd'}]-(:node)-[:rel{rel:'obj1'}]->(:node)
+return w
+```
+
+En het is dus ook mogelijk om beide knopen als resultaat terug te geven, indien gewenst:
+
+```text
+match (v:word{pt:'ww'})<-[:rel{rel:'hd'}]-(:node)-[:rel{rel:'obj1'}]->(w:node)
+return v, w
+```
+
+Een ander typisch voorbeeld is de optie om als resultaat van een query de waarde(s) van een of meer attributen te specificeren. Bijvoorbeeld:
+
+```text
+match (v:word{pt:'ww'})<-[:rel{rel:'hd'}]-(:node)-[:rel{rel:'obj2'}]->(w:node)
+return v.lemma, w.cat
+```
+
+Er zijn nog allerlei andere mogelijkheden, waarvan een aantal in de volgende sectie wordt geillustreerd. Een speciaal geval is de optie om een sub-graaf als resultaat terug te geven. Dat kan bijvoorbeeld als volgt:
+
+```text
+match p=(:word{pt:'ww'})<-[:rel{rel:'hd'}]-(:node)-[:rel{rel:'obj1'}]->(:node)
+return p
+```
+
+TODO: liever hier een voorbeeld waar dit ook zinvol is.
+
+
 ## Flexibel zoeken met SQL 
 
 Hierboven waren de voorbeelden steeds van het type: match een bepaald patroon, en geef een of meerdere delen van de match terug als resultaat. Door gebruik te maken van SQL is hier veel meer mogelijk. Hieronder tonen we een paar veelgebruikte technieken, zonder de ambitie een tutorial voor SQL te verzorgen.
@@ -194,7 +234,7 @@ order by aantal desc, woord
 
 ## Resultaten van een query in AlpinoGraph
 
-In het algemeen levert elke query een tabel op. Maar AlpinoGraph behandelt niet elke tabel op dezelfde wijze. In de gevallen waarbij de query een knoop in de graaf oplevert, kiest AlpinoGraph ervoor om de zin die hoort bij die knoop als resultaat te presenteren. Als je vervolgens op een zin klikt krijg je de visualizatie van de graaf te zien, in meerdere varianten.
+In het algemeen levert elke query een tabel op. Maar AlpinoGraph behandelt niet elke tabel op dezelfde wijze. In de gevallen waarbij de query een knoop in de graaf of een deelgraaf oplevert, kiest AlpinoGraph ervoor om de zin die hoort bij die knoop of deelgraaf als resultaat te presenteren. Als je vervolgens op een zin klikt krijg je de visualizatie van de graaf te zien, in meerdere varianten.
 
 Indien gewenst kun je alsnog de resultaten in tabelvorm bekijken door op de betreffende button te klikken. Twee andere opties zijn "woorden" en "lemma's". In die laatste gevallen wordt per hit de woordgroep (in woorden dan wel in lemma's) opgehaald die door de matchende knoop wordt gedomineerd. Van al die woordgroepen wordt vervolgens een frequentieoverzicht gemaakt.
 
@@ -241,6 +281,8 @@ return w2
 ```
 
 Je ziet dat dan in het frequentieoverzicht van de woorden of de lemma's met "..." de gaten in de woordgroepen worden aangegeven.
+
+In het receptenboek wordt uitgelegd hoe je queries kunt formuleren die op vergelijkbare wijze aggregeren over de waardes van attributen indien het andere attributen betreft dan "word" of "lemma".
 
 ## Geavanceerd zoeken met CYPHER
 
