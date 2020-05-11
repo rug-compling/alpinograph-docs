@@ -230,6 +230,77 @@ group by pt_list
 order by aantal desc, pt_list</span>
 </code></pre>
 
+## Meta-data
+
+### Overzicht van de meta-data
+
+Als er voor een corpus meta-data beschikbaar is, dan zijn er knopen met als type :meta. De aard van de meta-data is verschillend per corpus, en daarom ook de attributen die voor :meta beschikbaar zijn. Maar er is altijd het attribuut "sentid" en de knopen van de syntactische analyse hebben ook allemaal dat "sentid" attribuut met dezelfde waarde. Je kunt dus met een where-clause de bijbehorende meta-data terugvinden. 
+
+De volgende query toont voor een corpus welk type meta-data beschikbaar is:
+
+```text
+match (m:meta)
+return m.name, count(m.name)
+```
+
+De counts geven in dit geval aan voor hoeveel zinnen de meta-data van dat type beschikbaar is. En om te zien welke waardes in de meta-data worden gebruikt, kun je zoiets doen. Hier is 'country' dan een van de types meta-data die je in de vorige query hebt opgeleverd.
+
+```text
+match (m:meta{name:'country'})
+return m.value, count(m.value)
+```
+
+Je kunt dit ook doen voor meerdere types meta-data tegelijk. Bijvoorbeeld, hoe is de man/vrouw verhouding voor het Nederlandse en Vlaamse deel van het CGN. Hier gebruiken we het attribuut "sentid" om te zien welke meta-data bij elkaar hoort.
+
+```text
+match (m:meta{name:'country'})
+match (m2:meta{name:'sex'})
+where m.sentid = m2.sentid
+return m.value, m2.value, count(m.value + ' ' + m2.value)
+```
+
+
+### Gebruik van meta-data in queries
+
+Als voorbeeld nemen we de volgende query die zoekt naar gevallen waarbij een NP de eerste woordgroep van een zin is, en als onderwerp fungeert:
+
+```text
+match (n:nw{_vorfeld: true, _np: true})<-[r:rel{rel:'su'}]-()
+return n
+```
+
+Als we van de matchende zin ook de meta-data willen opleveren kunnen we gebruik maken van het feit dat alle knopen ook het attribuut "sentid" bevatten. Daarmee halen we dan de relevante meta-data op:
+
+```text
+match (n:nw{_vorfeld: true, _np: true})<-[r:rel{rel:'su'}]-()
+match (m:meta{name:'country'})
+where m.sentid = n.sentid
+return n,m.value
+```
+
+Je kunt dus ook eisen aan de relevante meta-data stellen. Of delen van de meta-data teruggeven. Of tellen. Dit voorbeeld werkt voor het CGN corpus:
+
+```text
+match (n:nw{_vorfeld: true, _np: true})<-[r:rel{rel:'su'}]-()
+match (m:meta{name:'country'})
+where m.sentid = n.sentid
+return m.value,count(m.value)
+```
+
+En ook meta-data combineren:
+
+```text
+match (n:nw{_vorfeld: true, _np: true})<-[r:rel]-()
+where r.rel in ['su','sup'] and r.id is null
+match (m:meta{name:'country'})
+where m.sentid = n.sentid
+match (m2:meta{name:'sex'})
+where m2.sentid = n.sentid
+return m.value,m2.value,count(m.value + ' ' + m2.value)
+```
+
+
+
 ## Aardige voorbeelden die nergens passen
 
 ### Wie is de baas?
