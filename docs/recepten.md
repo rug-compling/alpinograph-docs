@@ -85,6 +85,25 @@ return distinct n
 ```
 TODO: can this be done simpler?
 
+## Multi-word Units en Universal Dependencies
+
+In de Universal Dependency annotaties worden woorden die onderdeel zijn van een multi-word units niet anders behandeld dan andere woorden. Als je dus een query formuleert waarbij het resultaat een woord is, krijg je ook woorden die deel uitmaken van een multi-word unit. Dit is vaak niet gewenst.
+
+Bijvoorbeeld, de volgende query identificeert lijdend voorwerpen van het werkwoord eten:
+
+```text
+match (:word{lemma:'gebruiken'})-[:ud{rel:'obj'}]->(v)
+return v.lemma
+```
+
+Als je de resultaten bekijkt, krijg je verwachte lemma's zoals "machine", "woord", "stookolie", "traangas", maar
+bijvoorbeeld ook "soft". Dat is eigenlijk een halve hit omdat het in de betreffende zin over "soft drugs" gaat. In UD is er in dit geval een "fixed" relatie van het eerste woorden van de MWU met het tweede woord. Het zou aardig zijn als je in het overzicht van de lemma's dus "soft drug" in plaats van "soft" terug zou zien. Dat kan met het volgende recept, dat de UD relaties combineert met de relaties in de oorspronkelijke Alpino boom en vertrouwt op het feit dat MWU knopen ook een attribuut 'lemma' (en 'word') hebben.
+
+```text
+match (:word{lemma:'gebruiken'})-[:ud{rel:'obj'}]->(v1:word)<-[:rel*0..1{rel:'mwp'}]-(v)
+where not exists ( (v)<-[:rel{rel:'mwp'}]-()  )
+return v.lemma
+```text
 
 
 ## Tellen van reeksen
