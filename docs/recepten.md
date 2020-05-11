@@ -96,8 +96,7 @@ match (:word{lemma:'gebruiken'})-[:ud{rel:'obj'}]->(v)
 return v.lemma
 ```
 
-Als je de resultaten bekijkt, krijg je verwachte lemma's zoals "machine", "woord", "stookolie", "traangas", maar
-bijvoorbeeld ook "soft". Dat is eigenlijk een halve hit omdat het in de betreffende zin over "soft drugs" gaat. In UD is er in dit geval een "fixed" relatie van het eerste woorden van de MWU met het tweede woord. Het zou aardig zijn als je in het overzicht van de lemma's dus "soft drug" in plaats van "soft" terug zou zien. Dat kan met het volgende recept, dat de UD relaties combineert met de relaties in de oorspronkelijke Alpino boom en vertrouwt op het feit dat MWU knopen ook een attribuut 'lemma' (en 'word') hebben.
+Als je de resultaten bekijkt op basis van de Alpino Treebank, krijg je lemma's zoals "machine", "woord", "stookolie", "traangas", maar bijvoorbeeld ook "soft". Dat is eigenlijk een halve hit omdat het in de betreffende zin over "soft drugs" gaat. In UD is er in dit geval een "fixed" relatie van het eerste woord van de MWU met het tweede woord. Het zou aardig zijn als je in het overzicht van de lemma's dus "soft drug" in plaats van "soft" terug zou zien. Dat kan met het volgende recept, dat de UD relaties combineert met de relaties in de oorspronkelijke Alpino boom en vertrouwt op het feit dat MWU knopen ook een attribuut 'lemma' (en 'word') hebben.
 
 ```text
 match (:word{lemma:'gebruiken'})-[:ud{rel:'obj'}]->(v1:word)<-[:rel*0..1{rel:'mwp'}]-(v)
