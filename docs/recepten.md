@@ -104,6 +104,37 @@ where not exists ( (v)<-[:rel{rel:'mwp'}]-()  )
 return v.lemma
 ```
 
+## Tellen van combinaties van waardes
+
+Je kunt vrij gemakkelijk combinaties van de waardes van attributen tellen. Als voorbeeld kijken we hier naar werkwoorden met een vaste uitdrukking:
+
+```text
+match (v1:word{pt:'ww'})<-[:rel{rel:'hd'}]-()-[:rel{rel:'svp'}]->(v2:node)
+return v1.lemma, v2.lemma
+```
+
+Deze paren van lemma's willen we vervolgens tellen en sorteren. Dat kan als volgt:
+
+```text
+match (v1:word{pt:'ww'})<-[:rel{rel:'hd'}]-()-[:rel{rel:'svp'}]->(v2:node)
+return v1.lemma, v2.lemma, count(v1.lemma + ' ' + v2.lemma) as aantal
+order by aantal desc
+```
+
+
+
+## Matches binnen matches
+
+Je kunt queries soms opbouwen door een eerste selectie te maken en dan binnen die selectie een verdere selectie uit te voeren. In het volgende voorbeelden zoeken we naar een conjunctie met twee coordinatoren ("noch .. noch..", "zowel .. als .."). De eerste match zorgt voor een coordinatie die twee coordinatoren bevat. De tweede match eist dat de eerste coordinator vooraf gaat aan de tweede - op die manier krijg je elke conjunctie maar één keer, en de betreffende lemma's in de verwachte volgorde:
+
+```text
+match (v1:word) <-[:rel{rel:'crd'}]-(:node{cat: 'conj'})-[:rel{rel: 'crd'}]->(v2:word)
+where v1.id != v2.id
+match (v1) -[:next*]-> (v2)
+return v1.lemma, v2.lemma, count(v1.lemma + ' ' + v2.lemma) as aantal
+order by aantal desc
+```
+
 
 ## Tellen van reeksen
 
@@ -183,3 +214,43 @@ from (</span>
 group by pt_list
 order by aantal desc, pt_list</span>
 </code></pre>
+
+## Aardige voorbeelden die nergens passen
+
+### Wie is de baas?
+
+De volgende query verzameld onderwerpen van het werkwoord "beslissen" waarbij dat onderwerp ofwel een mulit-word unit is, ofwel een zelfstandig naamwoord.
+
+```text
+match (:word{lemma:'beslissen'})-[:pair{rel:'su'}]->(v)
+where v.cat='mwu' or v.pt='n'
+return v
+```
+
+Als je in dergelijke queries meerdere mogelijke lemma's wilt noemen kan dat met een "WHERE" clause:
+
+```text
+match (h:word)-[:pair{rel:'su'}]->(v)
+where h.lemma in ['beslissen','besluiten'] and (v.cat='mwu' or v.pt='n')
+return v
+```
+
+TODO: moet dat altijd idd zo?
+
+
+### Man/vrouw verdeling
+
+De volgende twee queries kun je gebruiken om eventueel verschillen te vinden tussen zelfstandige naamworden die met possesief "haar" of "zijn" worden gebruikt.
+
+```text
+match (w1:word)-[:ud{rel:'nmod:poss'}]->(w2:word{lemma:'haar'})
+return w1
+```
+
+
+```text
+match (w1:word)-[:ud{rel:'nmod:poss'}]->(w2:word{lemma:'zijn'})
+return w1
+```
+
+Voor "haar" levert dat als top-10 op: man, vriend, kind, moeder, dochter, zoon, vader, leven, rol, echt_genoot. Voor "zijn" krijgen we de volgende lijst (DutchWebCorpus): vrouw, pleog, naam, auto, vader, collega, vriendin, leven, zoon, club.
