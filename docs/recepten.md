@@ -254,8 +254,7 @@ Je kunt dit ook doen voor meerdere types meta-data tegelijk. Bijvoorbeeld, hoe i
 
 ```text
 match (m:meta{name:'country'})
-match (m2:meta{name:'sex'})
-where m.sentid = m2.sentid
+match (m2:meta{name:'sex', sentid:m.sentid})
 return m.value, m2.value, count(m.value + ' ' + m2.value)
 ```
 
