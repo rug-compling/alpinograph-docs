@@ -2,7 +2,7 @@
 
 ## Ngram
 
-De beschikbaarheid van de relatie :next maakt het zeer eenvoudig om naar specifieke woord-sequenties te zoeken. De volgende query vindt het trigram "in elk geval":
+De beschikbaarheid van de relatie `:next` maakt het zeer eenvoudig om naar specifieke woord-sequenties te zoeken. De volgende query vindt het trigram *in elk geval*:
 
 ```text
 match p = (:word{lemma:'in'})-[:next]->
@@ -11,7 +11,7 @@ match p = (:word{lemma:'in'})-[:next]->
 return p
 ```
 
-En het is niet veel ingewikkelder om naar woorden in de context van een Ngram te zoeken. Welke woorden treden op na het trigram "in elk geval":
+En het is niet veel ingewikkelder om naar woorden in de context van een Ngram te zoeken. Welke woorden treden op na het trigram *in elk geval*:
 
 ```text
 match (:word{lemma:'in'})-[:next]->
@@ -20,7 +20,7 @@ match (:word{lemma:'in'})-[:next]->
 return p
 ```
 
-Het volgende voorbeeld zoekt naar adjectieven die in het patroon "vinden het ADJ dat" voorkomen:
+Het volgende voorbeeld zoekt naar adjectieven die in het patroon *vinden het ADJ dat* voorkomen:
 
 ```text
 match (:word{lemma:'vinden'})-[:next]->
@@ -30,12 +30,12 @@ match (:word{lemma:'vinden'})-[:next]->
 return adj
 ```
 
-De beschikbaarheid van de :next relatie zorgt ervoor dat deze voorbeelden heel eenvoudig zijn. In vergelijking hiermee zijn voorbeelden met XPath in PaQu erg omslachtig.
+De beschikbaarheid van de `:next`-relatie zorgt ervoor dat deze voorbeelden heel eenvoudig zijn. In vergelijking hiermee zijn voorbeelden met XPath in PaQu erg omslachtig.
 
 
 ## Multi-word Units
 
-Multi-word units (mwu) worden steeds gerepresenteerd als een knoop direct boven de woorden waaruit de mwu bestaat. Als extraatje heeft deze niet-lexicale knoop toch een waarde voor de attributen 'word' en 'lemma'. Je kunt dus eenvoudig zoeken naar een specifieke mwu:
+Multi-word units (mwu) worden steeds gerepresenteerd als een knoop direct boven de woorden waaruit de mwu bestaat. Als extraatje heeft deze niet-lexicale knoop toch een waarde voor de attributen `word` en `lemma`. Je kunt dus eenvoudig zoeken naar een specifieke mwu:
 
 ```text
 match (p:node{word:'ten opzichte van'})
@@ -45,35 +45,33 @@ return p
 Bovendien kun je dus queries formuleren zonder dat je een verschil moet maken tussen mwu en woorden, indien je de lemma of het woord van een gevonden knoop terug wilt geven:
 
 ```text
-match  (:node)-[:rel{rel:'svp'}]->(p:nw)
+match (:node)-[:rel{rel:'svp'}]->(p:nw)
 return p.word
 ```
 Dit levert een tabel op waarin zowel woorden als mwu terecht komen.
 
-Je kunt natuurlijk ook specifiek naar een deel van een mwu zoeken. De volgende query geeft mwu terug waarbij een van de onderdelen het woord "van" is:
+Je kunt natuurlijk ook specifiek naar een deel van een mwu zoeken. De volgende query geeft mwu terug waarbij een van de onderdelen het woord *van* is:
 
 ```text
 match (n:node{cat:'mwu'})-[:rel{rel:'mwp'}]->(:word{lemma:'van'})
 return n
 ```
 
-Het is iets ingewikkelder om te formuleren dat het woord "van" het laatste woord van de mwu moet zijn:
+Het is iets ingewikkelder om te formuleren dat het woord *van* het laatste woord van de mwu moet zijn:
 
 ```text
-match (n:node{cat:'mwu'})-[:rel{rel:'mwp'}]->(w:word{lemma:'van'})
-where n.end = w.end
+match (n:node{cat:'mwu'})-[:rel{rel:'mwp'}]->(w:word{lemma:'van', end: w.end})
 return n
 ```
 
-Of waarbij "van" het derde woord moet zijn:
+Of waarbij *van* het derde woord moet zijn:
 
 ```text
-match (n:node{cat:'mwu'})-[:rel{rel:'mwp'}]->(w:word{lemma:'van'})
-where w.begin = n.begin + 2
+match (n:node{cat:'mwu'})-[:rel{rel:'mwp'}]->(w:word{lemma:'van', begin: n.begin + 2})
 return n
 ```
 
-Een lastiger vraagstuk is een query waarbij je eisen wilt stellen aan de attributen van een woord, ofwel aan de attributen van een mwu. Bijvoorbeeld: geef me elke naam, waarbij een naam een mwu is waarvoor geldt dat een van de delen van de mwu de postag 'SPEC(deeleigen)' heeft, ofwel het is geen mwu maar een woord waarvoor geldt dat het attribuut 'ntype' de waarde 'eigen' heeft.
+Een lastiger vraagstuk is een query waarbij je eisen wilt stellen aan de attributen van een woord, ofwel aan de attributen van een mwu. Bijvoorbeeld: geef me elke naam, waarbij een naam een mwu is waarvoor geldt dat een van de delen van de mwu de `postag` *SPEC(deeleigen)* heeft, ofwel het is geen mwu maar een woord waarvoor geldt dat het attribuut `ntype` de waarde *eigen* heeft.
 
 ```text
 match (w:word)<-[:rel*0..1{rel: 'mwp'}]-(n:nw)<-[r:rel]-()
@@ -87,7 +85,7 @@ TODO: can this be done simpler?
 
 ## Multi-word Units en Universal Dependencies
 
-In de Universal Dependency annotaties worden woorden die onderdeel zijn van een multi-word units niet anders behandeld dan andere woorden. Als je dus een query formuleert waarbij het resultaat een woord is, krijg je ook woorden die deel uitmaken van een multi-word unit. Dit is vaak niet gewenst.
+In de Universal Dependency annotaties worden woorden die onderdeel zijn van een multi-word unit niet anders behandeld dan andere woorden. Als je dus een query formuleert waarbij het resultaat een woord is, krijg je ook woorden die deel uitmaken van een multi-word unit. Dit is vaak niet gewenst.
 
 Bijvoorbeeld, de volgende query identificeert lijdend voorwerpen van het werkwoord eten:
 
@@ -96,7 +94,7 @@ match (:word{lemma:'gebruiken'})-[:ud{rel:'obj'}]->(v)
 return v.lemma
 ```
 
-Als je de resultaten bekijkt op basis van de Alpino Treebank, krijg je lemma's zoals "machine", "woord", "stookolie", "traangas", maar bijvoorbeeld ook "soft". Dat is eigenlijk een halve hit omdat het in de betreffende zin over "soft drugs" gaat. In UD is er in dit geval een "fixed" relatie van het eerste woord van de MWU met het tweede woord. Het zou aardig zijn als je in het overzicht van de lemma's dus "soft drug" in plaats van "soft" terug zou zien. Dat kan met het volgende recept, dat de UD relaties combineert met de relaties in de oorspronkelijke Alpino boom en vertrouwt op het feit dat MWU knopen ook een attribuut 'lemma' (en 'word') hebben.
+Als je de resultaten bekijkt op basis van de Alpino Treebank, krijg je lemma's zoals *machine*, *woord*, *stookolie*, *traangas*, maar bijvoorbeeld ook *soft*. Dat is eigenlijk een halve hit omdat het in de betreffende zin over *soft drugs* gaat. In UD is er in dit geval een *fixed* relatie van het eerste woord van de MWU met het tweede woord. Het zou aardig zijn als je in het overzicht van de lemma's dus *soft drug* in plaats van *soft* terug zou zien. Dat kan met het volgende recept, dat de UD relaties combineert met de relaties in de oorspronkelijke Alpino boom en vertrouwt op het feit dat MWU knopen ook een attribuut `lemma` (en `word`) hebben.
 
 ```text
 match (:word{lemma:'gebruiken'})-[:ud{rel:'obj'}]->(v1:word)<-[:rel*0..1{rel:'mwp'}]-(v)
@@ -140,7 +138,7 @@ order by aantal desc
 
 ## Matches binnen matches
 
-Je kunt queries soms opbouwen door een eerste selectie te maken en dan binnen die selectie een verdere selectie uit te voeren. In het volgende voorbeelden zoeken we naar een conjunctie met twee coordinatoren ("noch .. noch..", "zowel .. als .."). De eerste match zorgt voor een coordinatie die twee coordinatoren bevat. De tweede match eist dat de eerste coordinator vooraf gaat aan de tweede - op die manier krijg je elke conjunctie maar één keer, en de betreffende lemma's in de verwachte volgorde:
+Je kunt queries soms opbouwen door een eerste selectie te maken en dan binnen die selectie een verdere selectie uit te voeren. In het volgende voorbeelden zoeken we naar een conjunctie met twee coördinatoren (*noch .. noch..*, *zowel .. als ..*). De eerste match zorgt voor een coördinatie die twee coördinatoren bevat. De tweede match eist dat de eerste coördinator vooraf gaat aan de tweede - op die manier krijg je elke conjunctie maar één keer, en de betreffende lemma's in de verwachte volgorde:
 
 ```text
 match (v1:word) <-[:rel{rel:'crd'}]-(:node{cat: 'conj'})-[:rel{rel: 'crd'}]->(v2:word)
@@ -150,6 +148,15 @@ return v1.lemma, v2.lemma, count(v1.lemma + ' ' + v2.lemma) as aantal
 order by aantal desc
 ```
 
+TODO: Dit kan simpeler, zoals hieronder, maar wat is dan een goed
+voorbeeld?
+
+```text
+match (v1:word) <-[:rel{rel:'crd'}]-(:node{cat: 'conj'})-[:rel{rel: 'crd'}]->(v2:word)
+where v1.end < v2.end
+return v1.lemma, v2.lemma, count(v1.lemma + ' ' + v2.lemma) as aantal
+order by aantal desc
+```
 
 ## Tellen van reeksen
 
@@ -234,7 +241,7 @@ order by aantal desc, pt_list</span>
 
 ### Overzicht van de meta-data
 
-Als er voor een corpus meta-data beschikbaar is, dan zijn er knopen met als type :meta. De aard van de meta-data is verschillend per corpus, en daarom ook de attributen die voor :meta beschikbaar zijn. Maar er is altijd het attribuut "sentid" en de knopen van de syntactische analyse hebben ook allemaal dat "sentid" attribuut met dezelfde waarde. Je kunt dus met een where-clause de bijbehorende meta-data terugvinden. 
+Als er voor een corpus meta-data beschikbaar is, dan zijn er knopen met als type :meta. De aard van de meta-data is verschillend per corpus, en daarom ook de attributen die voor :meta beschikbaar zijn. Maar er is altijd het attribuut `sentid` en de knopen van de syntactische analyse hebben ook allemaal dat `sentid` attribuut met dezelfde waarde. Je kunt dus met een where-clause de bijbehorende meta-data terugvinden. 
 
 De volgende query toont voor een corpus welk type meta-data beschikbaar is:
 
@@ -250,11 +257,11 @@ match (m:meta{name:'country'})
 return m.value, count(m.value)
 ```
 
-Je kunt dit ook doen voor meerdere types meta-data tegelijk. Bijvoorbeeld, hoe is de man/vrouw verhouding voor het Nederlandse en Vlaamse deel van het CGN. Hier gebruiken we het attribuut "sentid" om te zien welke meta-data bij elkaar hoort.
+Je kunt dit ook doen voor meerdere types meta-data tegelijk. Bijvoorbeeld, hoe is de man/vrouw verhouding voor het Nederlandse en Vlaamse deel van het CGN. Hier gebruiken we het attribuut `sentid` om te zien welke meta-data bij elkaar hoort.
 
 ```text
-match (m:meta{name:'country'})
-match (m2:meta{name:'sex', sentid:m.sentid})
+match (m:meta{name:'country'}),
+      (m2:meta{name:'sex', sentid:m.sentid})
 return m.value, m2.value, count(m.value + ' ' + m2.value)
 ```
 
@@ -268,34 +275,29 @@ match (n:nw{_vorfeld: true, _np: true})<-[r:rel{rel:'su'}]-()
 return n
 ```
 
-Als we van de matchende zin ook de meta-data willen opleveren kunnen we gebruik maken van het feit dat alle knopen ook het attribuut "sentid" bevatten. Daarmee halen we dan de relevante meta-data op:
+Als we van de matchende zin ook de meta-data willen opleveren kunnen we gebruik maken van het feit dat alle knopen ook het attribuut `sentid` bevatten. Daarmee halen we dan de relevante meta-data op:
 
 ```text
-match (n:nw{_vorfeld: true, _np: true})<-[r:rel{rel:'su'}]-()
-match (m:meta{name:'country'})
-where m.sentid = n.sentid
-return n,m.value
+match (n:nw{_vorfeld: true, _np: true})<-[r:rel{rel:'su'}]-(),
+      (m:meta{name:'country', sentid: n.sentid})
+return n, m.value
 ```
 
 Je kunt dus ook eisen aan de relevante meta-data stellen. Of delen van de meta-data teruggeven. Of tellen. Dit voorbeeld werkt voor het CGN corpus:
 
 ```text
-match (n:nw{_vorfeld: true, _np: true})<-[r:rel{rel:'su'}]-()
-match (m:meta{name:'country'})
-where m.sentid = n.sentid
-return m.value,count(m.value)
-```
+match (n:nw{_vorfeld: true, _np: true})<-[r:rel{rel:'su'}]-(),
+      (m:meta{name:'country', sentid: n.sentid})
+return m.value, count(m.value)```
 
 En ook meta-data combineren:
 
 ```text
-match (n:nw{_vorfeld: true, _np: true})<-[r:rel]-()
+match (n:nw{_vorfeld: true, _np: true})<-[r:rel]-(),
+      (m:meta{name:'country', sentid: n.sentid}),
+      (m2:meta{name:'sex', sentid: n.sentid})
 where r.rel in ['su','sup'] and r.id is null
-match (m:meta{name:'country'})
-where m.sentid = n.sentid
-match (m2:meta{name:'sex'})
-where m2.sentid = n.sentid
-return m.value,m2.value,count(m.value + ' ' + m2.value)
+return m.value, m2.value, count(m.value + ' ' + m2.value)
 ```
 
 
@@ -304,7 +306,7 @@ return m.value,m2.value,count(m.value + ' ' + m2.value)
 
 ### Wie is de baas?
 
-De volgende query verzameld onderwerpen van het werkwoord "beslissen" waarbij dat onderwerp ofwel een mulit-word unit is, ofwel een zelfstandig naamwoord.
+De volgende query verzameld onderwerpen van het werkwoord *beslissen* waarbij dat onderwerp ofwel een multi-word unit is, ofwel een zelfstandig naamwoord.
 
 ```text
 match (:word{lemma:'beslissen'})-[:pair{rel:'su'}]->(v)
@@ -312,20 +314,18 @@ where v.cat='mwu' or v.pt='n'
 return v
 ```
 
-Als je in dergelijke queries meerdere mogelijke lemma's wilt noemen kan dat met een "WHERE" clause:
+Als je in dergelijke queries meerdere mogelijke lemma's wilt noemen kan dat met een `WHERE` clause:
 
 ```text
 match (h:word)-[:pair{rel:'su'}]->(v)
-where h.lemma in ['beslissen','besluiten'] and (v.cat='mwu' or v.pt='n')
+where h.lemma in ['beslissen','besluiten']
+  and (v.cat='mwu' or v.pt='n')
 return v
 ```
 
-TODO: moet dat altijd idd zo?
-
-
 ### Man/vrouw verdeling
 
-De volgende twee queries kun je gebruiken om eventueel verschillen te vinden tussen zelfstandige naamworden die met possesief "haar" of "zijn" worden gebruikt.
+De volgende twee queries kun je gebruiken om eventueel verschillen te vinden tussen zelfstandige naamworden die met possesief *haar* of *zijn* worden gebruikt.
 
 ```text
 match (w1:word)-[:ud{rel:'nmod:poss'}]->(w2:word{lemma:'haar'})
@@ -338,7 +338,7 @@ match (w1:word)-[:ud{rel:'nmod:poss'}]->(w2:word{lemma:'zijn'})
 return w1
 ```
 
-Voor "haar" levert dat als top-10 op: man, vriend, kind, moeder, dochter, zoon, vader, leven, rol, echt_genoot. Voor "zijn" krijgen we de volgende lijst (DutchWebCorpus): vrouw, ploeg, naam, auto, vader, collega, vriendin, leven, zoon, club.
+Voor *haar* levert dat als top-10 op: *man, vriend, kind, moeder, dochter, zoon, vader, leven, rol, echt_genoot*. Voor *zijn* krijgen we de volgende lijst (DutchWebCorpus): *vrouw, ploeg, naam, auto, vader, collega, vriendin, leven, zoon, club*.
 
 Merk op dat je bij deze queries wellicht de mededeling "Afgebroken" krijgt van AlpinoGraph, als je de tab "woorden" of "lemma's" gebruikt. Als je de telling voor het hele corpus wilt uitvoeren kun je dat doen door de telling expliciet in de query zelf uit te voeren:
 

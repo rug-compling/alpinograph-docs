@@ -18,14 +18,14 @@ In AlpinoGraph zijn een aantal syntactisch geannoteerde corpora beschikbaar. Alp
 
 ### Woorden
 
-De syntactische analyse van een zin is beschikbaar, zoals hierboven al genoemd, in meerdere lagen: de dependentiestructuur zoals bekend van CGN/Lassy/Alpino, de Universal Dependency-structuur (zowel standaard als enhanced), en de woord-paren structuur van PaQu. Deze lagen zijn allemaal gebaseerd op de woorden van de zin. Deze woorden zijn de bouwstenen van de graaf die al deze annotatielagen combineert. De volgende query zoekt alle woorden waarvoor het lemma de waarde "fiets" heeft: 
+De syntactische analyse van een zin is beschikbaar, zoals hierboven al genoemd, in meerdere lagen: de dependentiestructuur zoals bekend van CGN/Lassy/Alpino, de Universal Dependency-structuur (zowel standaard als enhanced), en de woord-paren structuur van PaQu. Deze lagen zijn allemaal gebaseerd op de woorden van de zin. Deze woorden zijn de bouwstenen van de graaf die al deze annotatielagen combineert. De volgende query zoekt alle woorden waarvoor het lemma de waarde *fiets* heeft: 
 
 ```text
 match (n:word{lemma: 'fiets'}) 
 return n;
 ```
 
-Een woord in de graafstructuur is een knoop van het type "word". Een knoop ziet eruit als 
+Een woord in de graafstructuur is een knoop van het type `word`. Een knoop ziet eruit als 
 
 ```text
 (:word)
@@ -33,7 +33,7 @@ Een woord in de graafstructuur is een knoop van het type "word". Een knoop ziet 
 (:word{...})
 ```
 
-waarbij tussen de accolades dan attributen en waardes kunnen worden gespecificeerd. In het voorbeeld fungeert "n" als een variabele.
+waarbij tussen de accolades dan attributen en waardes kunnen worden gespecificeerd. In het voorbeeld fungeert `n` als een variabele.
 
 ### Andere knopen
 
@@ -83,14 +83,14 @@ Er zijn meerdere soorten relaties beschikbaar, waaronder:
 
 #### :rel
 
-Om te zoeken naar een PP die een dochter heeft met het "hdf" relatie attribuut kun je de volgende query formuleren:
+Om te zoeken naar een PP die een dochter heeft met het *hdf* relatie attribuut kun je de volgende query formuleren:
 
 ```text
 match (n:node{cat:'pp'})-[:rel{rel:'hdf'}]->(:nw)
 return n
 ```
 
-We specificeren hier dus eerst via ":rel" dat het gaat om de Alpino relaties. En daarbinnen geven we aan dat de waarde van het "rel"-attribuut de waarde "hdf" heeft. Een edge met als type :rel vertrekt altijd vanuit een :node en eindigt bij een :node of een :word.
+We specificeren hier dus eerst via `:rel` dat het gaat om de Alpino relaties. En daarbinnen geven we aan dat de waarde van het `rel`-attribuut de waarde *hdf* heeft. Een edge met als type :rel vertrekt altijd vanuit een :node en eindigt bij een :node of een :word.
 
 #### :ud
 
@@ -103,7 +103,7 @@ return o
 
 #### :next
 
-Een woord heeft altijd een relatie met als type :next naar het volgende woord. Het is dus erg eenvoudig om te zoeken naar een bigram, bijvoorbeeld: "in geval":
+Een woord heeft altijd een relatie met als type :next naar het volgende woord. Het is dus erg eenvoudig om te zoeken naar een bigram, bijvoorbeeld: *in geval*:
 
 ```text
 match (w1:word{lemma:'in'})-[:next]->(w2:word{lemma:'geval'})
@@ -112,7 +112,7 @@ return w1,w2
 
 Dit voorbeeld toont ook aan dat het heel wel mogelijk is om als resultaat van een query meerdere knopen terug te geven: in dit geval de variabelen w1 en w2.
 
-Het is ook mogelijk om patronen te maken waarbij meerdere knopen en relaties tegelijk voorkomen. De volgende query identificeert woorden die direct volgen op "in geval":
+Het is ook mogelijk om patronen te maken waarbij meerdere knopen en relaties tegelijk voorkomen. De volgende query identificeert woorden die direct volgen op *in geval*:
 
 ```text
 match (:word{lemma:'in'})-[:next]->(:word{lemma:'geval'})-[:next]->(w:word)
@@ -165,14 +165,14 @@ Hierboven waren de voorbeelden steeds van het type: match een bepaald patroon, e
 
 ### distinct
 
-Bij sommige queries kan dezelfde knoop op meerdere manieren gevonden worden. Meestal geeft dat geen extra informatie. Met "distinct" kunnen zulke dubbele hits verwijderd worden.
+Bij sommige queries kan dezelfde knoop op meerdere manieren gevonden worden. Meestal geeft dat geen extra informatie. Met `distinct` kunnen zulke dubbele hits verwijderd worden.
 
 ```text
 match (n:node{cat:'mwu'}) -[:rel{rel:'mwp'}]-> (p:word{postag:'SPEC(deeleigen)'})
 return n
 ```
 
-In bovenstaand voorbeeld zoek je mwu's waarvoor geldt dat één van de delen de postag "SPEC(deeleigen)" heeft. Indien een mwu nu meerdere van zulke delen heeft, levert dat ook meerdere hits op. Die dubbelen verwijder je met het keyword "distinct" als volgt:
+In bovenstaand voorbeeld zoek je mwu's waarvoor geldt dat één van de delen de postag *SPEC(deeleigen)* heeft. Indien een mwu nu meerdere van zulke delen heeft, levert dat ook meerdere hits op. Die dubbelen verwijder je met het keyword `distinct` als volgt:
 
 ```text
 match (n:node{cat:'mwu'}) -[:rel{rel:'mwp'}]-> (p:word{postag:'SPEC(deeleigen)'})
@@ -191,7 +191,7 @@ return distinct sen
 
 ### where clause
 
-Verdere condities aan een patroon kun je (ook) specificeren met behulp van een "where"-clause. Bijvoorbeeld, de query die naar lijdend voorwerpen van "drinken" zoekt kun je uitbreiden door ook varianten van "drinken" toe te staan:
+Verdere condities aan een patroon kun je (ook) specificeren met behulp van een `where`-clause. Bijvoorbeeld, de query die naar lijdend voorwerpen van *drinken* zoekt kun je uitbreiden door ook varianten van *drinken* toe te staan:
 
 ```text
 match (w1:word)-[:ud{main:'obj'}]->(o:word{upos:'NOUN'})
@@ -217,7 +217,7 @@ where w.lemma in ['eten','op_eten','drinken','op_drinken']
 return w2.lemma, count(w2.lemma)
 ```
 
-Omdat in zulke gevallen het resultaat geen node of word is, zal in de AlpinoGraph interface de resulterende tabel worden getoond (in plaats van de gevonden zinnen met de matchende delen). De namen van de kolommen van de tabel kun je eventueel expliciet aangeven met "as Name", zoals in dit voorbeeld:
+Omdat in zulke gevallen het resultaat geen node of word is, zal in de AlpinoGraph interface de resulterende tabel worden getoond (in plaats van de gevonden zinnen met de matchende delen). De namen van de kolommen van de tabel kun je eventueel expliciet aangeven met `as Name`, zoals in dit voorbeeld:
 
 ```text
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
@@ -243,7 +243,7 @@ return w2.lemma as woord, count(w2.lemma) as aantal
 order by aantal desc
 ```
 
-En ten slotte kun je nog op basis van het woord sorteren indien de tellingen gelijk zijn, door een volgende kolomnaam toe te voegen bij het "order" regel:
+En ten slotte kun je nog op basis van het woord sorteren indien de tellingen gelijk zijn, door een volgende kolomnaam toe te voegen bij het `order` regel:
 
 ```text
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
@@ -255,8 +255,8 @@ order by aantal desc, woord
 ### TODO meer SQL trucjes
 
 - optional match voor negatie
-- where exists
-- ...
+- where exists, where not exists → niet met paden van variabele lengte
+- union, intersect, except
 
 ## Resultaten van een query in AlpinoGraph
 
@@ -288,9 +288,9 @@ match (:word{lemma:'eten'})-[:ud{main:'obj'}]->(w2:word)
 return w2
 ```
 
-Dit levert dus alle zinnen op waarin "eten" een lijdend voorwerp heeft. En als je op "lemma's" klikt krijg je een mooi frequentieoverzicht van al de (hoofden van) die lijdend voorwerpen.
+Dit levert dus alle zinnen op waarin *eten* een lijdend voorwerp heeft. En als je op "lemma's" klikt krijg je een mooi frequentieoverzicht van al de (hoofden van) die lijdend voorwerpen.
 
-In bovenstaande gevallen zijn de matchende knopen steeds woorden, maar dit werkt dus op vergelijkbare wijze voor hogere knopen. De volgende query vindt alle hogere knopen die in relatie "svp" met een werkwoord staan:
+In bovenstaande gevallen zijn de matchende knopen steeds woorden, maar dit werkt dus op vergelijkbare wijze voor hogere knopen. De volgende query vindt alle hogere knopen die in relatie *svp* met een werkwoord staan:
 
 ```text
 match (:node)-[:rel{rel:'svp'}]->(w2:node)
@@ -306,9 +306,9 @@ match (:node)-[:rel{rel:'pc'}]->(w2:node)
 return w2
 ```
 
-Je ziet dat dan in het frequentieoverzicht van de woorden of de lemma's met "..." de gaten in de woordgroepen worden aangegeven.
+Je ziet dat dan in het frequentieoverzicht van de woorden of de lemma's met *[...]* de gaten in de woordgroepen worden aangegeven.
 
-In het receptenboek wordt uitgelegd hoe je queries kunt formuleren die op vergelijkbare wijze aggregeren over de waardes van attributen indien het andere attributen betreft dan "word" of "lemma".
+In het receptenboek wordt uitgelegd hoe je queries kunt formuleren die op vergelijkbare wijze aggregeren over de waardes van attributen indien het andere attributen betreft dan `word` of `lemma`.
 
 ## Geavanceerd zoeken met CYPHER
 
