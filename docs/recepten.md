@@ -103,7 +103,7 @@ bijvoorbeeld ook "soft". Dat is eigenlijk een halve hit omdat het in de betreffe
 match (:word{lemma:'gebruiken'})-[:ud{rel:'obj'}]->(v1:word)<-[:rel*0..1{rel:'mwp'}]-(v)
 where not exists ( (v)<-[:rel{rel:'mwp'}]-()  )
 return v.lemma
-```text
+```
 
 
 ## Tellen van reeksen
