@@ -17,9 +17,3 @@ nav:
     - 'Alpino in AgensGraph': 'alpinoagens.md'
     - 'Cypher in AgensGraph': 'agensgraph.md'
     - Links: 'links.md'
-
-plugins:
-    - exclude:
-        glob:
-          - "*~"
-          - "#*#"
