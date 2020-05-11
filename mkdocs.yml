@@ -18,3 +18,8 @@ nav:
     - 'Cypher in AgensGraph': 'agensgraph.md'
     - Links: 'links.md'
 
+plugins:
+    - exclude:
+        glob:
+          - "*~"
+          - "#*#"
