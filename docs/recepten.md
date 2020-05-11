@@ -121,6 +121,21 @@ return v1.lemma, v2.lemma, count(v1.lemma + ' ' + v2.lemma) as aantal
 order by aantal desc
 ```
 
+Als een ander voorbeeld kun je dus gemakkelijk een frequentieoverzicht maken van de meest voorkomende paren van woordsoorten:
+
+```text
+match (w1)-[:next]->(w2)
+return w1.postag, w2.postag, count(w1.postag + ' ' + w2.postag) as aantal
+order by aantal desc
+```
+
+Of een overzicht van zelfstandige naamwoorden en de relatieve voornaamwoorden waarmee ze gecombineerd worden:
+
+```text
+match (w1)<-[:rel{rel:'hd'}]-()-[:rel]->(:node{cat:'rel'})-[:rel{rel:'rhd'}]->(w2:word)
+return w1.word, w2.word, count(w1.word + ' ' + w2.word) as aantal
+order by aantal desc
+```
 
 
 ## Matches binnen matches
@@ -253,4 +268,12 @@ match (w1:word)-[:ud{rel:'nmod:poss'}]->(w2:word{lemma:'zijn'})
 return w1
 ```
 
-Voor "haar" levert dat als top-10 op: man, vriend, kind, moeder, dochter, zoon, vader, leven, rol, echt_genoot. Voor "zijn" krijgen we de volgende lijst (DutchWebCorpus): vrouw, pleog, naam, auto, vader, collega, vriendin, leven, zoon, club.
+Voor "haar" levert dat als top-10 op: man, vriend, kind, moeder, dochter, zoon, vader, leven, rol, echt_genoot. Voor "zijn" krijgen we de volgende lijst (DutchWebCorpus): vrouw, ploeg, naam, auto, vader, collega, vriendin, leven, zoon, club.
+
+Merk op dat je bij deze queries wellicht de mededeling "Afgebroken" krijgt van AlpinoGraph, als je de tab "woorden" of "lemma's" gebruikt. Als je de telling voor het hele corpus wilt uitvoeren kun je dat doen door de telling expliciet in de query zelf uit te voeren:
+
+```text
+match (w1:word)-[:ud{rel:'nmod:poss'}]->(w2:word{lemma:'haar'})
+return w1.lemma, count(w1.lemma) as aantal
+order by aantal desc
+```
