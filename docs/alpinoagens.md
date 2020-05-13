@@ -146,6 +146,8 @@ TODO: in dit geval **nadat** indexnodes worden geëxpandeerd (klopt dat?)
 
 Het attribuut `_np` is `true` voor nodes en woorden die overeenkomen met deze xpath-expressie:
 
+TODO: een conj van een conj (etc) van een np is ook een np
+
 TODO: in dit geval **nadat** indexnodes worden geëxpandeerd (klopt dat?)
 
 
@@ -175,6 +177,35 @@ TODO: in dit geval **nadat** indexnodes worden geëxpandeerd (klopt dat?)
              @rel=("su","obj1","obj2","app")
            )
          )
+         or
+         ( @cat="conj"
+           and node[( @cat="np"
+                      or
+                      ( @lcat="np"
+                        and
+                        not(@rel=("hd","mwp"))
+                      )
+                      or
+                      ( @pt="n"
+                        and not(@rel="hd")
+                      )
+                      or
+                      ( @pt="vnw"
+                        and
+                        @pdtype="pron"
+                        and
+                        not(@rel="hd")
+                      )
+                      or
+                      ( @cat="mwu"
+                        and
+                        not(@rel="hd")
+                        and
+                        @rel=("su","obj1","obj2","app")
+                      )
+                    )]
+         )
+       )]
 ```
 
 Het attribuut `_vorfeld` is `true` voor nodes en woorden die overeenkomen met
