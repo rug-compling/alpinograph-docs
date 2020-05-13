@@ -114,8 +114,8 @@ attribuut | type   | opmerkingen
 `_clause_lvl` | int | bovenste _clause is niveau 1
 `_deste`   | bool   | zie beneden
 `_n_words` | int    | aantal tokens dat onder deze node zit
-`_np`      | bool   | node is een NP
-`_vorfeld` | bool   | node is een vorfeld
+`_np`      | bool   | node is een NP, zie beneden
+`_vorfeld` | bool   | node is een vorfeld, zie beneden
 ...       | string | alle overige attributen uit de Alpino-node behalve `rel` en `index`
 
 voor `cat` == `mwu` ook:
@@ -128,6 +128,9 @@ attribuut   | type   | opmerkingen
 
 Het attibuut `_deste` is `true` voor nodes die overeenkomen met deze xpath-expressie:
 
+TODO: in dit geval **nadat** indexnodes worden geëxpandeerd (klopt dat?)
+
+
 ```xpath
 //node[ node[ @graad="comp"]
         and
@@ -139,6 +142,65 @@ Het attibuut `_deste` is `true` voor nodes die overeenkomen met deze xpath-expre
               )
         ]
 ]
+```
+
+Het attribuut `_np` is `true` voor nodes en woorden die overeenkomen met deze xpath-expressie:
+
+TODO: in dit geval **nadat** indexnodes worden geëxpandeerd (klopt dat?)
+
+
+```xpath
+//node[( ( @cat="np"
+           or
+           ( @lcat="np"
+             and
+             not(@rel=("hd","mwp"))
+           )
+           or
+           ( @pt="n"
+             and not(@rel="hd")
+           )
+           or
+           ( @pt="vnw"
+             and
+             @pdtype="pron"
+             and
+             not(@rel="hd")
+           )
+           or
+           ( @cat="mwu"
+             and
+             not(@rel="hd")
+             and
+             @rel=("su","obj1","obj2","app")
+           )
+         )
+```
+
+Het attribuut `_vorfeld` is `true` voor nodes en woorden die overeenkomen met
+deze xpath-expressie:
+
+TODO: in dit geval **voordat** indexnodes worden geëxpandeerd
+
+```xpath
+//node[( (  ancestor::node[@cat="smain"]/node[@rel="hd"]/number(@begin) > node[@rel=("hd","cmp","mwp","crd","rhd","whd","nucl","dp")]/number(@begin)
+            or
+            (  ancestor::node[@cat="smain"]/node[@rel="hd"]/number(@begin) > number(@begin)
+               and
+               not(node[@rel=("hd","cmp","mwp","crd","rhd","whd","nucl","dp")])
+            )
+         )
+         and
+         not(parent::node[(  ancestor::node[@cat="smain"]/node[@rel="hd"]/number(@begin) > node[@rel=("hd","cmp","mwp","crd","rhd","whd","nucl","dp")]/number(@begin)
+                             or
+                             (  ancestor::node[@cat="smain"]/node[@rel="hd"]/number(@begin) > number(@begin)
+                                and
+                                not(node[@rel=("hd","cmp","mwp","crd","rhd","whd","nucl","dp")])
+                             )
+                          )])
+         and
+         (@cat or @pt)
+       )]
 ```
 
 **`:word`**
