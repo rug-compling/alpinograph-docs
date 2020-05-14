@@ -364,10 +364,26 @@ match ()-[:rel{rel: 'su'}]->(n)-[:rel*0..1{rel: 'hd'}]->(:word)
 return n
 ```
 
+### Eisen aan aantal
 
+Soms is er behoefte om te kunnen zeggen dat een bepaalde knoop of bepaalde relatie een specifiek aantal keer aanwezig moet zijn. In het volgende voorbeeld willen we nevenschikking vinden waarbij er precies één coordinator is:
 
+```text
+match n:node{cat: 'conj'})-[r:rel{rel: 'crd'}]->()
+with n, count(r) as cnt
+where cnt = 1
+return n
+```
 
-## Berekende attributen (of ergens anders)
+Je kunt dus iets vergelijkbaars doen om een nevenschikking te vinden met precies 5 conjuncten:
+```text
+match (n:node{cat: 'conj'})-[:rel{rel: 'cnj'}]->(r)
+with n, count(r) as cnt
+where cnt = 5
+return n
+```
+
+## Berekende attributen (of komt dit ergens anders)
 
 - attributen zoals '_vorfeld', documenteer hoe die zijn gevonden
 
