@@ -22,7 +22,7 @@ De syntactische analyse van een zin is beschikbaar, zoals hierboven al genoemd, 
 
 ```text
 match (n:word{lemma: 'fiets'}) 
-return n;
+return n
 ```
 
 Een woord in de graafstructuur is een knoop van het type `word`. Een knoop ziet eruit als 
@@ -224,11 +224,9 @@ return distinct n
 Als je in de output kijkt naar de zinnen kan het nog steeds zo zijn dat een zin meerdere keren voorkomt, indien die zin meerdere mwu's bevat die aan deze eisen voldoet. Als je elke zin slechts één keer terug wilt krijgen kun je expliciet naar zinnen zoeken. Dat gaat dan als volgt:
 
 ```text
-match (sen:sentence)-[:rel*]-> (:node{cat:'mwu'}) -[:rel{rel:'mwp'}]-> (p:word{postag:'SPEC(deeleigen)'})
-return distinct sen
+match (:node{cat:'mwu'}) -[:rel{rel:'mwp'}]-> (p:word{postag:'SPEC(deeleigen)'})
+return distinct p.sentid
 ```
-
-
 
 
 ### where clause
@@ -392,6 +390,8 @@ Je ziet dat dan in het frequentieoverzicht van de woorden of de lemma's met *[..
 
 In het receptenboek wordt uitgelegd hoe je queries kunt formuleren die op vergelijkbare wijze aggregeren over de waardes van attributen indien het andere attributen betreft dan `word` of `lemma`.
 
+TODO: bij download kun je ook andere attributen kiezen
+
 ## Geavanceerd zoeken met CYPHER
 
 ### paden met `*`
@@ -430,7 +430,7 @@ return n
 Soms is er behoefte om te kunnen zeggen dat een bepaalde knoop of bepaalde relatie een specifiek aantal keer aanwezig moet zijn. In het volgende voorbeeld willen we nevenschikking vinden waarbij er precies één coordinator is:
 
 ```text
-match n:node{cat: 'conj'})-[r:rel{rel: 'crd'}]->()
+match (n:node{cat: 'conj'})-[r:rel{rel: 'crd'}]->()
 with n, count(r) as cnt
 where cnt = 1
 return n
