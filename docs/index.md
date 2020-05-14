@@ -348,7 +348,7 @@ match (n)-[:rel*3{rel: 'cnj'}]->()
 return n
 ```
 
-Niet alleen kun je in zo'n patroon het preciese aantal stappen aangeven dat vereist is, je kunt ook een interval specificeren N..M, waarbij je N of M ook weg kunt laten. 
+Niet alleen kun je in zo'n patroon het preciese aantal stappen aangeven dat vereist is, je kunt ook een interval specificeren `i..j`, waarbij `i` en `j` integers zijn. `*3..8` geeft dan een pad aan van tussen de 3 en de 8 edges. Je kunt `i` of `j` ook weglaten. Met `*..5` geef je een pad aan van hoogstens 5 edges, terwijl `*3..` alle paden aangeeft met minstens drie edges.
 
 In het volgende voorbeeld zoeken we een knoop met daarin een woord dat je via minstens drie conjunct-relaties kunt bereiken:
 
@@ -357,7 +357,7 @@ match (n)-[:rel*3..{rel: 'cnj'}]->(:word)
 return n
 ```
 
-Een typisch geval is het gebruik van dit mechanisme met het interval 0..1. In het volgende voorbeeld worden knopen geidentificeerd die als subject optreden. In geval de knoop een lexicaal hoofd heeft, wordt dat hoofd als resultaat gevonden. Als de knoop zelf lexicaal is (en dus ook geen hoofd kan hebben), wordt de knoop zelf teruggegeven. Subjecten die niet lexicaal zijn, maar geen hoofd hebben (conjuncties bijvoorbeeld) worden dus overgeslagen.
+Een typisch geval is het gebruik van dit mechanisme met het interval `*0..1`. In het volgende voorbeeld worden knopen geïdentificeerd die als subject optreden. In geval de knoop een lexicaal hoofd heeft, wordt dat hoofd als resultaat gevonden. Als de knoop zelf lexicaal is (en dus ook geen hoofd kan hebben), wordt de knoop zelf teruggegeven. Subjecten die niet lexicaal zijn, maar geen hoofd hebben (conjuncties bijvoorbeeld) worden dus overgeslagen.
 
 ```text
 match ()-[:rel{rel: 'su'}]->(n)-[:rel*0..1{rel: 'hd'}]->(:word)
