@@ -173,9 +173,25 @@ match (w:word{word: '?'}),
 return n
 ```
 
-TODO: explain difference with
-match
-match
+Een gerelateerde techniek is het gebruik van meerdere `match` statements. In dat geval wordt de eerste match gebruikt als een eerste filter, en kan met variabelen geïnstantieerd in het eerste match patroon gezocht worden naar het tweede match patroon. Het vorige voorbeeld zou ook als volgt kunnen worden aangepakt:
+
+```text
+match (w:word{word: '?'})
+match (n:node{sentid:w.sentid,cat: 'sv1'})
+return n
+```
+
+Stel dat we op zoek willen naar cross-serial verb clusters. Eén aanpak bestaat eruit om eerst de werkwoordclusters te identificeren, en vervolgens daarbinnen die gevallen te selecteren waarbij een werkwoord uit het cluster een lijdend voorwerp selecteert dat ook fungeert als het onderwerp van het VC-complement:
+
+```text
+match (x)<-[:rel]-(n:node{cat: 'inf'})<-[:rel{rel: 'vc'}]-(n1)-[:rel{rel: 'hd'}]->(w:word{pt: 'ww'})
+where x.begin < w.begin
+match (n)-[:rel{rel: 'su'}]->()<-[:rel{rel: 'obj1'}]-(n1)
+return n
+```
+
+Het gebruik van de techniek om een patroon onder te verdelen in meerdere matches maakt de queries soms makkelijker te begrijpen.
+
 
 ### optional match
 
