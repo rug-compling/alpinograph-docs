@@ -276,7 +276,6 @@ order by aantal desc, woord
 
 ### TODO meer SQL trucjes
 
-- optional match voor negatie
 - where exists, where not exists → niet met paden van variabele lengte
 - union, intersect, except
 
@@ -334,7 +333,39 @@ In het receptenboek wordt uitgelegd hoe je queries kunt formuleren die op vergel
 
 ## Geavanceerd zoeken met CYPHER
 
-- 0..1* 
+### paden met `*`
+
+Een sequentie van edges (een pad) kan soms compact worden genoteerd met behulp van de `*`-operator. Om te zoeken naar een conjunct binnen een conjunct binnen een conjunct kun je formuleren:
+
+```text
+match (n)-[:rel{rel: 'cnj'}]->()-[:rel{rel: 'cnj'}]->()-[:rel{rel: 'cnj'}]->()
+return n
+```
+
+Je kunt zo'n sequentie afkorten als volgt:
+```text
+match (n)-[:rel*3{rel: 'cnj'}]->()
+return n
+```
+
+Niet alleen kun je in zo'n patroon het preciese aantal stappen aangeven dat vereist is, je kunt ook een interval specificeren N..M, waarbij je N of M ook weg kunt laten. 
+
+In het volgende voorbeeld zoeken we een knoop met daarin een woord dat je via minstens drie conjunct-relaties kunt bereiken:
+
+```text
+match (n)-[:rel*3..{rel: 'cnj'}]->(:word)
+return n
+```
+
+Een typisch geval is het gebruik van dit mechanisme met het interval 0..1. In het volgende voorbeeld worden knopen geidentificeerd die als subject optreden. In geval de knoop een lexicaal hoofd heeft, wordt dat hoofd als resultaat gevonden. Als de knoop zelf lexicaal is (en dus ook geen hoofd kan hebben), wordt de knoop zelf teruggegeven. Subjecten die niet lexicaal zijn, maar geen hoofd hebben (conjuncties bijvoorbeeld) worden dus overgeslagen.
+
+```text
+match ()-[:rel{rel: 'su'}]->(n)-[:rel*0..1{rel: 'hd'}]->(:word)
+return n
+```
+
+
+
 
 ## Berekende attributen (of ergens anders)
 
