@@ -163,6 +163,28 @@ TODO: liever hier een voorbeeld waar dit ook zinvol is.
 
 Hierboven waren de voorbeelden steeds van het type: match een bepaald patroon, en geef een of meerdere delen van de match terug als resultaat. Door gebruik te maken van SQL is hier veel meer mogelijk. Hieronder tonen we een paar veelgebruikte technieken, zonder de ambitie een tutorial voor SQL te verzorgen.
 
+### meerdere patronen
+
+Het argument van *match* is tot nu toe steeds één patroon. Je kunt ook meerdere patronen (TODO: of is dit eigenlijk 1 patroon met meerdere eisen?) als argument van `match` gebruiken, gescheiden door een comma. Het volgende patroon zoekt naar knopen van category `sv1` waarbij in dezelfde zin een vraagteken voorkomt:
+
+```text
+match (w:word{word: '?'}),
+      (n:node{sentid:w.sentid,cat: 'sv1'})
+return n
+```
+
+### optional match
+
+Het is lastig om direct in de graafpatronen te eisen dat een bepaalde edge *niet* bestaat. Een manier om dat toch te bewerkstelligen is het gebruik van de optional match. Hierbij wordt geprobeerd een patroon te matchen, maar indien dat niet lukt slaagt de query als geheel. De eventuele variabele die gebonden had moet worden door het optionele patroon krijgt de waarde null. Dit gebruiken we in het volgende voorbeeld om te eisen dat een knoop geen subject relatie mag hebben:
+
+```text
+match (n:node{cat: 'sv1'})
+optional match (n)-[:rel{rel: 'su'}]->(x1)
+with n, x1
+where x1 is null
+return n
+```
+
 ### distinct
 
 Bij sommige queries kan dezelfde knoop op meerdere manieren gevonden worden. Meestal geeft dat geen extra informatie. Met `distinct` kunnen zulke dubbele hits verwijderd worden.
