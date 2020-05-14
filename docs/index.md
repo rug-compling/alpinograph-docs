@@ -173,6 +173,10 @@ match (w:word{word: '?'}),
 return n
 ```
 
+TODO: explain difference with
+match
+match
+
 ### optional match
 
 Het is lastig om direct in de graafpatronen te eisen dat een bepaalde edge *niet* bestaat. Een manier om dat toch te bewerkstelligen is het gebruik van de optional match. Hierbij wordt geprobeerd een patroon te matchen, maar indien dat niet lukt slaagt de query als geheel. De eventuele variabele die gebonden had moet worden door het optionele patroon krijgt de waarde null. Dit gebruiken we in het volgende voorbeeld om te eisen dat een knoop geen subject relatie mag hebben:
