@@ -294,10 +294,51 @@ return w2.lemma as woord, count(w2.lemma) as aantal
 order by aantal desc, woord
 ```
 
-### TODO meer SQL trucjes
+### except, union, intersect
+
+Het is mogelijk om tabellen met resultaten te combineren met `except`, `union`, en `intersect` clauses. Een onbenullig voorbeeld ziet er zo uit:
+
+```text
+match (n:node{cat: 'pp'})
+return n
+union
+match (n:node{cat: 'np'})
+return n
+```
+
+Bij het gebruik van deze operatoren moeten de beide delen van de union een tabel opleveren met evenveel kolommen, en corresponderende kolommen moeten van hetzelfde type zijn. Een bij-effect van het gebruik van deze set-operatoren is, dat de tabellen ook als set worden geïnterpreteerd: elke rij is uniek. De volgende query levert daarom slechts een tabel met twee waardes: *np* en *pp*.
+
+```text
+match (n:node{cat: 'pp'})
+return n.cat
+union
+match (n:node{cat: 'np'})
+return n.cat
+```
+
+We kunnen bijvoorbeeld intersectie gebruiken om te ontdekken welke enkelvoudige zelfstandige naamwoorden (die niet als verkleinwoord zijn gebruikt) zowel met *de* als *het* combineren in het corpus:
+
+```text
+match (n:word{num:'sg'}) -[:ud{rel:'det'}]-> (:word{lemma:'de'})
+return n.lemma
+intersect
+match (n:word{graad:'basis'}) -[:ud{rel:'det'}]-> (:word{lemma:'het'})
+return n.lemma
+```
+
+De `except` clause werkt op een vergelijkbare manier en trekt de resultaten van de tweede match af van de eerste. Dus om de zelfstandige naamwoorden te vinden die alleen met "het" combineren, kun je een variant van de vorige query toepassen:
+
+```text
+match (n:word{graad:'basis'}) -[:ud{rel:'det'}]-> (:word{lemma:'het'})
+return n.lemma
+except
+match (n:word{num:'sg'}) -[:ud{rel:'det'}]-> (:word{lemma:'de'})
+return n.lemma
+```
+
+### TODO 
 
 - where exists, where not exists → niet met paden van variabele lengte
-- union, intersect, except
 
 ## Resultaten van een query in AlpinoGraph
 
