@@ -228,6 +228,30 @@ match (:node{cat:'mwu'}) -[:rel{rel:'mwp'}]-> (p:word{postag:'SPEC(deeleigen)'})
 return distinct p.sentid
 ```
 
+### with distinct
+
+Hierboven bespraken we hoe je kunt zorgen dat je met behulp van distinct unieke resultaten kunt krijgen. Soms is de situatie ingewikkelder. Stel je voor, dat je op zoek bent naar subjecten waarvoor geldt dat (net als hierboven) het een meerwoorduitdrukking moet zijn met minstens één dochter die de postag *SPEC(deeleigen)* heeft. Je wilt dan niet hetzelfde onderwerp meerdere keren terugkrijgen omdat er meerdere dochters de postag *SPEC(deeleigen)* hebben, maar je wilt wel, eventueel, meerdere onderwerpen uit dezelfde zin terugkrijgen als die er mochten zijn. Dan werkt het niet om `dinstinct` voor het hele patroon te gebruiken. In zulke gevallen kun je `with` gebruiken:
+
+```text
+match (n:node{cat:'mwu'}) -[:rel{rel:'mwp'}]-> (:word{postag:'SPEC(deeleigen)'})
+with distinct n
+match (:node{cat:'smain'})-[:rel{rel:'su'}]->(n)
+return n
+```
+
+Keyword `with` fungeert dus als een soort `return` statement, waarna je vervolgens verdere eisen aan de opgeleverde resultaten kunt stellen. Deze techniek lijkt een beetje op het gebruik van een existentiële quantifier.
+
+Een ingewikkelder voorbeeld van deze techniek vind je bij de volgende query om cross-serial verb clusters terug te vinden. In deze definitie wordt eerst een knoop `n1` gevonden die met relatie `vc` knoop `n1` in een werkwoordcluster domineert. Die definitie refereert aan knopen `x` en `w`, maar er kunnen meerdere knopen `x` zijn. In die verschillende `x` zijn we niet geinteresseerd - het bestaan van een `x` is voldoende om vast te stellen dat het hier om een werkwoordcluster gaat. Op basis van de unieke combinatie `n` en `n1` wordt dan vervolgens de eis gesteld dat het onderwerp van de één fungeert als het lijdend voorwerp van de ander:  
+
+```text
+match (x)<-[:rel]-(n:node{cat: 'inf'})<-[:rel{rel: 'vc'}]-(n1)-[:rel{rel: 'hd'}]->(w:word{pt: 'ww'})
+where not n1.cat in ['smain','sv1'] 
+  and x.begin < w.begin 
+with distinct n, n1
+
+match (n)-[:rel{rel: 'su'}]->()<-[:rel{rel: 'obj1'}]-(n1)
+return n
+```
 
 ### where clause
 
