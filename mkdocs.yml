@@ -13,6 +13,8 @@ lang: ['nl']
 
 nav:
     - Inleiding: 'index.md'
+    - 'Overzicht van AlpinoGraph': 'interface.md'
+    - 'Zoeken met AlpinoGraph': 'zoeken.md'
     - Receptenboek: 'recepten.md'
     - 'Alpino in AgensGraph': 'alpinoagens.md'
     - 'Cypher in AgensGraph': 'agensgraph.md'

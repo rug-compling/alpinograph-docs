@@ -39,6 +39,20 @@ RETURN persons.name, persons.age;
 
 Andere verschillen...
 
+Voor niet nader gespecifieerde relatie mag dit in openCypher:
+
+```text
+()-->()
+()<--()
+```
+
+In AgensGraph moet je hiervoor deze notatie gebruiken:
+
+```text
+()-[]->()
+()<-[]-()
+```
+
 Relaties kunnen maar van één soort zijn. Wel kun je soorten
 definiëren met een of meer basissoorten. Bijvoorbeeld, als je
 *vader* en *moeder* definieert als afgeleid van *ouder*, dan kun je
