@@ -160,6 +160,8 @@ order by aantal desc
 
 ## Tellen van reeksen
 
+TODO: gebruik `with` in plaat van `select`
+
 Stap 1: zoek iets
 
 ```text
