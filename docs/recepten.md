@@ -138,25 +138,21 @@ order by aantal desc
 
 ## Matches binnen matches
 
-Je kunt queries soms opbouwen door een eerste selectie te maken en dan binnen die selectie een verdere selectie uit te voeren. In het volgende voorbeeld zoeken we naar een conjunctie met twee coördinatoren (*noch .. noch..*, *zowel .. als ..*). De eerste match zorgt voor een coördinatie die twee coördinatoren bevat. De tweede match eist dat de eerste coördinator vooraf gaat aan de tweede - op die manier krijg je elke conjunctie maar één keer, en de betreffende lemma's in de verwachte volgorde:
+Je kunt queries soms opbouwen door een eerste selectie te maken en dan binnen die selectie een verdere selectie uit te voeren. 
+
+Stel dat we op zoek willen naar cross-serial verb clusters. Eén aanpak bestaat eruit om eerst de werkwoordclusters te identificeren, en vervolgens daarbinnen die gevallen te selecteren waarbij een werkwoord uit het cluster een lijdend voorwerp selecteert dat ook fungeert als het onderwerp van het VC-complement:
 
 ```text
-match (v1:word) <-[:rel{rel:'crd'}]-(:node{cat: 'conj'})-[:rel{rel: 'crd'}]->(v2:word)
-where v1.id != v2.id
-match (v1) -[:next*]-> (v2)
-return v1.lemma, v2.lemma, count(v1.lemma + ' ' + v2.lemma) as aantal
-order by aantal desc
+match (x)<-[:rel]-(n:node{cat: 'inf'})<-[:rel{rel: 'vc'}]-(n1)-[:rel{rel: 'hd'}]->(w:word{pt: 'ww'})
+where x.begin < w.begin
+match (n)-[:rel{rel: 'su'}]->()<-[:rel{rel: 'obj1'}]-(n1)
+return n
 ```
 
-TODO: Dit kan simpeler, zoals hieronder, maar wat is dan een goed
-voorbeeld?
+Het gebruik van de techniek om een patroon onder te verdelen in meerdere matches maakt de queries soms makkelijker te begrijpen.
 
-```text
-match (v1:word) <-[:rel{rel:'crd'}]-(:node{cat: 'conj'})-[:rel{rel: 'crd'}]->(v2:word)
-where v1.end < v2.end
-return v1.lemma, v2.lemma, count(v1.lemma + ' ' + v2.lemma) as aantal
-order by aantal desc
-```
+
+
 
 ## Tellen van reeksen
 
@@ -347,5 +343,17 @@ Merk op dat je bij deze queries wellicht de mededeling "Afgebroken" krijgt van A
 ```text
 match (w1:word)-[:ud{rel:'nmod:poss'}]->(w2:word{lemma:'haar'})
 return w1.lemma, count(w1.lemma) as aantal
+order by aantal desc
+```
+
+### paren van coördinatoren
+
+In het volgende voorbeeld zoeken we naar een conjunctie met twee coördinatoren (*noch .. noch..*, *zowel .. als ..*). De eerste match zorgt voor een coördinatie die twee coördinatoren bevat. De tweede match eist dat de eerste coördinator vooraf gaat aan de tweede - op die manier krijg je elke conjunctie maar één keer, en de betreffende lemma's in de verwachte volgorde:
+
+
+```text
+match (v1:word) <-[:rel{rel:'crd'}]-(:node{cat: 'conj'})-[:rel{rel: 'crd'}]->(v2:word)
+where v1.end < v2.end
+return v1.lemma, v2.lemma, count(v1.lemma + ' ' + v2.lemma) as aantal
 order by aantal desc
 ```
