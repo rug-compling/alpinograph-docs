@@ -184,16 +184,6 @@ match (n:node{sentid:w.sentid,cat: 'sv1'})
 return n
 ```
 
-Stel dat we op zoek willen naar cross-serial verb clusters. Eén aanpak bestaat eruit om eerst de werkwoordclusters te identificeren, en vervolgens daarbinnen die gevallen te selecteren waarbij een werkwoord uit het cluster een lijdend voorwerp selecteert dat ook fungeert als het onderwerp van het VC-complement:
-
-```text
-match (x)<-[:rel]-(n:node{cat: 'inf'})<-[:rel{rel: 'vc'}]-(n1)-[:rel{rel: 'hd'}]->(w:word{pt: 'ww'})
-where x.begin < w.begin
-match (n)-[:rel{rel: 'su'}]->()<-[:rel{rel: 'obj1'}]-(n1)
-return n
-```
-
-Het gebruik van de techniek om een patroon onder te verdelen in meerdere matches maakt de queries soms makkelijker te begrijpen.
 
 
 ### optional match
