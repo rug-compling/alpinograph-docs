@@ -286,7 +286,8 @@ Je kunt dus ook eisen aan de relevante meta-data stellen. Of delen van de meta-d
 ```text
 match (n:nw{_vorfeld: true, _np: true})<-[r:rel{rel:'su'}]-(),
       (m:meta{name:'country', sentid: n.sentid})
-return m.value, count(m.value)```
+return m.value, count(m.value)
+```
 
 En ook meta-data combineren:
 
