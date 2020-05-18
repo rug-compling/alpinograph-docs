@@ -138,7 +138,7 @@ order by aantal desc
 
 ## Matches binnen matches
 
-Je kunt queries soms opbouwen door een eerste selectie te maken en dan binnen die selectie een verdere selectie uit te voeren. In het volgende voorbeelden zoeken we naar een conjunctie met twee coördinatoren (*noch .. noch..*, *zowel .. als ..*). De eerste match zorgt voor een coördinatie die twee coördinatoren bevat. De tweede match eist dat de eerste coördinator vooraf gaat aan de tweede - op die manier krijg je elke conjunctie maar één keer, en de betreffende lemma's in de verwachte volgorde:
+Je kunt queries soms opbouwen door een eerste selectie te maken en dan binnen die selectie een verdere selectie uit te voeren. In het volgende voorbeeld zoeken we naar een conjunctie met twee coördinatoren (*noch .. noch..*, *zowel .. als ..*). De eerste match zorgt voor een coördinatie die twee coördinatoren bevat. De tweede match eist dat de eerste coördinator vooraf gaat aan de tweede - op die manier krijg je elke conjunctie maar één keer, en de betreffende lemma's in de verwachte volgorde:
 
 ```text
 match (v1:word) <-[:rel{rel:'crd'}]-(:node{cat: 'conj'})-[:rel{rel: 'crd'}]->(v2:word)
