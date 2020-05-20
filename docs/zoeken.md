@@ -159,12 +159,10 @@ return p
 TODO: liever hier een voorbeeld waar dit ook zinvol is.
 
 
-## Flexibel zoeken met SQL 
+## Flexibel zoeken met Cypher
 
 Hierboven waren de voorbeelden steeds van het type: match een bepaald patroon, en geef een of meerdere delen van de match terug als resultaat. Door gebruik te maken van SQL is hier veel meer mogelijk. Hieronder tonen we een paar veelgebruikte technieken, zonder de ambitie een tutorial voor SQL te verzorgen.
 
-TODO: het meeste wat hieronder beschreven wordt hoort nog bij cypher,
-niet bij sql.
 
 ### meerdere patronen
 
@@ -438,7 +436,7 @@ return n
 Een typisch geval is het gebruik van dit mechanisme met het interval `*0..1`. In het volgende voorbeeld worden knopen geïdentificeerd die als subject optreden. In geval de knoop een lexicaal hoofd heeft, wordt dat hoofd als resultaat gevonden. Als de knoop zelf lexicaal is (en dus ook geen hoofd kan hebben), wordt de knoop zelf teruggegeven. Subjecten die niet lexicaal zijn, maar geen hoofd hebben (conjuncties bijvoorbeeld) worden dus overgeslagen.
 
 ```text
-match ()-[:rel{rel: 'su'}]->(n)-[:rel*0..1{rel: 'hd'}]->(:word)
+match ()-[:rel{rel: 'su'}]->()-[:rel*0..1{rel: 'hd'}]->(n:word)
 return n
 ```
 
