@@ -156,13 +156,11 @@ Het gebruik van de techniek om een patroon onder te verdelen in meerdere matches
 
 ## Tellen van reeksen
 
-TODO: gebruik `with` in plaat van `select`
-
 Stap 1: zoek iets
 
 ```text
 match (n:node{_deste: true})
-return distinct n.sentid as sid, n.id
+return distinct n.sentid as sid, n.id as id
 order by sid, id
 ```
 
@@ -171,68 +169,40 @@ Stap 2: zoek de pt van woorden onder iets
 <pre><code class="text">
 match (n:node{_deste: true})
 <span class="prediff">match (n)-[:rel*]->(w:word)</span>
-return distinct n.sentid as sid, n.id<span class="prediff">, w.end as positie, w.pt as pt</span>
+return distinct n.sentid as sid, n.id as id<span class="prediff">, w.end as positie, w.pt as pt</span>
 order by sid, id<span class="prediff">, positie</span>
 </code></pre>
 
-Stap 3: voeg de pt van woorden per iets samen
+Stap 3: voeg de pt van woorden per iets samen, de oude `return` wordt `with`
 
 <pre><code class="text">
-<span class="prediff">select sid, id, json_agg(pt) as pt_list
-from (</span>
-  match (n:node{_deste: true})
-  match (n)-[:rel*]->(w:word)
-  return distinct n.sentid as sid, n.id, w.end as positie, w.pt as pt
-  order by sid, id, positie
-<span class="prediff">) as foo
-group by sid, id
-order by sid, id</span>
+match (n:node{_deste: true})
+match (n)-[:rel*]->(w:word)
+<span class="prediff">with</span> distinct n.sentid as sid, n.id as id, w.end as positie, w.pt as pt
+order by sid, id, positie
+<span class="prediff">return sid, id, collect(pt) as pt_list</span>
 </code></pre>
 
-Stap 3a: maak het wat leesbaarder
+
+Stap 3a: variant om te kijken of de woorden wel direct achter elkaar staan
 
 <pre><code class="text">
-select sid, id, <span class="prediff">string_agg(trim(both '"' from pt::text), ' ')</span> as pt_list
-from (
-  match (n:node{_deste: true})
-  match (n)-[:rel*]->(w:word)
-  return distinct n.sentid as sid, n.id, w.end as positie, w.pt as pt
-  order by sid, id, positie
-) as foo
-group by sid, id
-order by sid, id
-</code></pre>
-
-Stap 3b: variant om te kijken of de woorden wel direct achter elkaar staan
-
-<pre><code class="text">
-select sid, id, string_agg(trim(both '"' from pt::text), ' ') as pt_list
-from (
-  match (n:node{_deste: true})
-  match (n)-[:rel*]->(w:word)
-  return distinct n.sentid as sid, n.id, w.end as positie, <span class="prediff">w.end + ':' + w.pt</span> as pt
-  order by sid, id, positie
-) as foo
-group by sid, id
-order by sid, id
+match (n:node{_deste: true})
+match (n)-[:rel*]->(w:word)
+with distinct n.sentid as sid, n.id as id, w.end as positie, <span class="prediff">w.end + ':' +</span> w.pt as pt
+order by sid, id, positie
+return sid, id, collect(pt) as pt_list
 </code></pre>
 
 Stap 4: tel de frequenties van pt van woorden onder iets
 
 <pre><code class="text">
-<span class="prediff">select count(pt_list) as aantal, pt_list
-from (</span>
-  select string_agg(trim(both '"' from pt::text), ' ') as pt_list
-  from (
-    match (n:node{_deste: true})
-    match (n)-[:rel*]->(w:word)
-    return distinct n.sentid as sid, n.id as id, w.end as positie, w.pt as pt
-    order by sid, id, positie
-  ) as foo
-  group by sid, id
-<span class="prediff">) as bar
-group by pt_list
-order by aantal desc, pt_list</span>
+match (n:node{_deste: true})
+match (n)-[:rel*]->(w:word)
+with distinct n.sentid as sid, n.id as id, w.end as positie, w.pt as pt
+order by sid, id, positie
+<span class="prediff">with</span> sid <span class="prediff">as sid</span>, id <span class="prediff">as id</span>, collect(pt) as pt_list
+<span class="prediff">return count(pt_list) as aantal, pt_list</span>
 </code></pre>
 
 ## Meta-data
