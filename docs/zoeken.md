@@ -351,7 +351,8 @@ return n.lemma
 
 ### TODO 
 
-- where exists, where not exists → niet met paden van variabele lengte
+- `where exists`, `where not exists` → niet met paden van variabele lengte
+- `select`, waar het niet anders kan
 
 ## Resultaten van een query in AlpinoGraph
 

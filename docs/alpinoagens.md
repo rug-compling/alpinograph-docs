@@ -282,6 +282,7 @@ attribuut   | type   | opmerkingen
 attribuut   | type   | opmerkingen
 ------------|--------|------------
 `rel`       | string |
+`primary`  | bool   | `false` als `id` aanwezig, anders `true` --- TODO: uitleg
 `id`        | int    | als de link oorspronkelijk naar een lege indexnode ging: id van die node
 
 **`:pair`**
