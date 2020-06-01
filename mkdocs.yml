@@ -12,6 +12,7 @@ markdown_extensions:
 lang: ['nl']
 
 nav:
+    - AlpinoGraph: 'https://urd2.let.rug.nl/~kleiweg/alpinograph/'
     - Inleiding: 'index.md'
     - 'Overzicht van AlpinoGraph': 'interface.md'
     - 'Zoeken met AlpinoGraph': 'zoeken.md'
