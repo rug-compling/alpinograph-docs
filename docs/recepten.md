@@ -75,7 +75,7 @@ Een lastiger vraagstuk is een query waarbij je eisen wilt stellen aan de attribu
 
 ```text
 match (w:word)<-[:rel*0..1{rel: 'mwp'}]-(n:nw)<-[r:rel]-()
-where (      ( w.postag = 'SPEC(deeleigen)' or w.ntype = 'eigen') 
+where (      ( w.postag = 'SPEC(deeleigen)' or w.ntype = 'eigen')
          and ( n.cat='mwu'or w.id = n.id )
          and r.rel != 'mwp'
       )
@@ -138,7 +138,7 @@ order by aantal desc
 
 ## Matches binnen matches
 
-Je kunt queries soms opbouwen door een eerste selectie te maken en dan binnen die selectie een verdere selectie uit te voeren. 
+Je kunt queries soms opbouwen door een eerste selectie te maken en dan binnen die selectie een verdere selectie uit te voeren.
 
 Stel dat we op zoek willen naar cross-serial verb clusters. Eén aanpak bestaat eruit om eerst de werkwoordclusters te identificeren, en vervolgens daarbinnen die gevallen te selecteren waarbij een werkwoord uit het cluster een lijdend voorwerp selecteert dat ook fungeert als het onderwerp van het VC-complement:
 
@@ -209,7 +209,7 @@ order by sid, id, positie
 
 ### Overzicht van de meta-data
 
-Als er voor een corpus meta-data beschikbaar is, dan zijn er knopen met als type :meta. De aard van de meta-data is verschillend per corpus, en daarom ook de attributen die voor :meta beschikbaar zijn. Maar er is altijd het attribuut `sentid` en de knopen van de syntactische analyse hebben ook allemaal dat `sentid` attribuut met dezelfde waarde. Je kunt dus met een where-clause de bijbehorende meta-data terugvinden. 
+Als er voor een corpus meta-data beschikbaar is, dan zijn er knopen met als type :meta. De aard van de meta-data is verschillend per corpus, en daarom ook de attributen die voor :meta beschikbaar zijn. Maar er is altijd het attribuut `sentid` en de knopen van de syntactische analyse hebben ook allemaal dat `sentid` attribuut met dezelfde waarde. Je kunt dus met een where-clause de bijbehorende meta-data terugvinden.
 
 De volgende query toont voor een corpus welk type meta-data beschikbaar is:
 
@@ -327,4 +327,58 @@ match (v1:word) <-[:rel{rel:'crd'}]-(:node{cat: 'conj'})-[:rel{rel: 'crd'}]->(v2
 where v1.end < v2.end
 return v1.lemma, v2.lemma, count(v1.lemma + ' ' + v2.lemma) as aantal
 order by aantal desc
+```
+
+### vorfeld
+
+```text
+select sentid, id
+from (
+    match (n:node{cat:'smain'}) -[:rel{rel:'hd'}]-> (fin:word)
+    match (n) -[:rel*{primary:true}]-> (topic:nw) -[rel:rel*0..1]-> (htopic:nw)
+    where (( not htopic.lemma is null)
+              and htopic.begin < fin.begin
+              and   (  length(rel) = 0
+                    or rel[0].rel in ['hd','cmp','crd']
+                    )
+           ) or
+           (  topic.begin < fin.begin
+              and
+              topic.end <= fin.begin
+          )
+    return topic.sentid as sentid, topic.id as id, n.id as nid
+    except
+    match (n:node{cat:'smain'}) -[:rel{rel:'hd'}]-> (fin:word)
+    match (n) -[:rel*{primary:true}]-> (topic:nw) -[rel:rel*0..1]-> (htopic:nw)
+    where (( not htopic.lemma is null)
+              and htopic.begin < fin.begin
+              and   (  length(rel) = 0
+                    or rel[0].rel in ['hd','cmp','crd']
+                    )
+           ) or
+           (  topic.begin < fin.begin
+              and
+              topic.end <= fin.begin
+          )
+    match (topic) <-[:rel*1..]- (nt:node)  <-[:rel*]- (n)
+    match (nt) -[relt:rel*0..1]-> (hnt:nw)
+    where (( not hnt.lemma is null)
+              and hnt.begin < fin.begin
+              and   (  length(relt) = 0
+                    or relt[0].rel in ['hd','cmp','crd']
+                    )
+           ) or
+           (  nt.begin < fin.begin
+              and
+              nt.end <= fin.begin
+          )
+    return topic.sentid as sentid, topic.id as id, n.id as nid
+) as foo
+```
+
+Omdat bovenstaande nogal inefficiënt is kun je ook dit doen:
+
+```text
+match (n:nw{_vorfeld: true})
+return n
 ```
