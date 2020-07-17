@@ -83,6 +83,12 @@ zijn die voor `(:node)` of `(:word)` leeg.
 
 -- documentatie over het corpus
 (:doc)
+
+-- tellingen van attributen en metadata
+(:features)
+
+-- voor intern gebruik
+(:data)
 ```
 
 ## Attributen van items
@@ -274,6 +280,25 @@ attribuut   | type   | opmerkingen
 ------------|--------|------------
 `alud_version` | string | versie van de automatische afleiding van Universal Dependencies
 
+
+**`:features`**
+
+attribuut   | type   | opmerkingen
+------------|--------|------------
+`v`         | string | `meta`, `node`, `word`, `rel`
+`name`      | string |
+`count`     | int    |
+
+**`:data`**
+
+attribuut   | type   | opmerkingen
+------------|--------|------------
+`class`     | string | `node`, `rel`
+`name`      | string | naam in AlpinoGraph: `x_`..., met `[^a-zA-Z0-9]+` -> `_`
+`type`      | string | `text`, `int`, `float`, `bool`, `date`, `datetime`
+`oriname`   | string | oorspronkelijke naam in Alpino
+
+Voor intern gebruik, voor het reconstrueren van alpino_ds met door gebruiker toegevoegde attributen.
 
 ## Attributen van relaties
 
