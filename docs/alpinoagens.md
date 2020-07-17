@@ -294,7 +294,7 @@ attribuut   | type   | opmerkingen
 attribuut   | type   | opmerkingen
 ------------|--------|------------
 `class`     | string | `node`, `rel`
-`name`      | string | naam in AlpinoGraph: `x_`..., met `[^a-zA-Z0-9]+` -> `_`
+`name`      | string | naam in AlpinoGraph: `x_`..., met `[^a-zA-Z0-9]+` → `_`
 `type`      | string | `text`, `int`, `float`, `bool`, `date`, `datetime`
 `oriname`   | string | oorspronkelijke naam in Alpino
 
