@@ -2,26 +2,26 @@
 
 Een `<node>` in alpino\_ds is een `(:node)` of een `(:word)` in AgensGraph
 
-`:nw` is een alias voor `:node` of `:word`
+`(:nw)` is een alias voor `(:node)` of `(:word)`
 
 Dit in alpino\_ds:
 
 ```xml
-<node id="11">
-  <node id="12" rel="hd" />
+<node id="11" ... >
+  <node id="12" rel="hd" ... />
 </node>
 ```
 
 ... is dit in AgensGraph:
 
 ```text
-(:node{id: '11'})-[:rel{rel: 'hd'}]->(:node{id: '12'})
+(:node{id: '11', ... })-[:rel{rel: 'hd'}]->(:node{id: '12', ... })
 ```
 
-..of, als de binnenste node een woord is:
+... of, als de binnenste node een woord is:
 
 ```text
-(:node{id: '11'})-[:rel{rel: 'hd'}]->(:word{id: '12'})
+(:node{id: '11', ... })-[:rel{rel: 'hd'}]->(:word{id: '12', ... })
 ```
 
 
@@ -93,7 +93,7 @@ zijn die voor `(:node)` of `(:word)` leeg.
 
 ## Attributen van items
 
-**`:sentence`**
+### `(:sentence)`
 
 attribuut       | type   | opmerkingen
 ----------------|--------|------------
@@ -108,7 +108,7 @@ attribuut       | type   | opmerkingen
 `conllu_status` | string | `OK`, `error`
 `conllu_error`  | string |  als `conllu_status` != `OK`
 
-**`:node`**
+### `(:node)`
 
 attribuut | type   | opmerkingen
 ----------|--------|------------
@@ -116,13 +116,13 @@ attribuut | type   | opmerkingen
 `id`      | int    |
 `begin`   | int    |
 `end`     | int    |
-`_clause`  | bool   | node is een smain, sv1 of ssub
-`_clause_lvl` | int | bovenste _clause is niveau 1
-`_deste`   | bool   | zie beneden
-`_n_words` | int    | aantal tokens dat onder deze node zit
-`_np`      | bool   | node is een NP, zie beneden
-`_vorfeld` | bool   | node is een vorfeld, zie beneden
 ...       | string | alle overige attributen uit de Alpino-node behalve `rel` en `index`
+`_clause`  | bool   | zie [hier](../attributen/#_clause)
+`_clause_lvl` | int | zie [hier](../attributen/#_clause_lvl)
+`_deste`   | bool   | zie [hier](../attributen/#_deste)
+`_n_words` | int    | zie [hier](../attributen/#_n_words)
+`_np`      | bool   | zie [hier](../attributen/#_np)
+`_vorfeld` | bool   | zie [hier](../attributen/#_vorfeld)
 
 voor `cat` == `mwu` ook:
 
@@ -132,115 +132,7 @@ attribuut   | type   | opmerkingen
 `word`      | string |
 `lemma`     | string |
 
-Het attibuut `_deste` is `true` voor nodes die overeenkomen met deze xpath-expressie:
-
-TODO: in dit geval **nadat** indexnodes worden geëxpandeerd (klopt dat?)
-
-
-```xpath
-//node[ node[ @graad="comp"]
-        and
-        node[ @lemma=("hoe", "deste")
-              or
-              ( node[@lemma="des"]
-                and
-                node[@lemma="te"]
-              )
-        ]
-]
-```
-
-Het attribuut `_np` is `true` voor nodes en woorden die overeenkomen met deze xpath-expressie:
-
-TODO: een conj van een conj (etc) van een np is ook een np
-
-TODO: in dit geval **nadat** indexnodes worden geëxpandeerd (klopt dat?)
-
-
-```xpath
-//node[( ( @cat="np"
-           or
-           ( @lcat="np"
-             and
-             not(@rel=("hd","mwp"))
-           )
-           or
-           ( @pt="n"
-             and not(@rel="hd")
-           )
-           or
-           ( @pt="vnw"
-             and
-             @pdtype="pron"
-             and
-             not(@rel="hd")
-           )
-           or
-           ( @cat="mwu"
-             and
-             not(@rel="hd")
-             and
-             @rel=("su","obj1","obj2","app")
-           )
-         )
-         or
-         ( @cat="conj"
-           and node[( @cat="np"
-                      or
-                      ( @lcat="np"
-                        and
-                        not(@rel=("hd","mwp"))
-                      )
-                      or
-                      ( @pt="n"
-                        and not(@rel="hd")
-                      )
-                      or
-                      ( @pt="vnw"
-                        and
-                        @pdtype="pron"
-                        and
-                        not(@rel="hd")
-                      )
-                      or
-                      ( @cat="mwu"
-                        and
-                        not(@rel="hd")
-                        and
-                        @rel=("su","obj1","obj2","app")
-                      )
-                    )]
-         )
-       )]
-```
-
-Het attribuut `_vorfeld` is `true` voor nodes en woorden die overeenkomen met
-deze xpath-expressie:
-
-TODO: in dit geval **voordat** indexnodes worden geëxpandeerd
-
-```xpath
-//node[( (  ancestor::node[@cat="smain"]/node[@rel="hd"]/number(@begin) > node[@rel=("hd","cmp","mwp","crd","rhd","whd","nucl","dp")]/number(@begin)
-            or
-            (  ancestor::node[@cat="smain"]/node[@rel="hd"]/number(@begin) > number(@begin)
-               and
-               not(node[@rel=("hd","cmp","mwp","crd","rhd","whd","nucl","dp")])
-            )
-         )
-         and
-         not(parent::node[(  ancestor::node[@cat="smain"]/node[@rel="hd"]/number(@begin) > node[@rel=("hd","cmp","mwp","crd","rhd","whd","nucl","dp")]/number(@begin)
-                             or
-                             (  ancestor::node[@cat="smain"]/node[@rel="hd"]/number(@begin) > number(@begin)
-                                and
-                                not(node[@rel=("hd","cmp","mwp","crd","rhd","whd","nucl","dp")])
-                             )
-                          )])
-         and
-         (@cat or @pt)
-       )]
-```
-
-**`:word`**
+### `(:word)`
 
 attribuut   | type   | opmerkingen
 ------------|--------|------------
@@ -250,13 +142,13 @@ attribuut   | type   | opmerkingen
 `begin`     | int    |
 `end`       | int    |
 `getal_n`   | string | in plaats van `getal-n`
-`_n_words`  | int    | `1` --- aantal tokens dat onder deze node zit
-`_np`       | bool   | word is een NP
-`_vorfeld`  | bool   | word is een vorfeld
 ...         | string | alle overige attributen uit de Alpino-node behalve `rel` en `index`
 `upos`      | string | het veld `UPOS` van CoNLL-U
 `nospaceafter` | bool | `true` als CoNLL-U het extra attribuut `SpaceAfter=No` heeft
 ...         | string | alle features uit het veld `FEATS` van CoNLL-U, met hoofdletters
+`_n_words` | int    | zie [hier](../attributen/#_n_words)
+`_np`      | bool   | zie [hier](../attributen/#_np)
+`_vorfeld` | bool   | zie [hier](../attributen/#_n_vorfeld)
 
 Bij het zoeken naar CoNLL-U-features dubbele aanhalingstekens
 gebruiken, vanwege de hoofdletters:
@@ -265,7 +157,7 @@ gebruiken, vanwege de hoofdletters:
 match (w:word{"Gender": 'Com'}) return w;
 ```
 
-**`:meta`**
+### `(:meta)`
 
 attribuut   | type   | opmerkingen
 ------------|--------|------------
@@ -274,14 +166,14 @@ attribuut   | type   | opmerkingen
 `name`      | string |
 `value`     | string/number | number voor `int` en `float`
 
-**`:doc`**
+### `(:doc)`
 
 attribuut   | type   | opmerkingen
 ------------|--------|------------
 `alud_version` | string | versie van de automatische afleiding van Universal Dependencies
 
 
-**`:features`**
+### `(:features)`
 
 attribuut   | type   | opmerkingen
 ------------|--------|------------
@@ -289,7 +181,7 @@ attribuut   | type   | opmerkingen
 `name`      | string |
 `count`     | int    |
 
-**`:data`**
+### `(:data)`
 
 attribuut   | type   | opmerkingen
 ------------|--------|------------
@@ -302,7 +194,7 @@ Voor intern gebruik, voor het reconstrueren van alpino_ds met door gebruiker toe
 
 ## Attributen van relaties
 
-**`:rel`**
+### `[:rel]`
 
 attribuut   | type   | opmerkingen
 ------------|--------|------------
@@ -310,13 +202,13 @@ attribuut   | type   | opmerkingen
 `primary`  | bool   | `false` als `id` aanwezig, anders `true` --- TODO: uitleg
 `id`        | int    | als de link oorspronkelijk naar een lege indexnode ging: id van die node
 
-**`:pair`**
+### `[:pair]`
 
 attribuut   | type   | opmerkingen
 ------------|--------|------------
 `rel`       | string |
 
-**`:ud`**
+### `[:ud]`
 
 attribuut   | type   | opmerkingen
 ------------|--------|------------
@@ -324,7 +216,7 @@ attribuut   | type   | opmerkingen
 `main`      | string |
 `aux`       | string |
 
-**`:eud`**
+### `[:eud]`
 
 attribuut   | type   | opmerkingen
 ------------|--------|------------
@@ -334,7 +226,7 @@ attribuut   | type   | opmerkingen
 `from`      | string | indien niet gelijk aan waarde van `end`
 `to`        | string | indien niet gelijk aan waarde van `end`
 
-**`:next`**
+### `[:next]`
 
 geen attributen
 
