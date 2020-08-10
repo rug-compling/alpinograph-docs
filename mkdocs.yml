@@ -20,4 +20,5 @@ nav:
     - 'Alpino in AgensGraph': 'alpinoagens.md'
     - 'Hulpattributen': attributen.md
     - 'Cypher in AgensGraph': 'agensgraph.md'
+    - 'Corpora': 'corpora.md'
     - 'Links': 'links.md'
