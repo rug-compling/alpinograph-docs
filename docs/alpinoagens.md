@@ -49,7 +49,7 @@ zijn die voor `(:node)` of `(:word)` leeg.
 
 ```text
 -- Alpino-relaties
-(:sentence)-[:rel{rel: 'top'}->(:node{cat: 'top'})
+(:sentence)-[:rel{rel: 'top'}]->(:node{cat: 'top'})
 (:node)-[:rel]->(:node)
 (:node)-[:rel]->(:word)
 (:node)-[:rel]->(:nw)           -- link naar :node of :word
