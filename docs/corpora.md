@@ -38,7 +38,7 @@ Laatste versie beschikbaar via: [ivdnt.org/downloads/tstc-basilex-corpus](https:
  * Verwerking: automatisch
  * Metadata: `date`, `gender`, `grade`, `location`, `name`, `type`
 
-BasiScript is een corpus met 9 miljoen woorden geschreven tekst geproduceerd door leerlingen van de Nederlandse basisschool. In PaQu is het “opstellen”-deel opgenomen.
+BasiScript is een corpus met 9 miljoen woorden geschreven tekst geproduceerd door leerlingen van de Nederlandse basisschool. In AlpinoGraph is het “opstellen”-deel opgenomen.
 
 Het corpus bevat longitudinale data verzameld over drie achtereenvolgende jaren (najaar 2012 – voorjaar 2015). Het BasiScript-corpus is ontworpen om zowel de educatieve diversiteit (type school) als de geografische regio’s van Nederland te kunnen vergelijken.
 
@@ -52,7 +52,7 @@ Laatste versie beschikbaar via: [ivdnt.org/taalmaterialen/1953-tstc-basiscript-c
  * Verwerking: automatisch
  * Metadata: `age`, `code`, `months`, `paqu.path1`, `paqu.path2`, `paqu.path3`, `role`, `sex`
 
-Childes is een corpus van gesproken taal van jonge kinderen en hun gesprekspartners. De versie die in PaQu is opgenomen is op 18 november 2015 gedownload van [childes.psy.cmu.edu/data-xml/Germanic/Dutch/](http://childes.psy.cmu.edu/data-xml/Germanic/Dutch/).
+Childes is een corpus van gesproken taal van jonge kinderen en hun gesprekspartners. De versie die in AlpinoGraph is opgenomen is op 18 november 2015 gedownload van [childes.psy.cmu.edu/data-xml/Germanic/Dutch/](http://childes.psy.cmu.edu/data-xml/Germanic/Dutch/).
 
 De samenstelling van het corpus is als volgt.
 
@@ -116,7 +116,7 @@ Model*. [Arxiv 1912.09582](https://arxiv.org/abs/1912.09582).
 Het Eindhoven-corpus is al begin jaren zeventig verzameld. Jarenlang
 was de copyright status van dit corpus onduidelijk, maar inmiddels is
 en versie van het corpus via het Instituut voor de Nederlandse Taal te
-bekomen. De versie in PaQu gaat terug op een versie waarvan de
+bekomen. De versie in AlpinoGraph gaat terug op een versie waarvan de
 preciese geschiedenis in nevelen is gehuld.
 
 Laatste versie beschikbaar via: [ivdnt.org/downloads/taalmaterialen/tstc-eindhoven-corpus](https://ivdnt.org/downloads/taalmaterialen/tstc-eindhoven-corpus)
