@@ -317,7 +317,7 @@ return w1.lemma, count(w1.lemma) as aantal
 order by aantal desc
 ```
 
-### paren van coördinatoren
+### Paren van coördinatoren
 
 In het volgende voorbeeld zoeken we naar een conjunctie met twee coördinatoren (*noch .. noch..*, *zowel .. als ..*). De eerste match zorgt voor een coördinatie die twee coördinatoren bevat. De tweede match eist dat de eerste coördinator vooraf gaat aan de tweede - op die manier krijg je elke conjunctie maar één keer, en de betreffende lemma's in de verwachte volgorde:
 
@@ -381,4 +381,23 @@ Omdat bovenstaande nogal inefficiënt is kun je ook dit doen:
 ```text
 match (n:nw{_vorfeld: true})
 return n
+```
+
+### Verwante lemma's
+
+Je zoekt vaker naar een bepaald lemma dan naar een bepaald woord,
+omdat je constructies met alle woordvarianten van dat lemma wilt
+vinden. Maar het kan zijn dat er meerdere varianten van aan elkaar
+verwante lemma's zijn, en die kun je vaak vinden via overeenkomende
+woorden.
+
+Onderstaand voorbeeld geeft een aardig resultaat met het corpus
+*BasiLex 1.0*
+
+```text
+match (w1:word{lemma: 'fiets'})
+with distinct w1.word as word
+match (w:word{word: word})
+return distinct w.lemma, w.word, w.root, w.pt
+order by lemma, root, pt, word
 ```
