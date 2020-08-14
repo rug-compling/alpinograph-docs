@@ -193,8 +193,7 @@ return sid, id, collect(pt) as pt_list
 
 Stap 4: tel de frequenties van pt van woorden onder iets
 
-<pre><code class="text">
-match (n:node{_deste: true})
+<pre><code class="text">match (n:node{_deste: true})
 match (n)-[:rel*]->(w:word)
 with distinct n.sentid as sid, n.id as id, w.end as positie, w.pt as pt
 order by sid, id, positie
