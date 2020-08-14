@@ -24,7 +24,14 @@ voorbeelden van verschillende soorten zoekopdrachten.
 In [AlpinoGraph in AgensGraph](../alpinoagens/) is gedocumenteerd hoe
 het XML-formaat van Alpino is vertaald naar AgensGraph.
 
+In [Hulpattributen](../attributen/) vind je informatie over de
+attributen die niet voorkomen in Alpino, maar door AlpinoGraph zijn
+toegevoegd om het zoeken krachtiger te maken.
+
 In [Cypher in AgensGraph](../agensgraph/) lees je hoe Cypher zoals dat
 in AgensGraph is geïmplementeerd afwijkt van de standaard openCypher.
+
+In [Corpora](../corpora/) vind je informatie over alle corpora die
+beschikbaar zijn in de officiële versie van AlpinoGraph.
 
 In [Links](../links/) vind je nuttige externe informatie.
