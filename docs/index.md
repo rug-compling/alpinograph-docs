@@ -1,13 +1,14 @@
 
- * Ga naar [AlpinoGraph](https://urd2.let.rug.nl/~kleiweg/alpinograph/)
+[ Ga naar AlpinoGraph](https://urd2.let.rug.nl/~kleiweg/alpinograph/){: .md-button }
 
 # Inleiding
 
 AlpinoGraph is een tool om syntactisch geannoteerde corpora te doorzoeken. De tool maakt gebruik van [AgensGraph](https://bitnine.net/agensgraph/). AgensGraph combineert databasetechnologie ([PostgreSQL](https://www.postgresql.org/)) en [Cypher](https://en.wikipedia.org/wiki/Cypher_(query_language)), de standaard zoektaal voor grafen. De zoek-queries die je in AlpinoGraph kunt gebruiken zijn daarom een mix van SQL en Cypher. Daar voegt AlpinoGraph nog enkele extra uitbreidingen aan toe, zoals een eenvoudig maar handig systeem van macro's, en visualisatie van de resultaten.
 
-Als je Docker hebt kun je AlpinoGraph lokaal draaien, zodat je zelf
-corpora toe kunt voegen.
-Zie [AlpinoGraph in Docker](https://github.com/rug-compling/alpinograph-docker).
+!!! note
+    Als je Docker hebt kun je AlpinoGraph lokaal draaien, zodat je zelf
+    corpora toe kunt voegen.
+    Zie [AlpinoGraph in Docker](https://github.com/rug-compling/alpinograph-docker).
 
 ## Overzicht van documentatie
 

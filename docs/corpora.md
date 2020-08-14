@@ -3,13 +3,15 @@
 Een overzicht van corpora die beschikbaar zijn in de officiële versie
 van AlpinoGraph.
 
-Opmerking: de afleiding van Universal Dependencies is ook bij
-handmatig verwerkte corpora automatisch gedaan.
+!!! warning "Let op"
+    De afleiding van Universal Dependencies is ook bij
+    handmatig verwerkte corpora automatisch gedaan.
 
 ## Alpino Treebank
 
- * Aantal zinnen:  7.136
- * Verwerking: handmatig
+!!! info
+    * Aantal zinnen:  7.136
+    * Verwerking: handmatig
 
 Dit bevat de handmatig geannoteerde zinnen die gedistribueerd worden
 als onderdeel van het Alpino systeem. De zinnen bestaan uit het
@@ -24,9 +26,10 @@ Laatste versie beschikbaar via: [github.com/rug-compling/Alpino](https://github.
 
 ## BasiLex 1.0
 
- * Aantal zinnen: 1.635.680
- * Verwerking: automatisch
- * Metadata: `grade`, `level`, `level_determination`, `maintype`, `prod_date`, `type`
+!!! info
+    * Aantal zinnen: 1.635.680
+    * Verwerking: automatisch
+    * Metadata: `grade`, `level`, `level_determination`, `maintype`, `prod_date`, `type`
 
 Het BasiLex-corpus is een geannoteerde verzameling van teksten geschreven voor kinderen in de basisschoolleeftijd. Het corpus bevat 13,5 miljoen tokens, waarvan 11,5 miljoen woorden. De tokens komen voor ongeveer 40% uit educatieve materialen, 40% uit kinderliteratuur en 20% uit media.
 
