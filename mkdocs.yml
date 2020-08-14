@@ -1,13 +1,31 @@
 site_name: AlpinoGraph
 
 theme:
-    name: 'material'
+    name: material
+    language: nl
+    palette:
+        primary: green
+    favicon: ../favicon.ico
+
+extra_css:
+    - css/extra.css
 
 markdown_extensions:
     - admonition
     - attr_list
+    - toc:
+        permalink: true
+        toc_depth: 4
 
-lang: 'nl'
+plugins:
+    - search:
+        lang: du
+
+extra:
+    social:
+        - icon: fontawesome/brands/github
+          link: https://rug-compling.github.io/
+          name: RuG-CompLing on GitHub
 
 nav:
     - 'Inleiding': 'index.md'
