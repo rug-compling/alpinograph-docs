@@ -10,8 +10,8 @@ van AlpinoGraph.
 ## Alpino Treebank
 
 !!! info
-    * Aantal zinnen:  7.136
-    * Verwerking: handmatig
+    Aantal zinnen:  7.136  
+    Verwerking: handmatig
 
 Dit bevat de handmatig geannoteerde zinnen die gedistribueerd worden
 als onderdeel van het Alpino systeem. De zinnen bestaan uit het
