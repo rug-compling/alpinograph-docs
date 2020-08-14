@@ -166,8 +166,7 @@ order by sid, id
 
 Stap 2: zoek de pt van woorden onder iets
 
-<pre><code class="text">
-match (n:node{_deste: true})
+<pre><code class="text">match (n:node{_deste: true})
 <span class="prediff">match (n)-[:rel*]->(w:word)</span>
 return distinct n.sentid as sid, n.id as id<span class="prediff">, w.end as positie, w.pt as pt</span>
 order by sid, id<span class="prediff">, positie</span>
@@ -175,8 +174,7 @@ order by sid, id<span class="prediff">, positie</span>
 
 Stap 3: voeg de pt van woorden per iets samen, de oude `return` wordt `with`
 
-<pre><code class="text">
-match (n:node{_deste: true})
+<pre><code class="text">match (n:node{_deste: true})
 match (n)-[:rel*]->(w:word)
 <span class="prediff">with</span> distinct n.sentid as sid, n.id as id, w.end as positie, w.pt as pt
 order by sid, id, positie
@@ -186,8 +184,7 @@ order by sid, id, positie
 
 Stap 3a: variant om te kijken of de woorden wel direct achter elkaar staan
 
-<pre><code class="text">
-match (n:node{_deste: true})
+<pre><code class="text">match (n:node{_deste: true})
 match (n)-[:rel*]->(w:word)
 with distinct n.sentid as sid, n.id as id, w.end as positie, <span class="prediff">w.end + ':' +</span> w.pt as pt
 order by sid, id, positie
