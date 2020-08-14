@@ -5,7 +5,7 @@ theme:
     language: nl
     palette:
         primary: green
-    favicon: ../favicon.ico
+    favicon: favicon.ico
 
 extra_css:
     - css/extra.css
