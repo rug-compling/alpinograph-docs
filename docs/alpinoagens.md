@@ -85,7 +85,7 @@ zijn die voor `(:node)` of `(:word)` leeg.
 (:doc)
 
 -- tellingen van attributen en metadata
-(:features)
+(:feature)
 
 -- voor intern gebruik
 (:data)
@@ -173,7 +173,7 @@ attribuut   | type   | opmerkingen
 `alud_version` | string | versie van de automatische afleiding van Universal Dependencies
 
 
-### `(:features)`
+### `(:feature)`
 
 attribuut   | type   | opmerkingen
 ------------|--------|------------
