@@ -10,7 +10,7 @@ van AlpinoGraph.
 ## Alpino Treebank
 
 !!! info
-    Aantal zinnen:  7.136  
+    Aantal zinnen:  7.136 <br>
     Verwerking: handmatig
 
 Dit bevat de handmatig geannoteerde zinnen die gedistribueerd worden
@@ -27,8 +27,8 @@ Laatste versie beschikbaar via: [github.com/rug-compling/Alpino](https://github.
 ## BasiLex 1.0
 
 !!! info
-    Aantal zinnen: 1.635.680  
-    Verwerking: automatisch  
+    Aantal zinnen: 1.635.680 <br>
+    Verwerking: automatisch <br>
     Metadata: `grade`, `level`, `level_determination`, `maintype`, `prod_date`, `type`
 
 Het BasiLex-corpus is een geannoteerde verzameling van teksten geschreven voor kinderen in de basisschoolleeftijd. Het corpus bevat 13,5 miljoen tokens, waarvan 11,5 miljoen woorden. De tokens komen voor ongeveer 40% uit educatieve materialen, 40% uit kinderliteratuur en 20% uit media.
@@ -38,8 +38,8 @@ Laatste versie beschikbaar via: [ivdnt.org/downloads/tstc-basilex-corpus](https:
 ## BasiScript 1.0: Opstellen
 
 !!! info
-    Aantal zinnen: 782.179  
-    Verwerking: automatisch  
+    Aantal zinnen: 782.179 <br>
+    Verwerking: automatisch <br>
     Metadata: `date`, `gender`, `grade`, `location`, `name`, `type`
 
 BasiScript is een corpus met 9 miljoen woorden geschreven tekst geproduceerd door leerlingen van de Nederlandse basisschool. In AlpinoGraph is het “opstellen”-deel opgenomen.
@@ -53,8 +53,8 @@ Laatste versie beschikbaar via: [ivdnt.org/taalmaterialen/1953-tstc-basiscript-c
 ## Childes Dutch
 
 !!! info
-    Aantal zinnen: 545.476  
-    Verwerking: automatisch  
+    Aantal zinnen: 545.476 <br>
+    Verwerking: automatisch <br>
     Metadata: `age`, `code`, `months`, `paqu.path1`, `paqu.path2`, `paqu.path3`, `role`, `sex`
 
 Childes is een corpus van gesproken taal van jonge kinderen en hun gesprekspartners. De versie die in AlpinoGraph is opgenomen is op 18 november 2015 gedownload van [childes.psy.cmu.edu/data-xml/Germanic/Dutch/](http://childes.psy.cmu.edu/data-xml/Germanic/Dutch/).
@@ -80,7 +80,7 @@ Het corpus bevat de volgende onderdelen:
 ## CLEF
 
 !!! info
-    Aantal zinnen: 4.266.515  
+    Aantal zinnen: 4.266.515 <br>
     Verwerking: automatisch
 
 Dit corpus bevat alle zinnen van het Algemeen Dagblad en de NRC van
@@ -91,8 +91,8 @@ het gebied van Question Answering.
 ## Corpus Gesproken Nederlands
 
 !!! info
-    Aantal zinnen: 129.921  
-    Verwerking: handmatig  
+    Aantal zinnen: 129.921 <br>
+    Verwerking: handmatig <br>
     Metadata: `birthyear`, `country`, `sex`, `source`, `speaker_id`, `talk_id`
 
 Dit bevat de handmatig geannoteerde zinnen van het CGN (ongeveer 1 miljoen woorden), Versie 2.
@@ -104,7 +104,7 @@ Laatste versie beschikbaar via: [ivdnt.org/downloads/taalmaterialen/tstc-corpus-
 ## Dutch Web Corpus
 
 !!! info
-    Aantal zinnen: 1.498.479  
+    Aantal zinnen: 1.498.479 <br>
     Verwerking: automatisch
 
 This automatically annotated treebank contains the first 1.5 million
@@ -119,7 +119,7 @@ Model*. [Arxiv 1912.09582](https://arxiv.org/abs/1912.09582).
 ## Eindhoven
 
 !!! info
-    Aantal zinnen: 40.524  
+    Aantal zinnen: 40.524 <br>
     Verwerking: automatisch
 
 Het Eindhoven-corpus is al begin jaren zeventig verzameld. Jarenlang
@@ -133,7 +133,7 @@ Laatste versie beschikbaar via: [ivdnt.org/downloads/taalmaterialen/tstc-eindhov
 ## Lassy Groot: Kranten
 
 !!! info
-    Aantal zinnen: 14.974.458  
+    Aantal zinnen: 14.974.458 <br>
     Verwerking: automatisch
 
 Dit is het deel `WR-P-P-G` van het corpus Lassy Groot. Dit betreft materiaal afkomstig uit dagbladen.
@@ -145,8 +145,8 @@ Laatste versie beschikbaar via: [ivdnt.org/taalmaterialen/2056-tstc-lassy-groot-
 ## Lassy Klein
 
 !!! info
-    Aantal zinnen: 65.200  
-    Verwerking: handmatig  
+    Aantal zinnen: 65.200 <br>
+    Verwerking: handmatig <br>
     Metadata: `source`
 
 Lassy Klein is een handmatig geannoteerd corpus van ongeveer 1 miljoen
@@ -159,7 +159,7 @@ Laatste versie beschikbaar via: [ivdnt.org/downloads/tstc-lassy-klein-corpus)
 ## NL-wiki 2017
 
 !!! info
-    Aantal zinnen: 16.073.845  
+    Aantal zinnen: 16.073.845 <br>
     Verwerking: automatisch
 
 Dit corpus bevat alle zinnen van de dump van de Nederlandse Wikipedia van 1 Augustus 2017.
@@ -167,8 +167,8 @@ Dit corpus bevat alle zinnen van de dump van de Nederlandse Wikipedia van 1 Augu
 ## Wablieft
 
 !!! info
-    Aantal zinnen: 256.729  
-    Verwerking: automatisch  
+    Aantal zinnen: 256.729 <br>
+    Verwerking: automatisch <br>
     Metadata: `datum`, `issue`, `rubriek`
 
 it betreft het Wablieft corpus versie 1.2. Het Wablieft-corpus bevat

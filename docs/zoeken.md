@@ -1,6 +1,6 @@
 # Zoeken met AlpinoGraph
 
-De combinatie van databasetechnologie en graaf-gebaseerde zoektechnologie zorgt voor een erg flexibele en relatief efficiënte zoekmachine. Deze flexibiliteit betekent bijvoorbeeld dat je patronen kunt definiëren om zinnen die aan het patroon te voldoen terug te vinden. Maar je kunt ook woorden of woordgroepen terugvinden en aggregeren over de informatie van die woorden of woordgroepen (bijvoorbeeld voor het maken van frequentieoverzichten) door middel van de database-primitieven van SQL. 
+De combinatie van databasetechnologie en graaf-gebaseerde zoektechnologie zorgt voor een erg flexibele en relatief efficiënte zoekmachine. Deze flexibiliteit betekent bijvoorbeeld dat je patronen kunt definiëren om zinnen die aan het patroon te voldoen terug te vinden. Maar je kunt ook woorden of woordgroepen terugvinden en aggregeren over de informatie van die woorden of woordgroepen (bijvoorbeeld voor het maken van frequentieoverzichten) door middel van de database-primitieven van SQL.
 
 TODO: ergens, een verwijzing naar complete documentatie van AgensGraph?
 
@@ -18,14 +18,14 @@ In AlpinoGraph zijn een aantal syntactisch geannoteerde corpora beschikbaar. Alp
 
 ### Woorden
 
-De syntactische analyse van een zin is beschikbaar, zoals hierboven al genoemd, in meerdere lagen: de dependentiestructuur zoals bekend van CGN/Lassy/Alpino, de Universal Dependency-structuur (zowel standaard als enhanced), en de woord-paren structuur van PaQu. Deze lagen zijn allemaal gebaseerd op de woorden van de zin. Deze woorden zijn de bouwstenen van de graaf die al deze annotatielagen combineert. De volgende query zoekt alle woorden waarvoor het lemma de waarde *fiets* heeft: 
+De syntactische analyse van een zin is beschikbaar, zoals hierboven al genoemd, in meerdere lagen: de dependentiestructuur zoals bekend van CGN/Lassy/Alpino, de Universal Dependency-structuur (zowel standaard als enhanced), en de woord-paren structuur van PaQu. Deze lagen zijn allemaal gebaseerd op de woorden van de zin. Deze woorden zijn de bouwstenen van de graaf die al deze annotatielagen combineert. De volgende query zoekt alle woorden waarvoor het lemma de waarde *fiets* heeft:
 
 ```text
-match (n:word{lemma: 'fiets'}) 
+match (n:word{lemma: 'fiets'})
 return n
 ```
 
-Een woord in de graafstructuur is een knoop van het type `word`. Een knoop ziet eruit als 
+Een woord in de graafstructuur is een knoop van het type `word`. Een knoop ziet eruit als
 
 ```text
 (:word)
@@ -48,7 +48,7 @@ Naast woorden zijn er ook nog de andere knopen voor bijvoorbeeld NP, PP, SMAIN. 
 Je kunt dus bijvoorbeeld zoeken naar alle niet-lexicale knopen met als categorie PP:
 
 ```text
-match (n:node{cat: 'pp'}) 
+match (n:node{cat: 'pp'})
 return n
 ```
 
@@ -65,7 +65,7 @@ Indien je wilt zoeken naar een knoop maar die knoop mag zowel een woord zijn als
 Je kunt dus direct naar woorden en woordgroepen zoeken, maar het wordt pas echt een klein beetje interessant wanneer je ook relaties tussen woorden en woordgroepen kunt specificeren. In Cypher ziet zo'n relatie tussen twee knopen (woorden of woordgroepen) er zo uit, naar keuze:
 
 ```text
-() -[]-> () 
+() -[]-> ()
 
 () <-[]- ()
 ```
@@ -232,12 +232,12 @@ return n
 
 Keyword `with` fungeert dus als een soort `return` statement, waarna je vervolgens verdere eisen aan de opgeleverde resultaten kunt stellen. Deze techniek lijkt een beetje op het gebruik van een existentiële quantifier.
 
-Een ingewikkelder voorbeeld van deze techniek vind je bij de volgende query om cross-serial verb clusters terug te vinden. In deze definitie wordt eerst een knoop `n1` gevonden die met relatie `vc` knoop `n1` in een werkwoordcluster domineert. Die definitie refereert aan knopen `x` en `w`, maar er kunnen meerdere knopen `x` zijn. In die verschillende `x` zijn we niet geinteresseerd - het bestaan van een `x` is voldoende om vast te stellen dat het hier om een werkwoordcluster gaat. Op basis van de unieke combinatie `n` en `n1` wordt dan vervolgens de eis gesteld dat het onderwerp van de één fungeert als het lijdend voorwerp van de ander:  
+Een ingewikkelder voorbeeld van deze techniek vind je bij de volgende query om cross-serial verb clusters terug te vinden. In deze definitie wordt eerst een knoop `n1` gevonden die met relatie `vc` knoop `n1` in een werkwoordcluster domineert. Die definitie refereert aan knopen `x` en `w`, maar er kunnen meerdere knopen `x` zijn. In die verschillende `x` zijn we niet geinteresseerd - het bestaan van een `x` is voldoende om vast te stellen dat het hier om een werkwoordcluster gaat. Op basis van de unieke combinatie `n` en `n1` wordt dan vervolgens de eis gesteld dat het onderwerp van de één fungeert als het lijdend voorwerp van de ander:
 
 ```text
 match (x)<-[:rel]-(n:node{cat: 'inf'})<-[:rel{rel: 'vc'}]-(n1)-[:rel{rel: 'hd'}]->(w:word{pt: 'ww'})
-where not n1.cat in ['smain','sv1'] 
-  and x.begin < w.begin 
+where not n1.cat in ['smain','sv1']
+  and x.begin < w.begin
 with distinct n, n1
 
 match (n)-[:rel{rel: 'su'}]->()<-[:rel{rel: 'obj1'}]-(n1)
@@ -264,7 +264,7 @@ return w1, w2
 
 ### tellen en sorteren
 
-Vaak is het interessant om te aggregeren over de relevante delen van een match. Dat is natuurlijk makkelijk in een database te doen. 
+Vaak is het interessant om te aggregeren over de relevante delen van een match. Dat is natuurlijk makkelijk in een database te doen.
 
 ```text
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
@@ -280,7 +280,7 @@ where w.lemma in ['eten','op_eten','drinken','op_drinken']
 return w2.lemma as woord, count(w2.lemma) as aantal
 ```
 
-De namen van de kolommen zijn ook relevant indien je wilt sorteren. Je verwijst dan naar de kolom op basis waarvan je wilt sorteren. 
+De namen van de kolommen zijn ook relevant indien je wilt sorteren. Je verwijst dan naar de kolom op basis waarvan je wilt sorteren.
 
 ```text
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
@@ -349,7 +349,7 @@ match (n:word{num:'sg'}) -[:ud{rel:'det'}]-> (:word{lemma:'de'})
 return n.lemma
 ```
 
-### TODO 
+### TODO
 
 - `where exists`, `where not exists` → niet met paden van variabele lengte
 - `select`, waar het niet anders kan
@@ -375,7 +375,7 @@ match (w:word{lemma:'zijn'})
 return w
 ```
 
-Je kunt hier dus nu kiezen voor de andere opties. Als je nu voor "tabel" kiest, krijg je erg veel informatie: alle attributen van elke matchende knoop. Kies je voor "woorden", dan krijg je een mooi frequentie-overzicht van alle vormen van het werkwoord 'zijn'. In dit specifieke geval is het niet erg inzichtelijk om te kiezen voor "lemma's". 
+Je kunt hier dus nu kiezen voor de andere opties. Als je nu voor "tabel" kiest, krijg je erg veel informatie: alle attributen van elke matchende knoop. Kies je voor "woorden", dan krijg je een mooi frequentie-overzicht van alle vormen van het werkwoord 'zijn'. In dit specifieke geval is het niet erg inzichtelijk om te kiezen voor "lemma's".
 
 Het volgende voorbeeld suggereert wanneer het nuttig kan zijn om voor "lemma's" te kiezen:
 

@@ -12,8 +12,8 @@ en `(:word)`.
 ### `_clause`
 
 !!! info "Is deze node een *clause*?"
-    Items: `(:node)`  
-    Type: bool  
+    Items: `(:node)` <br>
+    Type: bool <br>
     Waarde: `true` of niet aanwezig
 
 De waarde is `true` voor een node waarvan `cat` de waarde `smain`,
@@ -23,8 +23,8 @@ De waarde is `true` voor een node waarvan `cat` de waarde `smain`,
 ### `_clause_lvl`
 
 !!! info "Als deze node een *clause* is, hoe diep is het dan genest?"
-    Items: `(:node)`  
-    Type: int  
+    Items: `(:node)` <br>
+    Type: int <br>
     Waarde: 1 of hoger, of niet aanwezig
 
 Dit attribuut is aanwezig op nodes met de waarde `true` voor het
@@ -39,8 +39,8 @@ De bepaling van niveau wordt afgeleid via [primaire relaties](#primary).
 ### `_deste`
 
 !!! info "Een hulpattribuut voor het zoeken naar *correlatieve comparatieven*"
-    Items: `(:node)`  
-    Type: bool  
+    Items: `(:node)` <br>
+    Type: bool <br>
     Waarde: `true` of niet aanwezig
 
 Het attibuut `_deste` is `true` voor nodes die overeenkomen met deze xpath-expressie:
@@ -63,8 +63,8 @@ TODO: in dit geval **nadat** indexnodes worden geëxpandeerd (klopt dat?)
 ### _n_words
 
 !!! info "Het aantal woorden dat deze node bestrijkt"
-    Items: `(:node)`, `(:word)`  
-    Type: int  
+    Items: `(:node)`, `(:word)` <br>
+    Type: int <br>
     Waarde: 1 of groter
 
 Voor woorden is dit altijd 1.
@@ -75,8 +75,8 @@ Voor nodes is dit het aantal woorden onder de node die zowel via
 ### `_np`
 
 !!! info "Is dit een NP?"
-    Items: `(:node)`, `(:word)`  
-    Type: bool  
+    Items: `(:node)`, `(:word)` <br>
+    Type: bool <br>
     Waarde: `true` of niet aanwezig
 
 Het attribuut `_np` is `true` voor nodes en woorden die overeenkomen met deze xpath-expressie:
@@ -148,8 +148,8 @@ TODO: definitie hieronder updaten
 ### _vorfeld
 
 !!! info "Is dit een vorfeld?"
-    Items: `(:node)`, `(:word)`   
-    Type: bool  
+    Items: `(:node)`, `(:word)`  <br>
+    Type: bool <br>
     Waarde: `true` of niet aanwezig
 
 
@@ -190,8 +190,8 @@ Extra attributen op relaties van het type `rel`.
 ### `id`
 
 !!! info "Het originele ID van niet-primaire relaties"
-    Relaties: `[:rel]`  
-    Type: int  
+    Relaties: `[:rel]` <br>
+    Type: int <br>
     Waarde: 1 of groter, of niet aanwezig
 
 Het ID van de lege index-node waarnaar deze relatie verwees in de
@@ -201,8 +201,8 @@ boom te reconstrueren.
 ### `primary`
 
 !!! info "Is dit een primaire relatie?"
-    Relaties: `[:rel]`  
-    Type: bool  
+    Relaties: `[:rel]` <br>
+    Type: bool <br>
     Waarde: `true`, `false`
 
 Relaties in de originele boom in Alpino naar een lege index-node zijn
