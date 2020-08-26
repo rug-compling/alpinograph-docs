@@ -78,66 +78,20 @@ geldt dat een van de delen van de mwu de `postag` *SPEC(deeleigen)*
 heeft, ofwel het is geen mwu maar een woord waarvoor geldt dat het
 attribuut `ntype` de waarde *eigen* heeft.
 
-
 ```text
-match (w:word)<-[:rel*0..1{rel: 'mwp'}]-(n:nw)<-[r:rel]-()
-where ( w.postag = 'SPEC(deeleigen)' or w.ntype = 'eigen')
-  and ( n.cat = 'mwu' or w.id = n.id )
-  and r.rel != 'mwp'
-return distinct n
-```
-
-TODO: Bovenstaande geeft ook *5 april* als resultaat in Alpino
-Treebank. De query voldoet ook niet aan de omschrijving. Deze wel:
-
-```text
-match (w:word)<-[:rel*0..1{rel: 'mwp'}]-(n:nw)<-[r:rel]-()
-where ( w.postag = 'SPEC(deeleigen)' and n.cat = 'mwu'
+match (w:word)<-[:rel*0..1{rel: 'mwp'}]-(n:nw)
+where not exists ( (n)<-[r:rel{rel: 'mwp'}]-() )
+  and ( w.postag = 'SPEC(deeleigen)' and n.cat = 'mwu'
      or w.id = n.id and w.ntype = 'eigen'
   )
-  and r.rel != 'mwp'
 return distinct n
 ```
-
-Zie het verschil: het zijn de data die eruit vallen:
-
-```text
-match (w:word)<-[:rel*0..1{rel: 'mwp'}]-(n:nw)<-[r:rel]-()
-where ( w.postag = 'SPEC(deeleigen)' or w.ntype = 'eigen')
-  and ( n.cat = 'mwu' or w.id = n.id )
-  and r.rel != 'mwp'
-return distinct n
-
-except
-
-match (w:word)<-[:rel*0..1{rel: 'mwp'}]-(n:nw)<-[r:rel]-()
-where ( w.postag = 'SPEC(deeleigen)' and n.cat = 'mwu'
-     or w.id = n.id and w.ntype = 'eigen'
-  )
-  and r.rel != 'mwp'
-return distinct n
-```
-
-
 Een bijkomend effect van het gebruik van `distinct` is dat de
 resultaten gesorteerd worden. In dit geval krijg je eerst alle
 multi-word units (type `:node`), en daarna de rest (type `:word`).
 
 Dit kun je veranderen door niet op `n` te sorteren (d.m.v.
 `distinct`), maar op attributen van `n`:
-
-```text
-match (w:word)<-[:rel*0..1{rel: 'mwp'}]-(n:nw)<-[r:rel]-()
-where ( w.postag = 'SPEC(deeleigen)' and n.cat = 'mwu'
-     or w.id = n.id and w.ntype = 'eigen'
-  )
-  and r.rel != 'mwp'
-return distinct n.sentid, n.id
-```
-
-TODO: can this be done simpler?
-
-Alternatief:
 
 ```text
 match (w:word)<-[:rel*0..1{rel: 'mwp'}]-(n:nw)
