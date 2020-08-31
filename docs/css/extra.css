@@ -2,3 +2,20 @@ span.prediff {
     font-weight: bold;
     background-color: #c0ffc0;
 }
+
+img[alt="hoofdscherm"] {
+    padding: 4px;
+    border: 1px solid grey;
+}
+
+img[alt="querymenu"],
+img[alt="corpusmenu"],
+img[alt="query"],
+img[alt="knoppen"],
+img[alt="macro's"],
+img[alt="permalink"] {
+    margin: 0px 1em .5em 0px;
+    padding: 4px;
+    border: 1px solid grey;
+    float: left;
+}
