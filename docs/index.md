@@ -12,27 +12,27 @@ AlpinoGraph is een tool om syntactisch geannoteerde corpora te doorzoeken. De to
 
 ## Overzicht van documentatie
 
-In [Overzicht van AlpinoGraph](../interface/) leer je de interface
+In [Overzicht van AlpinoGraph](interface/) leer je de interface
 kennen.
 
-In [Zoeken met AlpinoGraph](../zoeken/) vind je een uitgebreide
+In [Zoeken met AlpinoGraph](zoeken/) vind je een uitgebreide
 inleiding in de zoektaal Cypher en hoe je die in AlpinoGraph kunt
 toepassen.
 
-In het [Receptenboek](../recepten/) vind je een verzameling
+In het [Receptenboek](recepten/) vind je een verzameling
 voorbeelden van verschillende soorten zoekopdrachten.
 
-In [AlpinoGraph in AgensGraph](../alpinoagens/) is gedocumenteerd hoe
+In [AlpinoGraph in AgensGraph](alpinoagens/) is gedocumenteerd hoe
 het XML-formaat van Alpino is vertaald naar AgensGraph.
 
-In [Hulpattributen](../attributen/) vind je informatie over de
+In [Hulpattributen](attributen/) vind je informatie over de
 attributen die niet voorkomen in Alpino, maar door AlpinoGraph zijn
 toegevoegd om het zoeken krachtiger te maken.
 
-In [Cypher in AgensGraph](../agensgraph/) lees je hoe Cypher zoals dat
+In [Cypher in AgensGraph](agensgraph/) lees je hoe Cypher zoals dat
 in AgensGraph is geïmplementeerd afwijkt van de standaard openCypher.
 
-In [Corpora](../corpora/) vind je informatie over alle corpora die
+In [Corpora](corpora/) vind je informatie over alle corpora die
 beschikbaar zijn in de officiële versie van AlpinoGraph.
 
-In [Links](../links/) vind je nuttige externe informatie.
+In [Links](links/) vind je nuttige externe informatie.
