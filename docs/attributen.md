@@ -19,6 +19,13 @@ en `(:word)`.
 De waarde is `true` voor een node waarvan `cat` de waarde `smain`,
 `sv1` of `ssub` heeft.
 
+^^Definitie:^^
+
+```text
+match (n:node)
+where n.cat in ['smain','sv1','ssub']
+set n._clause = true;
+```
 
 ### `_clause_lvl`
 
@@ -34,6 +41,34 @@ onder andere clause-nodes.
 Het hoogste niveau heeft de waarde 1.
 
 De bepaling van niveau wordt afgeleid via [primaire relaties](#primary).
+
+^^Definitie:^^
+
+```text
+match p = (:sentence)-[:rel*{primary:true}]->(n:node)
+where n.cat in ['smain','sv1','ssub']
+set n._clause_lvl = count_lvl(to_json(p).vertices);
+```
+
+Hierbij is `count_lvl` een hulpfunctie met deze definitie:
+
+```text
+CREATE FUNCTION count_lvl(vertices json) RETURNS integer AS $$
+DECLARE
+  count integer := 0;
+  cat text;
+BEGIN
+  FOR i IN 0..(json_array_length(vertices) - 1)
+  LOOP
+    cat := vertices -> i #>> '{properties, cat}';
+    IF cat = 'smain' OR cat = 'sv1' OR cat = 'ssub' THEN
+      count := count + 1;
+    END IF;
+  END LOOP;
+  RETURN count;
+END;
+$$ LANGUAGE plpgsql;
+```
 
 
 ### `_deste`
