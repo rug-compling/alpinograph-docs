@@ -19,7 +19,7 @@ en `(:word)`.
 De waarde is `true` voor een node waarvan `cat` de waarde `smain`,
 `sv1` of `ssub` heeft.
 
-^^Definitie:^^
+^^Definitie^^
 
 ```text
 match (n:node)
@@ -42,7 +42,7 @@ Het hoogste niveau heeft de waarde 1.
 
 De bepaling van niveau wordt afgeleid via [primaire relaties](#primary).
 
-^^Definitie:^^
+^^Definitie^^
 
 ```text
 match p = (:sentence)-[:rel*{primary:true}]->(n:node)
@@ -73,27 +73,22 @@ $$ LANGUAGE plpgsql;
 
 ### `_deste`
 
-!!! info "Een hulpattribuut voor het zoeken naar *correlatieve comparatieven*"
+!!! info "Een hulpattribuut voor het zoeken naar [correlatieve comparatieven](https://urd2.let.rug.nl/~kleiweg/alpinograph/#--%20SPOD%20%7C%20Correlatieve%20comparatieven%0A%0Amatch%20p1%20%3D%20%28n1%3Anode%7B_deste%3A%20true%7D%29%3C-%5B%3Arel*0..%5D-%28n0%3Anode%29%3C-%5B%3Arel*0..%5D-%28n%3Anode%7Bcat%3A%20'du'%7D%29%0Amatch%20p2%20%3D%20%28n1%29%3C-%5B%3Arel*0..%5D-%28n0%29-%5B%3Arel*0..%5D-%3E%28n2%3Anode%7B_deste%3A%20true%7D%29%0Aoptional%20match%20p%20%3D%20%28n0%29%3C-%5B%3Arel*0..%5D-%28%3Anode%7Bcat%3A'du'%7D%29%3C-%5B%3Arel*1..%5D-%28n%29%0Awith%20n1%2C%20n2%2C%20p%2C%20p1%2C%20p2%0Awhere%20n1.id%20%3C%20n2.id%0A%20%20and%20p%20is%20null%0Areturn%20p1%2C%20p2%0A%0A)"
     Items: `(:node)` <br>
     Type: bool <br>
     Waarde: `true` of niet aanwezig
 
-Het attibuut `_deste` is `true` voor nodes die overeenkomen met deze xpath-expressie:
+^^Definitie^^
 
-TODO: in dit geval **nadat** indexnodes worden geëxpandeerd (klopt dat?)
-
-```xpath
-//node[ node[ @graad="comp"]
-        and
-        node[ @lemma=("hoe", "deste")
-              or
-              ( node[@lemma="des"]
-                and
-                node[@lemma="te"]
-              )
-        ]
-]
+```text
+match (:word{graad:'comp'})<-[:rel{primary:true}]-(n:node)-[:rel{primary:true}]->(n2:nw)
+optional match p = (:word{lemma:'des'})<-[:rel{primary:true}]-(n2)-[:rel{primary:true}]->(:word{lemma:'te'})
+with n, n2, p
+where n2.lemma in ['hoe','deste']
+   or p is not null
+set n._deste = true;
 ```
+
 
 ### _n_words
 
@@ -106,6 +101,16 @@ Voor woorden is dit altijd 1.
 
 Voor nodes is dit het aantal woorden onder de node die zowel via
 [primaire](#primary) als via niet-primaire relaties kan worden bereikt.
+
+^^Definitie^^
+
+```text
+match (n:nw)-[:rel*0..]->(w:word)
+with distinct n.sentid as sentid, n.id as id, w.id as wid
+with sentid, id, count(wid) as c
+match (n2:nw{sentid:sentid,id:id})
+set n2._n_words = c;
+```
 
 ### `_np`
 
