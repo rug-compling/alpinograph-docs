@@ -45,33 +45,14 @@ De bepaling van niveau wordt afgeleid via [primaire relaties](#primary).
 ^^Definitie^^
 
 ```text
-match p = (:sentence)-[:rel*{primary:true}]->(n:node)
+match p = (:node{id: 0})-[:rel*0..{primary:true}]->(n:node)
 where n.cat in ['smain','sv1','ssub']
-set n._clause_lvl = count_lvl(to_json(p).vertices);
+with n, (select count(*)
+    from jsonb_array_elements((to_json(p) -> 'vertices')::jsonb) as v
+    where v -> 'properties' ->> 'cat' in ('smain','sv1','ssub')
+) as c
+set n._clause_lvl = c;
 ```
-
-Hierbij is `count_lvl` een hulpfunctie met deze definitie:
-
-```text
-CREATE FUNCTION count_lvl(vertices json) RETURNS integer AS $$
-DECLARE
-  count integer := 0;
-  cat text;
-BEGIN
-  FOR i IN 0..(json_array_length(vertices) - 1)
-  LOOP
-    cat := vertices -> i #>> '{properties, cat}';
-    IF cat = 'smain' OR cat = 'sv1' OR cat = 'ssub' THEN
-      count := count + 1;
-    END IF;
-  END LOOP;
-  RETURN count;
-END;
-$$ LANGUAGE plpgsql;
-```
-
-TODO: definitie zonder hulpfunctie, zie: https://stackoverflow.com/questions/63754246/in-postgresql-how-can-i-extract-matching-items-from-a-list
-
 
 ### `_deste`
 
