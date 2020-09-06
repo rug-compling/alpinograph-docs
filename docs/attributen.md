@@ -70,6 +70,8 @@ END;
 $$ LANGUAGE plpgsql;
 ```
 
+TODO: definitie zonder hulpfunctie
+
 
 ### `_deste`
 
@@ -206,7 +208,7 @@ TODO: schematische weergave (plaatje)?
 ```
 match (x:nw)
 where x.sentid + ' ' + x.id in (
-    select id
+    select sid
     from (
 
         match (n:node{cat:'smain'})-[:rel{rel:'hd'}]->(fin:word)
@@ -221,7 +223,7 @@ where x.sentid + ' ' + x.id in (
                   and
                   topic.end <= fin.begin
               )
-        return topic.sentid + ' ' + topic.id as id, n.id as nid
+        return topic.sentid + ' ' + topic.id as sid, n.id as nid
 
         except
 
@@ -249,7 +251,7 @@ where x.sentid + ' ' + x.id in (
                   and
                   nt.end <= fin.begin
               )
-        return topic.sentid + ' ' + topic.id as id, n.id as nid
+        return topic.sentid + ' ' + topic.id as sid, n.id as nid
 
     ) as foo
 )
