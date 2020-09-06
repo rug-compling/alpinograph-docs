@@ -196,7 +196,10 @@ TODO: definitie hieronder updaten
     Type: bool <br>
     Waarde: `true` of niet aanwezig
 
-TODO: wat is een vorfeld?
+Het ^^vorfeld^^ is het zinsdeel vóór het finiete werkwoord in een
+zin met de *verb second*-volgorde. TODO: klopt deze omschrijving?
+
+TODO: schematische weergave (plaatje)?
 
 ^^Definitie^^
 
