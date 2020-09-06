@@ -78,11 +78,15 @@ $$ LANGUAGE plpgsql;
     Type: bool <br>
     Waarde: `true` of niet aanwezig
 
+TODO: korte uitleg
+
 ^^Definitie^^
 
 ```text
-match (:word{graad:'comp'})<-[:rel{primary:true}]-(n:node)-[:rel{primary:true}]->(n2:nw)
-optional match p = (:word{lemma:'des'})<-[:rel{primary:true}]-(n2)-[:rel{primary:true}]->(:word{lemma:'te'})
+match (:word{graad:'comp'})<-[:rel{primary:true}]-(n:node)
+                          -[:rel{primary:true}]->(n2:nw)
+optional match p = (:word{lemma:'des'})<-[:rel{primary:true}]-(n2)
+                      -[:rel{primary:true}]->(:word{lemma:'te'})
 with n, n2, p
 where n2.lemma in ['hoe','deste']
    or p is not null
@@ -192,35 +196,62 @@ TODO: definitie hieronder updaten
     Type: bool <br>
     Waarde: `true` of niet aanwezig
 
+TODO: wat is een vorfeld?
 
-Het attribuut `_vorfeld` is `true` voor nodes en woorden die overeenkomen met
-deze xpath-expressie:
+^^Definitie^^
 
-TODO: in dit geval **voordat** indexnodes worden geëxpandeerd
-
-TODO: definitie hieronder updaten
-
-```xpath
-//node[( (  ancestor::node[@cat="smain"]/node[@rel="hd"]/number(@begin) > node[@rel=("hd","cmp","mwp","crd","rhd","whd","nucl","dp")]/number(@begin)
-            or
-            (  ancestor::node[@cat="smain"]/node[@rel="hd"]/number(@begin) > number(@begin)
-               and
-               not(node[@rel=("hd","cmp","mwp","crd","rhd","whd","nucl","dp")])
-            )
-         )
-         and
-         not(parent::node[(  ancestor::node[@cat="smain"]/node[@rel="hd"]/number(@begin) > node[@rel=("hd","cmp","mwp","crd","rhd","whd","nucl","dp")]/number(@begin)
-                             or
-                             (  ancestor::node[@cat="smain"]/node[@rel="hd"]/number(@begin) > number(@begin)
-                                and
-                                not(node[@rel=("hd","cmp","mwp","crd","rhd","whd","nucl","dp")])
-                             )
-                          )])
-         and
-         (@cat or @pt)
-       )]
 ```
+match (x:nw)
+where x.sentid + ' ' + x.id in (
+    select id
+    from (
 
+        match (n:node{cat:'smain'}) -[:rel{rel:'hd'}]-> (fin:word)
+        match (n) -[:rel*{primary:true}]-> (topic:nw) -[rel:rel*0..1]-> (htopic:nw)
+        where (( not htopic.lemma is null)
+                  and htopic.begin < fin.begin
+                  and   (  length(rel) = 0
+                        or rel[0].rel in ['hd','cmp','crd']
+                        )
+               ) or
+               (  topic.begin < fin.begin
+                  and
+                  topic.end <= fin.begin
+              )
+        return topic.sentid + ' ' + topic.id as id, n.id as nid
+
+        except
+
+        match (n:node{cat:'smain'}) -[:rel{rel:'hd'}]-> (fin:word)
+        match (n) -[:rel*{primary:true}]-> (topic:nw) -[rel:rel*0..1]-> (htopic:nw)
+        where (( not htopic.lemma is null)
+                  and htopic.begin < fin.begin
+                  and   (  length(rel) = 0
+                        or rel[0].rel in ['hd','cmp','crd']
+                        )
+               ) or
+               (  topic.begin < fin.begin
+                  and
+                  topic.end <= fin.begin
+              )
+        match (topic) <-[:rel*1..]- (nt:node)  <-[:rel*]- (n)
+        match (nt) -[relt:rel*0..1]-> (hnt:nw)
+        where (( not hnt.lemma is null)
+                  and hnt.begin < fin.begin
+                  and   (  length(relt) = 0
+                        or relt[0].rel in ['hd','cmp','crd']
+                        )
+               ) or
+               (  nt.begin < fin.begin
+                  and
+                  nt.end <= fin.begin
+              )
+        return topic.sentid + ' ' + topic.id as id, n.id as nid
+
+    ) as foo
+)
+set x._vorfeld = true
+```
 
 ## Relaties
 

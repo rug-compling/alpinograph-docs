@@ -334,68 +334,18 @@ order by aantal desc
 
 ### Paren van coördinatoren
 
-In het volgende voorbeeld zoeken we naar een conjunctie met twee coördinatoren (*noch .. noch..*, *zowel .. als ..*). De eerste match zorgt voor een coördinatie die twee coördinatoren bevat. De tweede match eist dat de eerste coördinator vooraf gaat aan de tweede - op die manier krijg je elke conjunctie maar één keer, en de betreffende lemma's in de verwachte volgorde:
-
+In het volgende voorbeeld zoeken we naar een conjunctie met twee
+coördinatoren (*noch .. noch..*, *zowel .. als ..*). De eerste match
+zorgt voor een coördinatie die twee coördinatoren bevat. De tweede
+match eist dat de eerste coördinator vooraf gaat aan de tweede - op
+die manier krijg je elke conjunctie maar één keer, en de betreffende
+lemma's in de verwachte volgorde:
 
 ```text
 match (v1:word) <-[:rel{rel:'crd'}]-(:node{cat: 'conj'})-[:rel{rel: 'crd'}]->(v2:word)
 where v1.end < v2.end
 return v1.lemma, v2.lemma, count(v1.lemma + ' ' + v2.lemma) as aantal
 order by aantal desc
-```
-
-### vorfeld
-
-```text
-select sentid, id
-from (
-    match (n:node{cat:'smain'}) -[:rel{rel:'hd'}]-> (fin:word)
-    match (n) -[:rel*{primary:true}]-> (topic:nw) -[rel:rel*0..1]-> (htopic:nw)
-    where (( not htopic.lemma is null)
-              and htopic.begin < fin.begin
-              and   (  length(rel) = 0
-                    or rel[0].rel in ['hd','cmp','crd']
-                    )
-           ) or
-           (  topic.begin < fin.begin
-              and
-              topic.end <= fin.begin
-          )
-    return topic.sentid as sentid, topic.id as id, n.id as nid
-    except
-    match (n:node{cat:'smain'}) -[:rel{rel:'hd'}]-> (fin:word)
-    match (n) -[:rel*{primary:true}]-> (topic:nw) -[rel:rel*0..1]-> (htopic:nw)
-    where (( not htopic.lemma is null)
-              and htopic.begin < fin.begin
-              and   (  length(rel) = 0
-                    or rel[0].rel in ['hd','cmp','crd']
-                    )
-           ) or
-           (  topic.begin < fin.begin
-              and
-              topic.end <= fin.begin
-          )
-    match (topic) <-[:rel*1..]- (nt:node)  <-[:rel*]- (n)
-    match (nt) -[relt:rel*0..1]-> (hnt:nw)
-    where (( not hnt.lemma is null)
-              and hnt.begin < fin.begin
-              and   (  length(relt) = 0
-                    or relt[0].rel in ['hd','cmp','crd']
-                    )
-           ) or
-           (  nt.begin < fin.begin
-              and
-              nt.end <= fin.begin
-          )
-    return topic.sentid as sentid, topic.id as id, n.id as nid
-) as foo
-```
-
-Omdat bovenstaande nogal inefficiënt is kun je ook dit doen:
-
-```text
-match (n:nw{_vorfeld: true})
-return n
 ```
 
 ### Verwante lemma's
