@@ -70,7 +70,7 @@ END;
 $$ LANGUAGE plpgsql;
 ```
 
-TODO: definitie zonder hulpfunctie
+TODO: definitie zonder hulpfunctie, zie: https://stackoverflow.com/questions/63754246/in-postgresql-how-can-i-extract-matching-items-from-a-list
 
 
 ### `_deste`
