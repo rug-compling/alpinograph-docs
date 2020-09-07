@@ -63,6 +63,10 @@ set n._clause_lvl = c;
 
 TODO: korte uitleg
 
+TODO: met of zonder primary:true ? <br>
+Huidige implementatie is met
+
+
 ^^Definitie^^
 
 ```text
@@ -106,71 +110,25 @@ set n2._n_words = c;
     Type: bool <br>
     Waarde: `true` of niet aanwezig
 
-Het attribuut `_np` is `true` voor nodes en woorden die overeenkomen met deze xpath-expressie:
+TODO: met of zonder primary:true ? <br>
+Huidige implementatie is zonder (in twee match-patronen)
 
-TODO: een conj van een conj (etc) van een np is ook een np
+TODO: toelichting?
 
-TODO: in dit geval **nadat** indexnodes worden geëxpandeerd (klopt dat?)
 
-TODO: definitie hieronder updaten
+^^Definitie^^
 
-```xpath
-//node[( ( @cat="np"
-           or
-           ( @lcat="np"
-             and
-             not(@rel=("hd","mwp"))
-           )
-           or
-           ( @pt="n"
-             and not(@rel="hd")
-           )
-           or
-           ( @pt="vnw"
-             and
-             @pdtype="pron"
-             and
-             not(@rel="hd")
-           )
-           or
-           ( @cat="mwu"
-             and
-             not(@rel="hd")
-             and
-             @rel=("su","obj1","obj2","app")
-           )
-         )
-         or
-         ( @cat="conj"
-           and node[( @cat="np"
-                      or
-                      ( @lcat="np"
-                        and
-                        not(@rel=("hd","mwp"))
-                      )
-                      or
-                      ( @pt="n"
-                        and not(@rel="hd")
-                      )
-                      or
-                      ( @pt="vnw"
-                        and
-                        @pdtype="pron"
-                        and
-                        not(@rel="hd")
-                      )
-                      or
-                      ( @cat="mwu"
-                        and
-                        not(@rel="hd")
-                        and
-                        @rel=("su","obj1","obj2","app")
-                      )
-                    )]
-         )
-       )]
+```text
+match ()-[r:rel]->(n1:nw)
+where n1.cat = 'np'
+   or ( n1.lcat = 'np' and r.rel != 'hd' and r.rel != 'mwp' )
+   or ( n1.pt = 'n' and r.rel != 'hd' )
+   or ( n1.pt = 'vnw' and n1.pdtype = 'pron' and r.rel != 'hd' )
+   or ( n1.cat = 'mwu' and r.rel in ['su','obj1','obj2','app'] )
+with n1
+match (n1)<-[:rel*0..{rel:'cnj'}]-(n)
+set n._np = true;
 ```
-
 
 ### _vorfeld
 
