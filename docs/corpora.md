@@ -7,6 +7,9 @@ van AlpinoGraph.
     De afleiding van Universal Dependencies is ook bij
     handmatig verwerkte corpora automatisch gedaan.
 
+TODO: voor niet-handmatig verwerkte corpora: vermelden waardoor
+geparst --- zijn daarbij corpora die niet door Alpino zijn geparst?
+
 ## Alpino Treebank
 
 !!! info
