@@ -126,7 +126,7 @@ where n1.cat = 'np'
    or ( n1.pt = 'vnw' and n1.pdtype = 'pron' and r.rel != 'hd' )
    or ( n1.cat = 'mwu' and r.rel in ['su','obj1','obj2','app'] )
 with n1
-match (n1)<-[:rel*0..{rel:'cnj'}]-(n)
+match (n1)<-[:rel*0..{rel:'cnj'}]-(n:nw)
 set n._np = true;
 ```
 
