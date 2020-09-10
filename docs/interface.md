@@ -1,5 +1,13 @@
 # Overzicht van AlpinoGraph
 
+TODO: Zinnen uitleggen: werkt niet voor dit soort matches:
+
+```text
+match (n1:word{lemma:'fiets'}),
+      (n2:word{lemma:'trein'})
+return n1, n2
+```
+
 TODO: Macro's uitleggen.
 
 TODO: Permalink uitleggen.
