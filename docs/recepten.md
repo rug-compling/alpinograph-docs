@@ -372,10 +372,12 @@ order by lemma, root, pt, word
 TODO: plek, titel, toelichting (Gertjan)
 
 ```
-match (w1:word{pt:'ww'})<-[:rel{rel:'hd'}]-()-[:rel{rel:'vc'}]->(:node{cat:'whsub'})
+match (w1:word{pt:'ww'})<-[:rel{rel:'hd'}]-()
+         -[:rel{rel:'vc'}]->(:node{cat:'whsub'})
 with w1.lemma as lemma1, count(w1.lemma) as n
 where n > 1
-match (w:word{pt:'ww'})<-[:rel{rel:'hd'}]-()-[:rel{rel:'obj1'}]->(:node{cat:'whrel'})
+match (w:word{pt:'ww'})<-[:rel{rel:'hd'}]-()
+         -[:rel{rel:'obj1'}]->(:node{cat:'whrel'})
 where w.lemma in lemma1
 return w
 ```
