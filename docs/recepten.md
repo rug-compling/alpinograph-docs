@@ -438,7 +438,7 @@ En zo vind je alleen de complete named entities:
 ```text
 match p = (w:word)-[:next*0..]->(w2:word{sentid: w.sentid})
 where w.begin = w.sonar_ne_begin
-  and w2.end = w.sonar_ne_end
+  and w2.end = w.sonar_ne_end     -- NIET w2.sonar_ne_end
 return p
 ```
 
