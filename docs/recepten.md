@@ -385,3 +385,45 @@ return w
 ### Vorfeld
 
 TODO
+
+### Sonar
+
+!!! warning "Let op"
+    Dit is alleen voor het corpus Lassy Klein
+
+Het corpus Lassy Klein bevat *named entities* die afkomstig zijn uit
+SONAR, een onderdeel van Lassy. TODO
+
+TODO: Alle named entities als een reeks van een of meer woorden:
+
+```text
+match p = (w:word)-[:next*0..]->(w2:word)
+where w.begin = w.sonar_ne_begin
+  and w2.end = w.sonar_ne_end      -- NIET w2.sonar_ne_end
+return p
+```
+TODO: named entities als enkel `(:word)` of `(:node)` (incompleet):
+
+```text
+match (n:nw)
+where n.class_ne is not null
+return n
+```
+
+TODO: Verschil (minimaal 1 next):
+
+```text
+match p = (w:word)-[:next*1..]->(w2:word)
+where w.begin = w.sonar_ne_begin
+  and w2.end = w.sonar_ne_end
+return p
+
+except
+
+match p = (w:word)-[:next*1..]->(w2:word),
+      (w)<-[:rel]-(n:node)
+where w.begin = w.sonar_ne_begin
+  and w2.end = w.sonar_ne_end
+  and n.sonar_ne is not null
+return p
+```

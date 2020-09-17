@@ -150,10 +150,17 @@ Laatste versie beschikbaar via: [ivdnt.org/taalmaterialen/2056-tstc-lassy-groot-
 !!! info
     Aantal zinnen: 65.200 <br>
     Verwerking: handmatig <br>
-    Metadata: `source`
+    Metadata: `source` <br>
+    Extra attributen: `dscmanual`, `dscsense`, `sonar_ne`, `sonar_ne_begin`, `sonar_ne_class`, `sonar_ne_end`
 
 Lassy Klein is een handmatig geannoteerd corpus van ongeveer 1 miljoen
 woorden. De huidige versie betreft Release 5 (2018).
+
+De attributen `dscmanual` en `dscsense` bevatten... TODO
+
+De attributen  `sonar_ne`, `sonar_ne_begin`, `sonar_ne_class` en
+`sonar_ne_end` bevatten... TODO. Zie [Sonar](../recepten/#sonar) in
+het receptenboek.
 
 Meer informatie: [www.let.rug.nl/vannoord/Lassy/](https://www.let.rug.nl/vannoord/Lassy/)
 
