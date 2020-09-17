@@ -406,7 +406,7 @@ TODO: named entities als enkel `(:word)` of `(:node)` (incompleet):
 
 ```text
 match (n:nw)
-where n.class_ne is not null
+where n.sonar_ne is not null
 return n
 ```
 
