@@ -386,7 +386,7 @@ return w
 
 TODO
 
-### Sonar
+## Sonar
 
 !!! warning "Let op"
     Dit is alleen voor het corpus Lassy Klein
@@ -394,36 +394,96 @@ TODO
 Het corpus Lassy Klein bevat *named entities* die afkomstig zijn uit
 SONAR, een onderdeel van Lassy. TODO
 
-TODO: Alle named entities als een reeks van een of meer woorden:
+Zo vind je het eerste woord van alle named entities:
 
 ```text
-match p = (w:word)-[:next*0..]->(w2:word)
+match (w:word)
 where w.begin = w.sonar_ne_begin
-  and w2.end = w.sonar_ne_end      -- NIET w2.sonar_ne_end
+return w
+```
+
+Sommige named entities lopen door naar een volgende zin, bijvoorbeeld
+een boektitel die uit meerde woorden bestaat. Deze gevallen
+vind je zo:
+
+```text
+match (w:word)
+where w.begin = w.sonar_ne_begin
+match (w2:word{sentid: w.sentid, last: true})
+where w2.end < w.sonar_ne_end
+return w
+```
+
+En zo vind je de stukken die horen bij een named entity die in een
+vorige zin is begonnen:
+
+```text
+match (w:word{begin: 0})
+where w.sonar_ne_begin < 0
+return w
+```
+
+Zo vind je alle named entities, compleet en incompleet, met
+bijbehorende woorden:
+
+```text
+match p = (w:word)-[:next*0..]->(w2:word{sentid: w.sentid})
+where ( w.begin = w.sonar_ne_begin or ( w.begin = 0 and w.sonar_ne_begin < 0 ) )
+  and ( w2.end = w.sonar_ne_end or ( w2.last = true and w.sonar_ne_end > w2.end ) )
 return p
 ```
-TODO: named entities als enkel `(:word)` of `(:node)` (incompleet):
+
+En zo vind je alleen de complete named entities:
 
 ```text
-match (n:nw)
+match p = (w:word)-[:next*0..]->(w2:word{sentid: w.sentid})
+where w.begin = w.sonar_ne_begin
+  and w2.end = w.sonar_ne_end
+return p
+```
+
+Zo vind je named entities die maar uit één woord bestaan:
+
+```text
+match (w:word)
+where w.begin = w.sonar_ne_begin
+  and w.end = w.sonar_ne_end
+return w
+```
+
+Dit geeft hetzelfde resultaat:
+
+```text
+match (w:word)
+where w.sonar_ne is not null
+return w
+```
+
+Bij veel, maar lang niet alle, named entities van meerdere woorden hebben
+de woorden samen en met geen enkel ander woord één gezamelijke parent. Zo'n
+parent vind je zo:
+
+```text
+match (n:node)
 where n.sonar_ne is not null
 return n
 ```
 
-TODO: Verschil (minimaal 1 next):
+En uiteraard kun je zoeken op een specifieke soort named entity:
 
 ```text
-match p = (w:word)-[:next*1..]->(w2:word)
+match p = (w:word{sonar_ne_class: 'loc'})-[:next*0..]->(w2:word)
 where w.begin = w.sonar_ne_begin
-  and w2.end = w.sonar_ne_end
-return p
-
-except
-
-match p = (w:word)-[:next*1..]->(w2:word),
-      (w)<-[:rel]-(n:node)
-where w.begin = w.sonar_ne_begin
-  and w2.end = w.sonar_ne_end
-  and n.sonar_ne is not null
+  and w2.end = w.sonar_ne_end     -- NIET w2.sonar_ne_end
 return p
 ```
+
+Of:
+
+```text
+match (n:nw{sonar_ne: 'pro'})
+return n
+```
+
+De laatste vindt niet alles, omdat het attribuut `sonar_ne` niet
+altijd aanwezig is (zie boven).
