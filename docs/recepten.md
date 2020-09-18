@@ -484,6 +484,22 @@ Of:
 match (n:nw{sonar_ne: 'pro'})
 return n
 ```
-
 De laatste vindt niet alles, omdat het attribuut `sonar_ne` niet
 altijd aanwezig is (zie boven).
+
+Een overzicht van alle soorten:
+
+```text
+match (w:word)
+where w.begin = w.sonar_ne_begin
+return w.sonar_ne_class, count(w.sonar_ne_class)
+```
+
+Een overzicht van de lengtes:
+
+```text
+match (w:word)
+where w.begin = w.sonar_ne_begin
+with w.sonar_ne_end - w.sonar_ne_begin as lengte
+return lengte, count(lengte)
+```
