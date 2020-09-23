@@ -484,6 +484,7 @@ Of:
 match (n:nw{sonar_ne: 'pro'})
 return n
 ```
+
 De laatste vindt niet alles, omdat het attribuut `sonar_ne` niet
 altijd aanwezig is (zie boven).
 

@@ -164,7 +164,7 @@ het receptenboek.
 
 Meer informatie: [www.let.rug.nl/vannoord/Lassy/](https://www.let.rug.nl/vannoord/Lassy/)
 
-Laatste versie beschikbaar via: [ivdnt.org/downloads/tstc-lassy-klein-corpus)
+Laatste versie beschikbaar via: [ivdnt.org/downloads/tstc-lassy-klein-corpus](https://ivdnt.org/downloads/tstc-lassy-klein-corpus)
 
 ## NL-wiki 2017
 
