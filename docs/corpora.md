@@ -23,9 +23,9 @@ Alpino Treebank is verschenen op CDROM en werd in november 2002
 feestelijk overhandigd aan de eerste computationeel-taalkundige van
 Nederland: Hugo Brandt Corstius.
 
-Meer informatie: [www.let.rug.nl/~vannoord/trees/](https://www.let.rug.nl/~vannoord/trees/)
+Meer informatie op de [Alpino Treebank website](https://www.let.rug.nl/~vannoord/trees/).
 
-Laatste versie beschikbaar via: [github.com/rug-compling/Alpino](https://github.com/rug-compling/Alpino)
+Laatste versie beschikbaar op [GitHub](https://github.com/rug-compling/Alpino).
 
 ## BasiLex 1.0
 
@@ -36,7 +36,7 @@ Laatste versie beschikbaar via: [github.com/rug-compling/Alpino](https://github.
 
 Het BasiLex-corpus is een geannoteerde verzameling van teksten geschreven voor kinderen in de basisschoolleeftijd. Het corpus bevat 13,5 miljoen tokens, waarvan 11,5 miljoen woorden. De tokens komen voor ongeveer 40% uit educatieve materialen, 40% uit kinderliteratuur en 20% uit media.
 
-Laatste versie beschikbaar via: [ivdnt.org/downloads/tstc-basilex-corpus](https://ivdnt.org/downloads/tstc-basilex-corpus)
+Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/downloads/tstc-basilex-corpus).
 
 ## BasiScript 1.0: Opstellen
 
@@ -51,7 +51,7 @@ Het corpus bevat longitudinale data verzameld over drie achtereenvolgende jaren 
 
 De data bevat voornamelijk handgeschreven teksten en een klein aantal teksten geproduceerd met een tekstverwerker (met automatische spelling- en grammaticacontrole uitgeschakeld). De data is geanonimiseerd.
 
-Laatste versie beschikbaar via: [ivdnt.org/taalmaterialen/1953-tstc-basiscript-corpus-j](https://ivdnt.org/taalmaterialen/1953-tstc-basiscript-corpus-j)
+Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/taalmaterialen/1953-tstc-basiscript-corpus-j).
 
 ## Childes Dutch
 
@@ -60,7 +60,10 @@ Laatste versie beschikbaar via: [ivdnt.org/taalmaterialen/1953-tstc-basiscript-c
     Verwerking: automatisch <br>
     Metadata: `age`, `code`, `months`, `paqu.path1`, `paqu.path2`, `paqu.path3`, `role`, `sex`
 
-Childes is een corpus van gesproken taal van jonge kinderen en hun gesprekspartners. De versie die in AlpinoGraph is opgenomen is op 18 november 2015 gedownload van [childes.psy.cmu.edu/data-xml/Germanic/Dutch/](http://childes.psy.cmu.edu/data-xml/Germanic/Dutch/).
+Childes is een corpus van gesproken taal van jonge kinderen en hun
+gesprekspartners. De versie die in AlpinoGraph is opgenomen is op 18
+november 2015 gedownload van
+`http://childes.psy.cmu.edu/data-xml/Germanic/Dutch/` (TODO: gebroken link).
 
 Het corpus bevat de volgende onderdelen:
 
@@ -100,9 +103,9 @@ het gebied van Question Answering.
 
 Dit bevat de handmatig geannoteerde zinnen van het CGN (ongeveer 1 miljoen woorden), Versie 2.
 
-Meer informatie: [lands.let.ru.nl/cgn/](http://lands.let.ru.nl/cgn/)
+Meer informatie op de [website van het Corpus Gesproken Nederlands](http://lands.let.ru.nl/cgn/).
 
-Laatste versie beschikbaar via: [ivdnt.org/downloads/taalmaterialen/tstc-corpus-gesproken-nederlands](https://ivdnt.org/downloads/taalmaterialen/tstc-corpus-gesproken-nederlands)
+Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/downloads/taalmaterialen/tstc-corpus-gesproken-nederlands).
 
 ## Dutch Web Corpus
 
@@ -131,7 +134,7 @@ en versie van het corpus via het Instituut voor de Nederlandse Taal te
 bekomen. De versie in AlpinoGraph gaat terug op een versie waarvan de
 preciese geschiedenis in nevelen is gehuld.
 
-Laatste versie beschikbaar via: [ivdnt.org/downloads/taalmaterialen/tstc-eindhoven-corpus](https://ivdnt.org/downloads/taalmaterialen/tstc-eindhoven-corpus)
+Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/downloads/taalmaterialen/tstc-eindhoven-corpus).
 
 ## Lassy Groot: Kranten
 
@@ -141,9 +144,9 @@ Laatste versie beschikbaar via: [ivdnt.org/downloads/taalmaterialen/tstc-eindhov
 
 Dit is het deel `WR-P-P-G` van het corpus Lassy Groot. Dit betreft materiaal afkomstig uit dagbladen.
 
-Meer informatie: [www.let.rug.nl/vannoord/Lassy/](https://www.let.rug.nl/vannoord/Lassy/)
+Meer informatie op de [Lassy website](https://www.let.rug.nl/vannoord/Lassy/).
 
-Laatste versie beschikbaar via: [ivdnt.org/taalmaterialen/2056-tstc-lassy-groot-corpus](https://ivdnt.org/taalmaterialen/2056-tstc-lassy-groot-corpus)
+Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/taalmaterialen/2056-tstc-lassy-groot-corpus)
 
 ## Lassy Klein
 
@@ -162,9 +165,9 @@ De attributen  `sonar_ne`, `sonar_ne_begin`, `sonar_ne_class` en
 `sonar_ne_end` bevatten... TODO. Zie [Sonar](../recepten/#sonar) in
 het receptenboek.
 
-Meer informatie: [www.let.rug.nl/vannoord/Lassy/](https://www.let.rug.nl/vannoord/Lassy/)
+Meer informatie op de [Lassy website](https://www.let.rug.nl/vannoord/Lassy/).
 
-Laatste versie beschikbaar via: [ivdnt.org/downloads/tstc-lassy-klein-corpus](https://ivdnt.org/downloads/tstc-lassy-klein-corpus)
+Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/downloads/tstc-lassy-klein-corpus).
 
 ## NL-wiki 2017
 
@@ -183,12 +186,12 @@ Dit corpus bevat alle zinnen van de dump van de Nederlandse Wikipedia van 1 Augu
 
 it betreft het Wablieft corpus versie 1.2. Het Wablieft-corpus bevat
 het digitaal archief van de Wablieft-krant (periode 2011-2017), zoals
-ook beschikbaar op de website
-[www.wablieft.be/krant/archief](http://www.wablieft.be/krant/archief).
+ook beschikbaar op de
+[wablieft website](http://www.wablieft.be/krant/archief).
 Het bevat 2 miljoen woorden krantenmateriaal in eenvoudig te lezen
 Nederlands.
 
+Meer informatie:
+[Wablieft: An Easy-to-Read Newspaper Corpus for Dutch](https://lirias.kuleuven.be/retrieve/548433) (PDF).
 
-Meer informatie: [lirias.kuleuven.be/retrieve/548433](https://lirias.kuleuven.be/retrieve/548433)
-
-Laatste versie beschikbaar via: [ivdnt.org/downloads/taalmaterialen/tstc-wablieft-corpus-1-2](https://ivdnt.org/downloads/taalmaterialen/tstc-wablieft-corpus-1-2)
+Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/downloads/taalmaterialen/tstc-wablieft-corpus-1-2).
