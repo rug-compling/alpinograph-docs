@@ -130,11 +130,11 @@ Model*. [Arxiv 1912.09582](https://arxiv.org/abs/1912.09582).
 
 Het Eindhoven-corpus is al begin jaren zeventig verzameld. Jarenlang
 was de copyright status van dit corpus onduidelijk, maar inmiddels is
-en versie van het corpus via het Instituut voor de Nederlandse Taal te
-bekomen. De versie in AlpinoGraph gaat terug op een versie waarvan de
+een versie van het corpus via het
+[Instituut voor de Nederlandse taal](https://ivdnt.org/downloads/taalmaterialen/tstc-eindhoven-corpus)
+te
+downloaden. De versie in AlpinoGraph gaat terug op een versie waarvan de
 preciese geschiedenis in nevelen is gehuld.
-
-Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/downloads/taalmaterialen/tstc-eindhoven-corpus).
 
 ## Lassy Groot: Kranten
 
