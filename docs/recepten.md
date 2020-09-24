@@ -504,3 +504,63 @@ where w.begin = w.sonar_ne_begin
 with w.sonar_ne_end - w.sonar_ne_begin as lengte
 return lengte, count(lengte)
 ```
+
+## Compound parts
+
+Zoek een woord met *groen* als compound part:
+
+```text
+match (w:word)
+where 'groen' in w._cp
+return w
+```
+
+Zoek een woord dat begint met *groen* of *bruin*:
+
+```text
+match (w:word)
+where head(w._cp) in ['groen','bruin']
+return w
+```
+
+Zoek een woord dat eidigt met *groen* of *bruin*:
+
+```text
+match (w:word)
+where last(w._cp) in ['groen','bruin']
+return w
+```
+
+Zoek een woord waarvan het tweede deel *groen* of *bruin* is (telling
+start bij 0):
+
+```text
+match (w:word)
+where w._cp[1] in ['groen','bruin']
+return w
+```
+
+Zoek een woord waravan het voorlaatste deel *groen* of *bruin* is (laatste is lengte - 1):
+
+```text
+match (w:word)
+where w._cp[length(w._cp)-2] in ['groen','bruin']
+return w
+```
+
+Het volgende voorbeeld maakt gebruik van deze macro:
+
+```text
+kleur = """
+    'rood','groen','blauw','geel','oranje','bruin','roze','wit','zwart','grijs','paars','lila'
+"""
+```
+
+Zoek woorden met een kleur:
+
+```text
+match (w:word)
+where any(x in w._cp where x in [%kleur%])
+return w.word, count(w.word)
+order by count desc, word
+```
