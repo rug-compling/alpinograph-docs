@@ -69,7 +69,7 @@ Zie voorbeelden van [zoeken met compound parts](../recepten/#compound-parts).
 
 ```text
 match (w:word)
-with w, regexp_split_to_array(w.lemma, E'_') as cp
+with w, regexp_split_to_array(w.lemma, '_') as cp
 set w._cp = cp;
 ```
 
