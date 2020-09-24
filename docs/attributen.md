@@ -58,7 +58,7 @@ set n._clause_lvl = c;
 
 !!! info "Compound parts"
     Items: `(:word)` <br>
-    Type: lijst van strings
+    Type: lijst van strings <br>
     Waarde: lijst van lengte 1 of langer
 
 Dit zijn de *compound parts* van een woord, afgeleid van het lemma.
