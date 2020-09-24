@@ -65,6 +65,14 @@ Dit zijn de *compound parts* van een woord, afgeleid van het lemma.
 
 Zie voorbeelden van [zoeken met compound parts](../recepten/#compound-parts).
 
+^^Definitie^^
+
+```text
+match (w:word)
+with w, regexp_split_to_array(w.lemma, E'_') as cp
+set w._cp = cp;
+```
+
 ### `_deste`
 
 !!! info "Een hulpattribuut voor het zoeken naar [correlatieve comparatieven](https://urd2.let.rug.nl/~kleiweg/alpinograph/#--%20SPOD%20%7C%20Correlatieve%20comparatieven%0A%0Amatch%20p1%20%3D%20%28n1%3Anode%7B_deste%3A%20true%7D%29%3C-%5B%3Arel*0..%5D-%28n0%3Anode%29%3C-%5B%3Arel*0..%5D-%28n%3Anode%7Bcat%3A%20'du'%7D%29%0Amatch%20p2%20%3D%20%28n1%29%3C-%5B%3Arel*0..%5D-%28n0%29-%5B%3Arel*0..%5D-%3E%28n2%3Anode%7B_deste%3A%20true%7D%29%0Aoptional%20match%20p%20%3D%20%28n0%29%3C-%5B%3Arel*0..%5D-%28%3Anode%7Bcat%3A'du'%7D%29%3C-%5B%3Arel*1..%5D-%28n%29%0Awith%20n1%2C%20n2%2C%20p%2C%20p1%2C%20p2%0Awhere%20n1.id%20%3C%20n2.id%0A%20%20and%20p%20is%20null%0Areturn%20p1%2C%20p2%0A%0A)"
