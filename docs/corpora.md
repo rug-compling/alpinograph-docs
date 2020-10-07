@@ -153,11 +153,13 @@ Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://
 !!! info
     Aantal zinnen: 65.200 <br>
     Verwerking: handmatig <br>
-    Metadata: `source` <br>
+    Metadata: `source`,`type`, `description` <br>
     Extra attributen: `dscmanual`, `dscsense`, `sonar_ne`, `sonar_ne_begin`, `sonar_ne_class`, `sonar_ne_end`
 
 Lassy Klein is een handmatig geannoteerd corpus van ongeveer 1 miljoen
 woorden. De huidige versie betreft Release 5 (2018).
+
+TODO: gebruikt: develop versie van 29 sept 2020
 
 De attributen `dscmanual` en `dscsense` bevatten... TODO
 
