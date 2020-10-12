@@ -403,7 +403,7 @@ return w
 ```
 
 Sommige named entities lopen door naar een volgende zin, bijvoorbeeld
-een boektitel die uit meerde woorden bestaat. Deze gevallen
+een boektitel die uit meerdere zinnen bestaat. Deze gevallen
 vind je zo:
 
 ```text
