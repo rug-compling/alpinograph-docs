@@ -162,8 +162,9 @@ woorden. De huidige versie betreft Release 5 (2018).
 TODO: gebruikt: develop versie van 29 sept 2020
 
 Lassy Klein bevat delen uit een voorlopige versie van het corpus SONAR500 (de
-codering in bestandsnamen wijkt af van die in de definitieve versie van SONAR500), Dutch Parallel Corpus,
-en Wikipedia.
+codering in bestandsnamen
+[wijkt af](https://www.let.rug.nl/vannoord/Lassy/Lassy-Klein-Groot.txt) van
+die in de definitieve versie van SONAR500), Dutch Parallel Corpus, en Wikipedia.
 
 De attributen `dscmanual` en `dscsense` bevatten... TODO
 
