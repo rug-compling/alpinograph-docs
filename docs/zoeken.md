@@ -349,6 +349,48 @@ match (n:word{num:'sg'}) -[:ud{rel:'det'}]-> (:word{lemma:'de'})
 return n.lemma
 ```
 
+### all, any, none, single
+
+Stel, je hebt een query met een path van onbekende lengte, zoals:
+
+```
+match p = (n1)-[r:rel*1..3]->(n2)
+return p
+```
+
+Hieraan wil je de voorwaarde toevoegen dat alle edges in `r` geen
+attribuut `id` hebben. Dit kun je doen met de functie `all`.
+Maar dit werkt niet:
+
+```
+match p = (n1)-[r:rel*1..3]->(n2)
+where all(x in r where x.id is null)
+return p
+```
+
+De juiste syntax
+is ingewikkeld omdat je het argument eerst in jsonb moet omzetten,
+waarna de attributen beschikbaar zijn via properties:
+
+```
+match p = (n1)-[r:rel*1..3]->(n2)
+where all(x in to_jsonb(r) where x.properties.id is null)
+return p
+```
+
+Zie ook:
+[Predicates functions](https://bitnine.net/documentations/manual/agens_graph_developer_manual_en.html#predicates-functions)
+(TODO: is deze link stabiel?)
+
+Bovenstaand voorbeeld is slechts bedoeld als illustratie. Voor dit geval, als een `:rel` geen
+`id` heeft, dan heeft het `primary:true`, dus bovenstaande query kan
+sneller op deze manier:
+
+```
+match p = (n1)-[r:rel*1..3{primary:true}]->(n2)
+return p
+```
+
 ### TODO
 
 - `where exists`, `where not exists` → niet met paden van variabele lengte
