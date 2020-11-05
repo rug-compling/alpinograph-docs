@@ -6,6 +6,7 @@ theme:
     palette:
         primary: green
     favicon: favicon.ico
+    logo: favicon.png
 
 extra_css:
     - css/extra.css
