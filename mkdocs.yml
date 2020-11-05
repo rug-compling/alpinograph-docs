@@ -14,6 +14,8 @@ markdown_extensions:
     - admonition
     - attr_list
     - pymdownx.caret
+    - pymdownx.highlight
+    - pymdownx.superfences
     - toc:
         permalink: true
         toc_depth: 4
