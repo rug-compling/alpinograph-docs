@@ -20,14 +20,14 @@ In AlpinoGraph zijn een aantal syntactisch geannoteerde corpora beschikbaar. Alp
 
 De syntactische analyse van een zin is beschikbaar, zoals hierboven al genoemd, in meerdere lagen: de dependentiestructuur zoals bekend van CGN/Lassy/Alpino, de Universal Dependency-structuur (zowel standaard als enhanced), en de woord-paren structuur van PaQu. Deze lagen zijn allemaal gebaseerd op de woorden van de zin. Deze woorden zijn de bouwstenen van de graaf die al deze annotatielagen combineert. De volgende query zoekt alle woorden waarvoor het lemma de waarde *fiets* heeft:
 
-```text
+```cypher
 match (n:word{lemma: 'fiets'})
 return n
 ```
 
 Een woord in de graafstructuur is een knoop van het type `word`. Een knoop ziet eruit als
 
-```text
+```cypher
 (:word)
 
 (:word{...})
@@ -39,7 +39,7 @@ waarbij tussen de accolades dan attributen en waardes kunnen worden gespecificee
 
 Naast woorden zijn er ook nog de andere knopen voor bijvoorbeeld NP, PP, SMAIN. Deze knopen zien eruit als
 
-```text
+```cypher
 (:node)
 
 (:node{...})
@@ -47,14 +47,14 @@ Naast woorden zijn er ook nog de andere knopen voor bijvoorbeeld NP, PP, SMAIN. 
 
 Je kunt dus bijvoorbeeld zoeken naar alle niet-lexicale knopen met als categorie PP:
 
-```text
+```cypher
 match (n:node{cat: 'pp'})
 return n
 ```
 
 Indien je wilt zoeken naar een knoop maar die knoop mag zowel een woord zijn als een hogere knoop, dan gebruik je de notatie
 
-```text
+```cypher
 (:nw)
 
 (:nw{...})
@@ -64,7 +64,7 @@ Indien je wilt zoeken naar een knoop maar die knoop mag zowel een woord zijn als
 
 Je kunt dus direct naar woorden en woordgroepen zoeken, maar het wordt pas echt een klein beetje interessant wanneer je ook relaties tussen woorden en woordgroepen kunt specificeren. In Cypher ziet zo'n relatie tussen twee knopen (woorden of woordgroepen) er zo uit, naar keuze:
 
-```text
+```cypher
 () -[]-> ()
 
 () <-[]- ()
@@ -85,7 +85,7 @@ Er zijn meerdere soorten relaties beschikbaar, waaronder:
 
 Om te zoeken naar een PP die een dochter heeft met het *hdf* relatie attribuut kun je de volgende query formuleren:
 
-```text
+```cypher
 match (n:node{cat:'pp'})-[:rel{rel:'hdf'}]->(:nw)
 return n
 ```
@@ -96,7 +96,7 @@ We specificeren hier dus eerst via `:rel` dat het gaat om de Alpino relaties. En
 
 Een universal dependency relatie wordt gerepresenteert met het :ud type. Zulke relaties bestaan alleen tussen woorden. De volgende query vindt alle lijdend voorwerpen van 'drinken' waarbij het attribuut UPOS de waarde 'NOUN' heeft:
 
-```text
+```cypher
 match (:word{lemma:'drinken'})-[:ud{main:'obj'}]->(o:word{upos:'NOUN'})
 return o
 ```
@@ -105,7 +105,7 @@ return o
 
 Een woord heeft altijd een relatie met als type :next naar het volgende woord. Het is dus erg eenvoudig om te zoeken naar een bigram, bijvoorbeeld: *in geval*:
 
-```text
+```cypher
 match (w1:word{lemma:'in'})-[:next]->(w2:word{lemma:'geval'})
 return w1,w2
 ```
@@ -114,7 +114,7 @@ Dit voorbeeld toont ook aan dat het heel wel mogelijk is om als resultaat van ee
 
 Het is ook mogelijk om patronen te maken waarbij meerdere knopen en relaties tegelijk voorkomen. De volgende query identificeert woorden die direct volgen op *in geval*:
 
-```text
+```cypher
 match (:word{lemma:'in'})-[:next]->(:word{lemma:'geval'})-[:next]->(w:word)
 return w
 ```
@@ -123,35 +123,35 @@ return w
 
 In veel gevallen wordt een query gedefinieerd waarbij een knoop wordt gespecificeerd die je als resultaat terug wilt krijgen.  Zo'n typisch geval is de volgende query, waarbij we via de Alpino relaties zoeken naar lijdend voorwerpen van een werkwoord:
 
-```text
+```cypher
 match (:word{pt:'ww'})<-[:rel{rel:'hd'}]-(:node)-[:rel{rel:'obj1'}]->(w:node)
 return w
 ```
 
 Een voordeel in vergelijking met XPath is, dat je indien je dezelfde hierarchische relatie wilt beschrijven, maar een andere knoop als resultaat terug wilt krijgen, slechts de variabele op een andere plek in het patroon kunt plaatsen. In XPath moet je in zulke gevallen de query herschrijven. Hier wordt het:
 
-```text
+```cypher
 match (w:word{pt:'ww'})<-[:rel{rel:'hd'}]-(:node)-[:rel{rel:'obj1'}]->(:node)
 return w
 ```
 
 En het is dus ook mogelijk om beide knopen als resultaat terug te geven, indien gewenst:
 
-```text
+```cypher
 match (v:word{pt:'ww'})<-[:rel{rel:'hd'}]-(:node)-[:rel{rel:'obj1'}]->(w:node)
 return v, w
 ```
 
 Een ander typisch voorbeeld is de optie om als resultaat van een query de waarde(s) van een of meer attributen te specificeren. Bijvoorbeeld:
 
-```text
+```cypher
 match (v:word{pt:'ww'})<-[:rel{rel:'hd'}]-(:node)-[:rel{rel:'obj2'}]->(w:node)
 return v.lemma, w.cat
 ```
 
 Er zijn nog allerlei andere mogelijkheden, waarvan een aantal in de volgende sectie wordt geillustreerd. Een speciaal geval is de optie om een sub-graaf als resultaat terug te geven. Dat kan bijvoorbeeld als volgt:
 
-```text
+```cypher
 match p=(:word{pt:'ww'})<-[:rel{rel:'hd'}]-(:node)-[:rel{rel:'obj1'}]->(:node)
 return p
 ```
@@ -168,7 +168,7 @@ Hierboven waren de voorbeelden steeds van het type: match een bepaald patroon, e
 
 Het argument van *match* is tot nu toe steeds één patroon. Je kunt ook meerdere patronen (TODO: of is dit eigenlijk 1 patroon met meerdere eisen?) als argument van `match` gebruiken, gescheiden door een comma. Het volgende patroon zoekt naar knopen van category `sv1` waarbij in dezelfde zin een vraagteken voorkomt:
 
-```text
+```cypher
 match (w:word{word: '?'}),
       (n:node{sentid:w.sentid,cat: 'sv1'})
 return n
@@ -176,7 +176,7 @@ return n
 
 Een gerelateerde techniek is het gebruik van meerdere `match` statements. In dat geval wordt de eerste match gebruikt als een eerste filter, en kan met variabelen geïnstantieerd in het eerste match patroon gezocht worden naar het tweede match patroon. Het vorige voorbeeld zou ook als volgt kunnen worden aangepakt:
 
-```text
+```cypher
 match (w:word{word: '?'})
 match (n:node{sentid:w.sentid,cat: 'sv1'})
 return n
@@ -188,7 +188,7 @@ return n
 
 Het is lastig om direct in de graafpatronen te eisen dat een bepaalde edge *niet* bestaat. Een manier om dat toch te bewerkstelligen is het gebruik van de optional match. Hierbij wordt geprobeerd een patroon te matchen, maar indien dat niet lukt slaagt de query als geheel. De eventuele variabele die gebonden had moet worden door het optionele patroon krijgt de waarde null. Dit gebruiken we in het volgende voorbeeld om te eisen dat een knoop geen subject relatie mag hebben:
 
-```text
+```cypher
 match (n:node{cat: 'sv1'})
 optional match (n)-[:rel{rel: 'su'}]->(x1)
 with n, x1
@@ -200,21 +200,21 @@ return n
 
 Bij sommige queries kan dezelfde knoop op meerdere manieren gevonden worden. Meestal geeft dat geen extra informatie. Met `distinct` kunnen zulke dubbele hits verwijderd worden.
 
-```text
+```cypher
 match (n:node{cat:'mwu'}) -[:rel{rel:'mwp'}]-> (p:word{postag:'SPEC(deeleigen)'})
 return n
 ```
 
 In bovenstaand voorbeeld zoek je mwu's waarvoor geldt dat één van de delen de postag *SPEC(deeleigen)* heeft. Indien een mwu nu meerdere van zulke delen heeft, levert dat ook meerdere hits op. Die dubbelen verwijder je met het keyword `distinct` als volgt:
 
-```text
+```cypher
 match (n:node{cat:'mwu'}) -[:rel{rel:'mwp'}]-> (p:word{postag:'SPEC(deeleigen)'})
 return distinct n
 ```
 
 Als je in de output kijkt naar de zinnen kan het nog steeds zo zijn dat een zin meerdere keren voorkomt, indien die zin meerdere mwu's bevat die aan deze eisen voldoet. Als je elke zin slechts één keer terug wilt krijgen kun je expliciet naar zinnen zoeken. Dat gaat dan als volgt:
 
-```text
+```cypher
 match (:node{cat:'mwu'}) -[:rel{rel:'mwp'}]-> (p:word{postag:'SPEC(deeleigen)'})
 return distinct p.sentid
 ```
@@ -223,7 +223,7 @@ return distinct p.sentid
 
 Hierboven bespraken we hoe je kunt zorgen dat je met behulp van distinct unieke resultaten kunt krijgen. Soms is de situatie ingewikkelder. Stel je voor, dat je op zoek bent naar subjecten waarvoor geldt dat (net als hierboven) het een meerwoorduitdrukking moet zijn met minstens één dochter die de postag *SPEC(deeleigen)* heeft. Je wilt dan niet hetzelfde onderwerp meerdere keren terugkrijgen omdat er meerdere dochters de postag *SPEC(deeleigen)* hebben, maar je wilt wel, eventueel, meerdere onderwerpen uit dezelfde zin terugkrijgen als die er mochten zijn. Dan werkt het niet om `dinstinct` voor het hele patroon te gebruiken. In zulke gevallen kun je `with` gebruiken:
 
-```text
+```cypher
 match (n:node{cat:'mwu'}) -[:rel{rel:'mwp'}]-> (:word{postag:'SPEC(deeleigen)'})
 with distinct n
 match (:node{cat:'smain'})-[:rel{rel:'su'}]->(n)
@@ -234,7 +234,7 @@ Keyword `with` fungeert dus als een soort `return` statement, waarna je vervolge
 
 Een ingewikkelder voorbeeld van deze techniek vind je bij de volgende query om cross-serial verb clusters terug te vinden. In deze definitie wordt eerst een knoop `n1` gevonden die met relatie `vc` knoop `n1` in een werkwoordcluster domineert. Die definitie refereert aan knopen `x` en `w`, maar er kunnen meerdere knopen `x` zijn. In die verschillende `x` zijn we niet geinteresseerd - het bestaan van een `x` is voldoende om vast te stellen dat het hier om een werkwoordcluster gaat. Op basis van de unieke combinatie `n` en `n1` wordt dan vervolgens de eis gesteld dat het onderwerp van de één fungeert als het lijdend voorwerp van de ander:
 
-```text
+```cypher
 match (x)<-[:rel]-(n:node{cat: 'inf'})<-[:rel{rel: 'vc'}]-(n1)-[:rel{rel: 'hd'}]->(w:word{pt: 'ww'})
 where not n1.cat in ['smain','sv1']
   and x.begin < w.begin
@@ -248,7 +248,7 @@ return n
 
 Verdere condities aan een patroon kun je (ook) specificeren met behulp van een `where`-clause. Bijvoorbeeld, de query die naar lijdend voorwerpen van *drinken* zoekt kun je uitbreiden door ook varianten van *drinken* toe te staan:
 
-```text
+```cypher
 match (w1:word)-[:ud{main:'obj'}]->(o:word{upos:'NOUN'})
 where w1.lemma in ['eten','op_eten','drinken','op_drinken']
 return o
@@ -256,7 +256,7 @@ return o
 
 Zo'n where clause is ook een makkelijke manier om uit te drukken dat een bepaalde waarde nu juist niet mag voorkomen. In het volgende voorbeeld zoeken we werkwoorden met lijdend voorwerpen waarbij dat lijdend voorwerp geen voornaamwoord mag zijn:
 
-```text
+```cypher
 match (w1:word{upos:'VERB'})-[:ud{main:'obj'}]->(w2:word)
 where w2.upos != 'PRON'
 return w1, w2
@@ -266,7 +266,7 @@ return w1, w2
 
 Vaak is het interessant om te aggregeren over de relevante delen van een match. Dat is natuurlijk makkelijk in een database te doen.
 
-```text
+```cypher
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
 where w.lemma in ['eten','op_eten','drinken','op_drinken']
 return w2.lemma, count(w2.lemma)
@@ -274,7 +274,7 @@ return w2.lemma, count(w2.lemma)
 
 Omdat in zulke gevallen het resultaat geen node of word is, zal in de AlpinoGraph interface de resulterende tabel worden getoond (in plaats van de gevonden zinnen met de matchende delen). De namen van de kolommen van de tabel kun je eventueel expliciet aangeven met `as Name`, zoals in dit voorbeeld:
 
-```text
+```cypher
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
 where w.lemma in ['eten','op_eten','drinken','op_drinken']
 return w2.lemma as woord, count(w2.lemma) as aantal
@@ -282,7 +282,7 @@ return w2.lemma as woord, count(w2.lemma) as aantal
 
 De namen van de kolommen zijn ook relevant indien je wilt sorteren. Je verwijst dan naar de kolom op basis waarvan je wilt sorteren.
 
-```text
+```cypher
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
 where w.lemma in ['eten','op_eten','drinken','op_drinken']
 return w2.lemma as woord, count(w2.lemma) as aantal
@@ -291,7 +291,7 @@ order by aantal
 
 Je kunt natuurlijk ook omgekeerd sorteren, dat gaat als volgt:
 
-```text
+```cypher
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
 where w.lemma in ['eten','op_eten','drinken','op_drinken']
 return w2.lemma as woord, count(w2.lemma) as aantal
@@ -300,7 +300,7 @@ order by aantal desc
 
 En ten slotte kun je nog op basis van het woord sorteren indien de tellingen gelijk zijn, door een volgende kolomnaam toe te voegen bij het `order` regel:
 
-```text
+```cypher
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
 where w.lemma in ['eten','op_eten','drinken','op_drinken']
 return w2.lemma as woord, count(w2.lemma) as aantal
@@ -311,7 +311,7 @@ order by aantal desc, woord
 
 Het is mogelijk om tabellen met resultaten te combineren met `except`, `union`, en `intersect` clauses. Een onbenullig voorbeeld ziet er zo uit:
 
-```text
+```cypher
 match (n:node{cat: 'pp'})
 return n
 union
@@ -321,7 +321,7 @@ return n
 
 Bij het gebruik van deze operatoren moeten de beide delen van de union een tabel opleveren met evenveel kolommen, en corresponderende kolommen moeten van hetzelfde type zijn. Een bij-effect van het gebruik van deze set-operatoren is, dat de tabellen ook als set worden geïnterpreteerd: elke rij is uniek. De volgende query levert daarom slechts een tabel met twee waardes: *np* en *pp*.
 
-```text
+```cypher
 match (n:node{cat: 'pp'})
 return n.cat
 union
@@ -331,7 +331,7 @@ return n.cat
 
 We kunnen bijvoorbeeld intersectie gebruiken om te ontdekken welke enkelvoudige zelfstandige naamwoorden (die niet als verkleinwoord zijn gebruikt) zowel met *de* als *het* combineren in het corpus:
 
-```text
+```cypher
 match (n:word{num:'sg'}) -[:ud{rel:'det'}]-> (:word{lemma:'de'})
 return n.lemma
 intersect
@@ -341,7 +341,7 @@ return n.lemma
 
 De `except` clause werkt op een vergelijkbare manier en trekt de resultaten van de tweede match af van de eerste. Dus om de zelfstandige naamwoorden te vinden die alleen met "het" combineren, kun je een variant van de vorige query toepassen:
 
-```text
+```cypher
 match (n:word{graad:'basis'}) -[:ud{rel:'det'}]-> (:word{lemma:'het'})
 return n.lemma
 except
@@ -353,7 +353,7 @@ return n.lemma
 
 Stel, je hebt een query met een path van onbekende lengte, zoals:
 
-```
+```cypher
 match p = (n1)-[r:rel*1..3]->(n2)
 return p
 ```
@@ -362,7 +362,7 @@ Hieraan wil je de voorwaarde toevoegen dat alle edges in `r` geen
 attribuut `id` hebben. Dit kun je doen met de functie `all`.
 Maar dit werkt niet:
 
-```
+```cypher
 match p = (n1)-[r:rel*1..3]->(n2)
 where all(x in r where x.id is null)
 return p
@@ -372,7 +372,7 @@ De juiste syntax
 is ingewikkeld omdat je het argument eerst in jsonb moet omzetten,
 waarna de attributen beschikbaar zijn via properties:
 
-```
+```cypher
 match p = (n1)-[r:rel*1..3]->(n2)
 where all(x in to_jsonb(r) where x.properties.id is null)
 return p
@@ -386,7 +386,7 @@ Bovenstaand voorbeeld is slechts bedoeld als illustratie. Voor dit geval, als ee
 `id` heeft, dan heeft het `primary:true`, dus bovenstaande query kan
 sneller op deze manier:
 
-```
+```cypher
 match p = (n1)-[r:rel*1..3{primary:true}]->(n2)
 return p
 ```
@@ -404,7 +404,7 @@ Indien gewenst kun je alsnog de resultaten in tabelvorm bekijken door op de betr
 
 Dus voor deze query:
 
-```text
+```cypher
 match (w:word{lemma:'zijn'})
 return w.word
 ```
@@ -412,7 +412,7 @@ return w.word
 krijg je alleen een tabel te zien, terwijl je voor de volgende query de zinnen terug krijgt:
 
 
-```text
+```cypher
 match (w:word{lemma:'zijn'})
 return w
 ```
@@ -421,7 +421,7 @@ Je kunt hier dus nu kiezen voor de andere opties. Als je nu voor "tabel" kiest, 
 
 Het volgende voorbeeld suggereert wanneer het nuttig kan zijn om voor "lemma's" te kiezen:
 
-```text
+```cypher
 match (:word{lemma:'eten'})-[:ud{main:'obj'}]->(w2:word)
 return w2
 ```
@@ -430,7 +430,7 @@ Dit levert dus alle zinnen op waarin *eten* een lijdend voorwerp heeft. En als j
 
 In bovenstaande gevallen zijn de matchende knopen steeds woorden, maar dit werkt dus op vergelijkbare wijze voor hogere knopen. De volgende query vindt alle hogere knopen die in relatie *svp* met een werkwoord staan:
 
-```text
+```cypher
 match (:node)-[:rel{rel:'svp'}]->(w2:node)
 return w2
 ```
@@ -439,7 +439,7 @@ Omdat de query een node oplevert krijg je per default de zinnen te zien waarin e
 
 In sommige gevallen bevatten die woordgroepen gaten (discontinue woordgroepen). Een typisch voorbeeld hiervan levert de volgende query:
 
-```text
+```cypher
 match (:node)-[:rel{rel:'pc'}]->(w2:node)
 return w2
 ```
@@ -456,13 +456,13 @@ TODO: bij download kun je ook andere attributen kiezen
 
 Een sequentie van edges (een pad) kan soms compact worden genoteerd met behulp van de `*`-operator. Om te zoeken naar een conjunct binnen een conjunct binnen een conjunct kun je formuleren:
 
-```text
+```cypher
 match (n)-[:rel{rel: 'cnj'}]->()-[:rel{rel: 'cnj'}]->()-[:rel{rel: 'cnj'}]->()
 return n
 ```
 
 Je kunt zo'n sequentie afkorten als volgt:
-```text
+```cypher
 match (n)-[:rel*3{rel: 'cnj'}]->()
 return n
 ```
@@ -471,14 +471,14 @@ Niet alleen kun je in zo'n patroon het preciese aantal stappen aangeven dat vere
 
 In het volgende voorbeeld zoeken we een knoop met daarin een woord dat je via minstens drie conjunct-relaties kunt bereiken:
 
-```text
+```cypher
 match (n)-[:rel*3..{rel: 'cnj'}]->(:word)
 return n
 ```
 
 Een typisch geval is het gebruik van dit mechanisme met het interval `*0..1`. In het volgende voorbeeld worden knopen geïdentificeerd die als subject optreden. In geval de knoop een lexicaal hoofd heeft, wordt dat hoofd als resultaat gevonden. Als de knoop zelf lexicaal is (en dus ook geen hoofd kan hebben), wordt de knoop zelf teruggegeven. Subjecten die niet lexicaal zijn, maar geen hoofd hebben (conjuncties bijvoorbeeld) worden dus overgeslagen.
 
-```text
+```cypher
 match ()-[:rel{rel: 'su'}]->()-[:rel*0..1{rel: 'hd'}]->(n:word)
 return n
 ```
@@ -487,7 +487,7 @@ return n
 
 Soms is er behoefte om te kunnen zeggen dat een bepaalde knoop of bepaalde relatie een specifiek aantal keer aanwezig moet zijn. In het volgende voorbeeld willen we nevenschikking vinden waarbij er precies één coordinator is:
 
-```text
+```cypher
 match (n:node{cat: 'conj'})-[r:rel{rel: 'crd'}]->()
 with n, count(r) as cnt
 where cnt = 1
@@ -495,7 +495,7 @@ return n
 ```
 
 Je kunt dus iets vergelijkbaars doen om een nevenschikking te vinden met precies 5 conjuncten:
-```text
+```cypher
 match (n:node{cat: 'conj'})-[:rel{rel: 'cnj'}]->(r)
 with n, count(r) as cnt
 where cnt = 5

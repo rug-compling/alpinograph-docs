@@ -21,7 +21,7 @@ De waarde is `true` voor een node waarvan `cat` de waarde `smain`,
 
 ^^Definitie^^
 
-```text
+```cypher
 match (n:node)
 where n.cat in ['smain','sv1','ssub']
 set n._clause = true;
@@ -44,7 +44,7 @@ De bepaling van niveau wordt afgeleid via [primaire relaties](#primary).
 
 ^^Definitie^^
 
-```text
+```cypher
 match p = (:node{id: 0})-[:rel*0..{primary:true}]->(n:node)
 where n.cat in ['smain','sv1','ssub']
 with n, (select count(*)
@@ -67,7 +67,7 @@ Zie voorbeelden van [zoeken met compound parts](../recepten/#compound-parts).
 
 ^^Definitie^^
 
-```text
+```cypher
 match (w:word)
 with w, regexp_split_to_array(w.lemma, '_') as cp
 set w._cp = cp;
@@ -88,7 +88,7 @@ Huidige implementatie is met
 
 ^^Definitie^^
 
-```text
+```cypher
 match (:word{graad:'comp'})<-[:rel{primary:true}]-(n:node)
                           -[:rel{primary:true}]->(n2:nw)
 optional match p = (:word{lemma:'des'})<-[:rel{primary:true}]-(n2)
@@ -114,7 +114,7 @@ Voor nodes is dit het aantal woorden onder de node die zowel via
 
 ^^Definitie^^
 
-```text
+```cypher
 match (n:nw)-[:rel*0..]->(w:word)
 with distinct n.sentid as sentid, n.id as id, w.id as wid
 with sentid, id, count(wid) as c
@@ -137,7 +137,7 @@ TODO: toelichting?
 
 ^^Definitie^^
 
-```text
+```cypher
 match ()-[r:rel]->(n1:nw)
 where n1.cat = 'np'
    or ( n1.lcat = 'np' and r.rel != 'hd' and r.rel != 'mwp' )
@@ -163,7 +163,7 @@ TODO: schematische weergave (plaatje)?
 
 ^^Definitie^^
 
-```
+```cypher
 match (x:nw)
 where x.sentid + ' ' + x.id in (
     select sid

@@ -14,26 +14,26 @@ Dit in alpino\_ds:
 
 ... is dit in AgensGraph:
 
-```text
+```cypher
 (:node{id: '11', ... })-[:rel{rel: 'hd'}]->(:node{id: '12', ... })
 ```
 
 ... of, als de binnenste node een woord is:
 
-```text
+```cypher
 (:node{id: '11', ... })-[:rel{rel: 'hd'}]->(:word{id: '12', ... })
 ```
 
 
 Dit:
 
-```text
+```cypher
 match (n:node{cat: 'np'}) return n;
 ```
 
 ... is sneller dan dit:
 
-```text
+```cypher
 match (n{cat: 'np'}) return n;
 ```
 
@@ -47,7 +47,7 @@ zijn die voor `(:node)` of `(:word)` leeg.
 
 ## Patronen
 
-```text
+```cypher
 -- Alpino-relaties
 (:sentence)-[:rel{rel: 'top'}]->(:node{cat: 'top'})
 (:node)-[:rel]->(:node)
@@ -153,7 +153,7 @@ attribuut   | type   | opmerkingen
 Bij het zoeken naar CoNLL-U-features dubbele aanhalingstekens
 gebruiken, vanwege de hoofdletters:
 
-```text
+```cypher
 match (w:word{"Gender": 'Com'}) return w;
 ```
 

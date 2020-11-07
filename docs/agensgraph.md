@@ -12,26 +12,32 @@ aanhalingstekens staat.
 Strings dienen tussen **enkele** aanhalingstekens te staan.
 
 Dit is correct in openCypher:
-```text
+
+```cypher
 MATCH (tobias {name: 'Tobias'}), (others)
 WHERE others.name IN ['Andres', 'Peter'] AND (tobias)<-[]-(others)
 RETURN others.name, others.age;
 ```
+
 In AgensGraph moet je dat zo doen:
-```text
+
+```cypher
 MATCH (tobias {name: 'Tobias'}), (others)
 WHERE others.name IN ['Andres', 'Peter'] AND EXISTS((tobias)<-[]-(others))
 RETURN others.name, others.age;
 ```
 
 openCypher:
-```text
+
+```cypher
 MATCH (persons), (peter {name: 'Peter'})
 WHERE NOT (persons)-[]->(peter)
 RETURN persons.name, persons.age;
 ```
+
 AgensGraph:
-```text
+
+```cypher
 MATCH (persons), (peter {name:'Peter'})
 WHERE NOT EXISTS((persons)-[]->(peter))
 RETURN persons.name, persons.age;
@@ -41,14 +47,14 @@ Andere verschillen...
 
 Voor niet nader gespecifieerde relatie mag dit in openCypher:
 
-```text
+```cypher
 ()-->()
 ()<--()
 ```
 
 In AgensGraph moet je hiervoor deze notatie gebruiken:
 
-```text
+```cypher
 ()-[]->()
 ()<-[]-()
 ```
@@ -62,22 +68,23 @@ niet in AgensGraph: `match ()-[:vader|moeder]->()`
 
 Dit werkt in Neo4j:
 
-```text
+```cypher
 match (x) where "Node" in labels(x) or "Word" in labels(x) return x;
 ```
 
 In AgensGraph moet je het zo doen:
 
-```text
+```cypher
 match (x) where any(i in labels(x) where i='node' or i='word') return x;
 ```
 
 Als je alle variabelen wilt hebben, dan werkt dit ook:
-```text
+```cypher
 match (w1:word{lemma:'fietsen'})<-[n:next*]-(w2:word{lemma:'gaan'}) return *;
 ```
 
 Let op:
+
 ```text
 # drop graph if exists test cascade;
 # create graph test;
