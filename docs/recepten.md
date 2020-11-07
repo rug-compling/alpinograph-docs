@@ -558,7 +558,7 @@ return w
 
 Het volgende voorbeeld maakt gebruik van deze macro:
 
-```text
+```python
 kleur = """
     'rood','groen','blauw','geel','oranje','bruin','roze','wit','zwart','grijs','paars','lila'
 """
