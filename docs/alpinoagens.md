@@ -199,8 +199,8 @@ Voor intern gebruik, voor het reconstrueren van alpino_ds met door gebruiker toe
 attribuut   | type   | opmerkingen
 ------------|--------|------------
 `rel`       | string |
-`primary`  | bool   | `false` als `id` aanwezig, anders `true` --- TODO: uitleg
-`id`        | int    | als de link oorspronkelijk naar een lege indexnode ging: id van die node
+`primary`  | bool   | zie [hier](../attributen/#relaties)
+`id`        | int    | zie [hier](../attributen/#relaties)
 
 ### `[:pair]`
 

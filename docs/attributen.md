@@ -220,6 +220,24 @@ set x._vorfeld = true
 
 Extra attributen op relaties van het type `rel`.
 
+De attributen `id` en `primary` hebben betrekking op relaties waarbij
+in Alpino een index-node werd gebruikt.
+
+Voorbeeld, dit in Alpino:
+
+```xml
+<node begin="7" end="9" id="17" index="3" rel="su"  cat="np"> ... </node>
+...
+<node begin="7" end="9" id="21" index="3" rel="obj1"/>
+```
+
+... wordt dit in AlpinoGraph:
+
+```cypher
+(:node)-[:rel{rel: 'su',   primary: true}]->
+   (:node{begin: 7, end: 9, id: 17, cat: 'np'})
+      <-[:rel{rel: 'obj1', primary: false, id: 21}]-(:node)
+```
 
 ### `id`
 
@@ -240,4 +258,5 @@ boom te reconstrueren.
     Waarde: `true`, `false`
 
 Relaties in de originele boom in Alpino naar een lege index-node zijn
-niet primair. Alle overige relaties zijn primair.
+niet primair. Alle overige relaties zijn primair, ook daar waar geen
+index-node was.
