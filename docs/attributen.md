@@ -157,7 +157,9 @@ set n._np = true;
     Waarde: `true` of niet aanwezig
 
 Het ^^vorfeld^^ is het zinsdeel vóór het finiete werkwoord in een
-zin met de *verb second*-volgorde. (TODO, Gertjan: klopt deze omschrijving?)
+zin met de *verb second*-volgorde.
+(TODO, Gertjan: klopt deze omschrijving?)
+Zie [Wikipedia](https://de.wikipedia.org/wiki/Feldermodell_des_deutschen_Satzes#Das_Vorfeld)
 
 Voobeelden:
 
