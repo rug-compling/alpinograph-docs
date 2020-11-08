@@ -157,9 +157,23 @@ set n._np = true;
     Waarde: `true` of niet aanwezig
 
 Het ^^vorfeld^^ is het zinsdeel vóór het finiete werkwoord in een
-zin met de *verb second*-volgorde. TODO: klopt deze omschrijving?
+zin met de *verb second*-volgorde. (TODO, Gertjan: klopt deze omschrijving?)
 
-TODO: schematische weergave (plaatje)?
+Voobeelden:
+
+ * **In elk geval** kan men stellen dat er onzekerheid heerst over de vraag of de rente nog verder zal stijgen .
+ * **Dit effect** is nu bezig te verdwijnen .
+ * **Aan het slot** was de markt op het beste niveau van de dag en liep de ticker drie minuten achter .
+ * **In een plaats hier vlakbij** werd onlangs een voorstel voor de gemeenteraad gebracht .
+ * **Wie ironisch is** zegt het tegendeel van hetgeen hij meent .
+
+TODO: Is die laatste wel correct?
+
+TODO: Waarom niet dit soort dingen:
+
+ * **Wie** loopt daar ?
+
+TODO, Gertjan: schematische weergave met vorfeld , mittelfeld, nachfeld (plaatje)?
 
 ^^Definitie^^
 
