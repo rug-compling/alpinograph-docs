@@ -390,10 +390,6 @@ where w.lemma in lemma1
 return w
 ```
 
-### Vorfeld
-
-TODO
-
 ## Sonar
 
 !!! warning "Let op"
