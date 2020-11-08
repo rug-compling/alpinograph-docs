@@ -502,8 +502,22 @@ where cnt = 5
 return n
 ```
 
-## Berekende attributen (of komt dit ergens anders)
+## Berekende attributen
 
-- attributen zoals '_vorfeld', documenteer hoe die zijn gevonden
+Sommige complexere concepten zijn "voorberekend" en als
+[hulpattribuut](../attributen) aanwezig. Hierdoor wordt het zoeken
+naar sommige ingewikkelde dingen een stuk vereenvoudigd.
 
-TODO
+Een voorbeeld is het zoeken naar een NP-topic dat het onderwerp is.
+Hierin speelt het zinsdeel dat met *vorfeld* aangeduid wordt een rol.
+Omdat dit iets is dat als voorberekend attribuut is opgenomen
+wordt de query vrij eenvoudig, en vooral veel sneller dan wanneer je
+de structuur van een vorfeld zou moeten uitschrijven in je query:
+
+```cypher
+match (n:nw{_vorfeld: true, _np: true})<-[r:rel]-()
+where r.rel in ['su','sup'] and r.id is null
+return n.sentid, n.id
+```
+
+De definitie van het attribuut `_vorfeld` zie je [hier](../attributen/#_vorfeld).
