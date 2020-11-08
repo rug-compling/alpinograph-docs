@@ -531,7 +531,7 @@ where head(w._cp) in ['groen','bruin']
 return w
 ```
 
-Zoek een woord dat eidigt met *groen* of *bruin*:
+Zoek een woord dat eindigt met *groen* of *bruin*:
 
 ```cypher
 match (w:word)
