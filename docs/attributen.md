@@ -80,11 +80,8 @@ set w._cp = cp;
     Type: bool <br>
     Waarde: `true` of niet aanwezig
 
-TODO: korte uitleg
-
-TODO: met of zonder primary:true ? <br>
-Huidige implementatie is met
-
+Zonder dit hulpattribuut is het zoeken naar correlatieve comparatieven
+zeer tijdrovend.
 
 ^^Definitie^^
 
@@ -129,10 +126,8 @@ set n2._n_words = c;
     Type: bool <br>
     Waarde: `true` of niet aanwezig
 
-TODO: met of zonder primary:true ? <br>
-Huidige implementatie is zonder (in twee match-patronen)
-
-TODO: toelichting?
+In Alpino heeft een NP lang niet altijd de category NP. Dit
+hulpattribuut is aanwezig op elke NP, zowel node als word.
 
 
 ^^Definitie^^
