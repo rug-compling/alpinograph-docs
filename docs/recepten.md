@@ -396,7 +396,7 @@ return w
     Dit is alleen voor het corpus Lassy Klein
 
 Het corpus Lassy Klein bevat *named entities* die afkomstig zijn uit
-SONAR, een onderdeel van Lassy. TODO
+SONAR, een onderdeel van Lassy. Zie [hier](../corpora/#lassy-klein).
 
 Zo vind je het eerste woord van alle named entities:
 
