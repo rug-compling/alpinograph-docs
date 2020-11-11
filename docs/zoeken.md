@@ -196,6 +196,53 @@ where x1 is null
 return n
 ```
 
+!!! warning "Vuistregel"
+    Gebruik na `optional match` altijd een `with`, anders krijg je
+    resultaten die je waarschijnlijk niet wilt.
+
+Je kunt een optional match ook gebruiken om te zoeken naar
+alternatieve structuren. Met onderstaande query zoek je naar
+ja/nee-vragen. Hierin moet het resultaat van de optional match of null
+zijn, of aan bepaalde voorwaarden voldoen.
+
+```cypher
+match (w:word{word: '?'}) ,
+      (n:node{sentid:w.sentid,cat: 'sv1'})<-[r:rel]-()
+optional match (n)-[:rel{rel: 'hd'}]->(n1)
+with w, r, n, n1
+where not r.rel = 'body'
+  and n.end < w.end
+  and (n1 is null or n1.stype is null or n1.stype = 'ynquestion')
+return n.sentid, n.id
+```
+
+### exists
+
+In sommige gevallen is het handiger om in plaats van een optional
+match een `exists` of `not exists` na een `with` te gebruiken. Hierin
+is `exists` een functie met als argument een path-expressie.
+
+Dit is een voorbeeld waarin gezocht wordt naar ingebedde vraagzinnen:
+
+```cypher
+match (n:node{cat: 'whsub'})-[:rel*1..2]->(n2:node{cat: 'ssub'})
+where exists( (n)-[:rel{rel: 'body'}]->(n2) )
+   or exists( (n)-[:rel{rel: 'body'}]->(:node{cat: 'conj'})-[:rel{rel: 'cnj'}]->(n2) )
+   or exists( (n)-[:rel{rel: 'body'}]->(:node{cat: 'du'})-[:rel]->(n2) )
+return n.sentid, n.id, n2.id
+```
+
+Er gelden twee beperkingen voor exists:
+
+ 1. Je kunt geen nieuwe variabelen introduceren.
+ 1. Gebruik dit niet voor paden met een variabele lengte, zoals
+    `()-[:rel*]->()` want daarmee komt de server in de
+    [problemen](https://github.com/bitnine-oss/agensgraph/issues/524).
+
+De functie `exists` is specifiek voor AgensGraph, en een van de dingen
+waarmee AgensGraph afwijkt van staandaard openCypher.
+Zie [Cypher in AgensGraph](../agensgraph/).
+
 ### distinct
 
 Bij sommige queries kan dezelfde knoop op meerdere manieren gevonden worden. Meestal geeft dat geen extra informatie. Met `distinct` kunnen zulke dubbele hits verwijderd worden.
@@ -391,10 +438,37 @@ match p = (n1)-[r:rel*1..3{primary:true}]->(n2)
 return p
 ```
 
-### TODO
+### select
 
-- `where exists`, `where not exists` → niet met paden van variabele lengte
-- `select`, waar het niet anders kan
+Alhoewel je met Cypher een eind kunt komen, loop je soms tegen
+beperkingen aan die in Cypher niet op te lossen zijn, maar wel in SQL.
+Omdat AgensGraph geïmplementeerd is in PostgreSQL kun je Cypher
+imbedden in SQL (en andersom).
+
+Het algemene patroon is dit:
+
+```cypher
+select ...
+from (
+   match ...
+   return ...
+) as foo
+where ...
+```
+
+In het volgende voorbeeld worden nevenschikkingen van NP's geteld:
+
+```cypher
+select count(distinct(sentid)) as zinnen, count(sentid) as items
+from (
+  match (n:node{cat: 'conj'}) -[:rel{rel: 'cnj'}]-> (:nw{_np: true})
+  return n.sentid, n.id
+  except
+  match (n:node{cat: 'conj'}) -[:rel{rel: 'cnj'}]-> (n2:nw)
+  where n2._np is null
+  return n.sentid, n.id
+) as foo
+```
 
 ## Resultaten van een query in AlpinoGraph
 
