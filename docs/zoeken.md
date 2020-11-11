@@ -2,8 +2,6 @@
 
 De combinatie van databasetechnologie en graaf-gebaseerde zoektechnologie zorgt voor een erg flexibele en relatief efficiënte zoekmachine. Deze flexibiliteit betekent bijvoorbeeld dat je patronen kunt definiëren om zinnen die aan het patroon te voldoen terug te vinden. Maar je kunt ook woorden of woordgroepen terugvinden en aggregeren over de informatie van die woorden of woordgroepen (bijvoorbeeld voor het maken van frequentieoverzichten) door middel van de database-primitieven van SQL.
 
-TODO: ergens, een verwijzing naar complete documentatie van AgensGraph?
-
 Niet alleen is de zoekmachine veel flexibeler dan bijvoorbeeld XPath (zoals beschikbaar in [PaQu](https://www.let.rug.nl/alfa/paqu)), ook is het relatief makkelijk om verschillende annotatielagen te combineren. In AlpinoGraph zijn meerdere annotatielagen beschikbaar:
 
 - de CGN/Lassy/Alpino dependentiestructuren
@@ -13,6 +11,12 @@ Niet alleen is de zoekmachine veel flexibeler dan bijvoorbeeld XPath (zoals besc
 Deze drie lagen kunnen in queries indien gewenst eenvoudig gecombineerd worden.
 
 In AlpinoGraph zijn een aantal syntactisch geannoteerde corpora beschikbaar. AlpinoGraph ondersteunt handmatig geverifieerde treebanks zoals CGN, Lassy Klein en de Alpino Treebank. Daarnaast worden ook automatisch door Alpino geanalyseerde corpora ondersteund, zoals Lassy Groot.
+
+Hieronder volgt een beknopte inleiding, toegespitst op zoeken in
+corpora met AlpinoGraph. Voor een complete handleiding van AgensGraph,
+zie de
+[AgensGraph Developer Manual](https://bitnine.net/documentations/manual/agens_graph_developer_manual_en.html).
+
 
 ## Syntactische analyse als graaf
 
@@ -156,17 +160,17 @@ match p=(:word{pt:'ww'})<-[:rel{rel:'hd'}]-(:node)-[:rel{rel:'obj1'}]->(:node)
 return p
 ```
 
-TODO: liever hier een voorbeeld waar dit ook zinvol is.
-
-
 ## Flexibel zoeken met Cypher
 
-Hierboven waren de voorbeelden steeds van het type: match een bepaald patroon, en geef een of meerdere delen van de match terug als resultaat. Door gebruik te maken van SQL is hier veel meer mogelijk. Hieronder tonen we een paar veelgebruikte technieken, zonder de ambitie een tutorial voor SQL te verzorgen.
-
+Hierboven waren de voorbeelden steeds van het type: match een bepaald
+patroon, en geef een of meerdere delen van de match terug als
+resultaat. Met Cypher is veel meer mogelijk. Hieronder tonen we een
+paar veelgebruikte technieken, zonder de ambitie een tutorial voor
+Cypher te verzorgen.
 
 ### meerdere patronen
 
-Het argument van *match* is tot nu toe steeds één patroon. Je kunt ook meerdere patronen (TODO: of is dit eigenlijk 1 patroon met meerdere eisen?) als argument van `match` gebruiken, gescheiden door een comma. Het volgende patroon zoekt naar knopen van category `sv1` waarbij in dezelfde zin een vraagteken voorkomt:
+Het argument van *match* is tot nu toe steeds één patroon. Je kunt ook meerdere patronen als argument van `match` gebruiken, gescheiden door een comma. Het volgende patroon zoekt naar knopen van category `sv1` waarbij in dezelfde zin een vraagteken voorkomt:
 
 ```cypher
 match (w:word{word: '?'}),
@@ -240,7 +244,7 @@ Er gelden twee beperkingen voor exists:
     [problemen](https://github.com/bitnine-oss/agensgraph/issues/524).
 
 De functie `exists` is specifiek voor AgensGraph, en een van de dingen
-waarmee AgensGraph afwijkt van staandaard openCypher.
+waarmee AgensGraph afwijkt van standaard openCypher.
 Zie [Cypher in AgensGraph](../agensgraph/).
 
 ### distinct
@@ -427,6 +431,8 @@ return p
 
 Zie ook:
 [Predicates functions](https://bitnine.net/documentations/manual/agens_graph_developer_manual_en.html#predicates-functions)
+in de
+[AgensGraph Developer Manual](https://bitnine.net/documentations/manual/agens_graph_developer_manual_en.html).
 (TODO: is deze link stabiel?)
 
 Bovenstaand voorbeeld is slechts bedoeld als illustratie. Voor dit geval, als een `:rel` geen
@@ -520,9 +526,11 @@ return w2
 
 Je ziet dat dan in het frequentieoverzicht van de woorden of de lemma's met *[...]* de gaten in de woordgroepen worden aangegeven.
 
-In het receptenboek wordt uitgelegd hoe je queries kunt formuleren die op vergelijkbare wijze aggregeren over de waardes van attributen indien het andere attributen betreft dan `word` of `lemma`.
-
-TODO: bij download kun je ook andere attributen kiezen
+In het receptenboek wordt uitgelegd hoe je queries kunt formuleren die
+op vergelijkbare wijze aggregeren over de waardes van attributen
+indien het andere attributen betreft dan `word` of `lemma`.
+Maar als je de resultaten wilt downloaden heb je ook de mogelijkheid
+voor een ander attribuut dan `word` of `lemma` te kiezen.
 
 ## Geavanceerd zoeken met CYPHER
 
