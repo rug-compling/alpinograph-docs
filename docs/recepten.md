@@ -134,7 +134,7 @@ Deze paren van lemma's willen we vervolgens tellen en sorteren. Dat kan als volg
 
 ```cypher
 match (v1:word{pt:'ww'})<-[:rel{rel:'hd'}]-()-[:rel{rel:'svp'}]->(v2:node)
-return v1.lemma, v2.lemma, count(v1.lemma + ' ' + v2.lemma) as aantal
+return v1.lemma, v2.lemma, count(*) as aantal
 order by aantal desc
 ```
 
@@ -142,7 +142,7 @@ Als een ander voorbeeld kun je dus gemakkelijk een frequentieoverzicht maken van
 
 ```cypher
 match (w1)-[:next]->(w2)
-return w1.postag, w2.postag, count(w1.postag + ' ' + w2.postag) as aantal
+return w1.postag, w2.postag, count(*) as aantal
 order by aantal desc
 ```
 
@@ -150,7 +150,7 @@ Of een overzicht van zelfstandige naamwoorden en de relatieve voornaamwoorden wa
 
 ```cypher
 match (w1)<-[:rel{rel:'hd'}]-()-[:rel]->(:node{cat:'rel'})-[:rel{rel:'rhd'}]->(w2:word)
-return w1.word, w2.word, count(w1.word + ' ' + w2.word) as aantal
+return w1.word, w2.word, count(*) as aantal
 order by aantal desc
 ```
 
@@ -238,14 +238,14 @@ De volgende query toont voor een corpus welk type meta-data beschikbaar is:
 
 ```cypher
 match (m:meta)
-return m.name, count(m.name)
+return m.name, count(*)
 ```
 
 De counts geven in dit geval aan voor hoeveel zinnen de meta-data van dat type beschikbaar is. En om te zien welke waardes in de meta-data worden gebruikt, kun je zoiets doen. Hier is 'country' dan een van de types meta-data die je in de vorige query hebt opgeleverd.
 
 ```cypher
 match (m:meta{name:'country'})
-return m.value, count(m.value)
+return m.value, count(*)
 ```
 
 Je kunt dit ook doen voor meerdere types meta-data tegelijk. Bijvoorbeeld, hoe is de man/vrouw verhouding voor het Nederlandse en Vlaamse deel van het CGN. Hier gebruiken we het attribuut `sentid` om te zien welke meta-data bij elkaar hoort.
@@ -253,7 +253,7 @@ Je kunt dit ook doen voor meerdere types meta-data tegelijk. Bijvoorbeeld, hoe i
 ```cypher
 match (m:meta{name:'country'}),
       (m2:meta{name:'sex', sentid:m.sentid})
-return m.value, m2.value, count(m.value + ' ' + m2.value)
+return m.value, m2.value, count(*)
 ```
 
 
@@ -279,7 +279,7 @@ Je kunt dus ook eisen aan de relevante meta-data stellen. Of delen van de meta-d
 ```cypher
 match (n:nw{_vorfeld: true, _np: true})<-[r:rel{rel:'su'}]-(),
       (m:meta{name:'country', sentid: n.sentid})
-return m.value, count(m.value)
+return m.value, count(*)
 ```
 
 En ook meta-data combineren:
@@ -289,7 +289,7 @@ match (n:nw{_vorfeld: true, _np: true})<-[r:rel]-(),
       (m:meta{name:'country', sentid: n.sentid}),
       (m2:meta{name:'sex', sentid: n.sentid})
 where r.rel in ['su','sup'] and r.id is null
-return m.value, m2.value, count(m.value + ' ' + m2.value)
+return m.value, m2.value, count(*)
 ```
 
 
@@ -336,7 +336,7 @@ Merk op dat je bij deze queries wellicht de mededeling "Afgebroken" krijgt van A
 
 ```cypher
 match (w1:word)-[:ud{rel:'nmod:poss'}]->(w2:word{lemma:'haar'})
-return w1.lemma, count(w1.lemma) as aantal
+return w1.lemma, count(*) as aantal
 order by aantal desc
 ```
 
@@ -352,7 +352,7 @@ lemma's in de verwachte volgorde:
 ```cypher
 match (v1:word) <-[:rel{rel:'crd'}]-(:node{cat: 'conj'})-[:rel{rel: 'crd'}]->(v2:word)
 where v1.end < v2.end
-return v1.lemma, v2.lemma, count(v1.lemma + ' ' + v2.lemma) as aantal
+return v1.lemma, v2.lemma, count(*) as aantal
 order by aantal desc
 ```
 
@@ -382,7 +382,7 @@ TODO: plek, titel, toelichting (Gertjan)
 ```cypher
 match (w1:word{pt:'ww'})<-[:rel{rel:'hd'}]-()
          -[:rel{rel:'vc'}]->(:node{cat:'whsub'})
-with w1.lemma as lemma1, count(w1.lemma) as n
+with w1.lemma as lemma1, count(*) as n
 where n > 1
 match (w:word{pt:'ww'})<-[:rel{rel:'hd'}]-()
          -[:rel{rel:'obj1'}]->(:node{cat:'whrel'})
@@ -497,7 +497,7 @@ Een overzicht van alle soorten:
 ```cypher
 match (w:word)
 where w.begin = w.sonar_ne_begin
-return w.sonar_ne_class, count(w.sonar_ne_class)
+return w.sonar_ne_class, count(*)
 ```
 
 Een overzicht van de lengtes:
@@ -506,7 +506,7 @@ Een overzicht van de lengtes:
 match (w:word)
 where w.begin = w.sonar_ne_begin
 with w.sonar_ne_end - w.sonar_ne_begin as lengte
-return lengte, count(lengte)
+return lengte, count(*)
 ```
 
 ## Compound parts
@@ -565,6 +565,6 @@ Zoek woorden met een kleur:
 ```cypher
 match (w:word)
 where any(x in w._cp where x in [%kleur%])
-return w.word, count(w.word)
+return w.word, count(*)
 order by count desc, word
 ```

@@ -320,7 +320,7 @@ Vaak is het interessant om te aggregeren over de relevante delen van een match. 
 ```cypher
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
 where w.lemma in ['eten','op_eten','drinken','op_drinken']
-return w2.lemma, count(w2.lemma)
+return w2.lemma, count(*)
 ```
 
 Omdat in zulke gevallen het resultaat geen node of word is, zal in de AlpinoGraph interface de resulterende tabel worden getoond (in plaats van de gevonden zinnen met de matchende delen). De namen van de kolommen van de tabel kun je eventueel expliciet aangeven met `as Name`, zoals in dit voorbeeld:
@@ -328,7 +328,7 @@ Omdat in zulke gevallen het resultaat geen node of word is, zal in de AlpinoGrap
 ```cypher
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
 where w.lemma in ['eten','op_eten','drinken','op_drinken']
-return w2.lemma as woord, count(w2.lemma) as aantal
+return w2.lemma as woord, count(*) as aantal
 ```
 
 De namen van de kolommen zijn ook relevant indien je wilt sorteren. Je verwijst dan naar de kolom op basis waarvan je wilt sorteren.
@@ -336,7 +336,7 @@ De namen van de kolommen zijn ook relevant indien je wilt sorteren. Je verwijst 
 ```cypher
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
 where w.lemma in ['eten','op_eten','drinken','op_drinken']
-return w2.lemma as woord, count(w2.lemma) as aantal
+return w2.lemma as woord, count(*) as aantal
 order by aantal
 ```
 
@@ -345,7 +345,7 @@ Je kunt natuurlijk ook omgekeerd sorteren, dat gaat als volgt:
 ```cypher
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
 where w.lemma in ['eten','op_eten','drinken','op_drinken']
-return w2.lemma as woord, count(w2.lemma) as aantal
+return w2.lemma as woord, count(*) as aantal
 order by aantal desc
 ```
 
@@ -354,7 +354,7 @@ En ten slotte kun je nog op basis van het woord sorteren indien de tellingen gel
 ```cypher
 match (w:word)-[:ud{main:'obj'}]->(w2:word{upos:'NOUN'})
 where w.lemma in ['eten','op_eten','drinken','op_drinken']
-return w2.lemma as woord, count(w2.lemma) as aantal
+return w2.lemma as woord, count(*) as aantal
 order by aantal desc, woord
 ```
 
@@ -465,7 +465,7 @@ where ...
 In het volgende voorbeeld worden nevenschikkingen van NP's geteld:
 
 ```cypher
-select count(distinct(sentid)) as zinnen, count(sentid) as items
+select count(distinct(sentid)) as zinnen, count(*) as items
 from (
   match (n:node{cat: 'conj'}) -[:rel{rel: 'cnj'}]-> (:nw{_np: true})
   return n.sentid, n.id
@@ -571,7 +571,7 @@ Soms is er behoefte om te kunnen zeggen dat een bepaalde knoop of bepaalde relat
 
 ```cypher
 match (n:node{cat: 'conj'})-[r:rel{rel: 'crd'}]->()
-with n, count(r) as cnt
+with n, count(*) as cnt
 where cnt = 1
 return n
 ```
@@ -579,7 +579,7 @@ return n
 Je kunt dus iets vergelijkbaars doen om een nevenschikking te vinden met precies 5 conjuncten:
 ```cypher
 match (n:node{cat: 'conj'})-[:rel{rel: 'cnj'}]->(r)
-with n, count(r) as cnt
+with n, count(*) as cnt
 where cnt = 5
 return n
 ```

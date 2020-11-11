@@ -114,7 +114,7 @@ Voor nodes is dit het aantal woorden onder de node die zowel via
 ```cypher
 match (n:nw)-[:rel*0..]->(w:word)
 with distinct n.sentid as sentid, n.id as id, w.id as wid
-with sentid, id, count(wid) as c
+with sentid, id, count(*) as c
 match (n2:nw{sentid:sentid,id:id})
 set n2._n_words = c;
 ```
