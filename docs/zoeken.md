@@ -429,11 +429,11 @@ where all(x in to_jsonb(r) where x.properties.id is null)
 return p
 ```
 
-Zie ook:
+Het gebruik van `any`, `none` en `single` is analoog aan het gebruik
+van `all`. Zie ook:
 [Predicates functions](https://bitnine.net/documentations/manual/agens_graph_developer_manual_en.html#predicates-functions)
 in de
 [AgensGraph Developer Manual](https://bitnine.net/documentations/manual/agens_graph_developer_manual_en.html).
-(TODO: is deze link stabiel?)
 
 Bovenstaand voorbeeld is slechts bedoeld als illustratie. Voor dit geval, als een `:rel` geen
 `id` heeft, dan heeft het `primary:true`, dus bovenstaande query kan
