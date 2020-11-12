@@ -7,9 +7,6 @@ van AlpinoGraph.
     De afleiding van Universal Dependencies is ook bij
     handmatig verwerkte corpora automatisch gedaan.
 
-TODO: voor niet-handmatig verwerkte corpora: vermelden waardoor
-geparst --- zijn daarbij corpora die niet door Alpino zijn geparst?
-
 ## Alpino Treebank
 
 !!! info
@@ -62,8 +59,8 @@ Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://
 
 Childes is een corpus van gesproken taal van jonge kinderen en hun
 gesprekspartners. De versie die in AlpinoGraph is opgenomen is op 18
-november 2015 gedownload van
-`http://childes.psy.cmu.edu/data-xml/Germanic/Dutch/` (TODO: gebroken link).
+november 2015 gedownload.
+Zie [CHILDES: Child Language Data Exchange System](https://childes.talkbank.org/).
 
 Het corpus bevat de volgende onderdelen:
 
@@ -157,22 +154,20 @@ Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://
     Extra attributen: `dscmanual`, `dscsense`, `sonar_ne`, `sonar_ne_begin`, `sonar_ne_class`, `sonar_ne_end`
 
 Lassy Klein is een handmatig geannoteerd corpus van ongeveer 1 miljoen
-woorden. De huidige versie betreft Release 5 (2018).
-
-TODO: gebruikt: develop versie van 29 sept 2020
+woorden. De huidige versie betreft een ontwikkelingsversie uit 2020.
 
 Lassy Klein bevat delen uit een voorlopige versie van het corpus SONAR500 (de
 codering in bestandsnamen
 [wijkt af](https://www.let.rug.nl/vannoord/Lassy/Lassy-Klein-Groot.txt) van
 die in de definitieve versie van SONAR500), Dutch Parallel Corpus, en Wikipedia.
 
-De attributen `dscmanual` en `dscsense` bevatten... TODO
+De attributen `dscmanual` en `dscsense` bevatten sense-informatie uit
+het Dutch semantic corpus.
+Zie [DutchSemCor Project Homepage](http://wordpress.let.vupr.nl/dutchsemcor/)
 
 De attributen  `sonar_ne`, `sonar_ne_begin`, `sonar_ne_class` en
-`sonar_ne_end` bevatten... TODO. Zie [Sonar](../recepten/#sonar) in
-het receptenboek.
-
-
+`sonar_ne_end` bevatten informatie over *named entities* uit SONAR500.
+Zie [Sonar](../recepten/#sonar) in het receptenboek.
 
 Meer informatie op de [Lassy website](https://www.let.rug.nl/vannoord/Lassy/).
 
