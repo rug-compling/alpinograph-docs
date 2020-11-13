@@ -33,7 +33,7 @@ Laatste versie beschikbaar op [GitHub](https://github.com/rug-compling/Alpino).
 
 Het BasiLex-corpus is een geannoteerde verzameling van teksten geschreven voor kinderen in de basisschoolleeftijd. Het corpus bevat 13,5 miljoen tokens, waarvan 11,5 miljoen woorden. De tokens komen voor ongeveer 40% uit educatieve materialen, 40% uit kinderliteratuur en 20% uit media.
 
-Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/downloads/tstc-basilex-corpus).
+Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://taalmaterialen.ivdnt.org/download/tstc-basilex-corpus/).
 
 ## BasiScript 1.0: Opstellen
 
@@ -48,7 +48,7 @@ Het corpus bevat longitudinale data verzameld over drie achtereenvolgende jaren 
 
 De data bevat voornamelijk handgeschreven teksten en een klein aantal teksten geproduceerd met een tekstverwerker (met automatische spelling- en grammaticacontrole uitgeschakeld). De data is geanonimiseerd.
 
-Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/taalmaterialen/1953-tstc-basiscript-corpus-j).
+Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://taalmaterialen.ivdnt.org/download/tstc-basiscript-corpus/).
 
 ## Childes Dutch
 
@@ -102,7 +102,7 @@ Dit bevat de handmatig geannoteerde zinnen van het CGN (ongeveer 1 miljoen woord
 
 Meer informatie op de [website van het Corpus Gesproken Nederlands](http://lands.let.ru.nl/cgn/).
 
-Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/downloads/taalmaterialen/tstc-corpus-gesproken-nederlands).
+Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://taalmaterialen.ivdnt.org/download/tstc-corpus-gesproken-nederlands/).
 
 ## Dutch Web Corpus
 
@@ -128,7 +128,7 @@ Model*. [Arxiv 1912.09582](https://arxiv.org/abs/1912.09582).
 Het Eindhoven-corpus is al begin jaren zeventig verzameld. Jarenlang
 was de copyright status van dit corpus onduidelijk, maar inmiddels is
 een versie van het corpus via het
-[Instituut voor de Nederlandse taal](https://ivdnt.org/downloads/taalmaterialen/tstc-eindhoven-corpus)
+[Instituut voor de Nederlandse taal](https://taalmaterialen.ivdnt.org/download/tstc-eindhoven-corpus/)
 te
 downloaden. De versie in AlpinoGraph gaat terug op een versie waarvan de
 preciese geschiedenis in nevelen is gehuld.
@@ -143,7 +143,7 @@ Dit is het deel `WR-P-P-G` van het corpus Lassy Groot. Dit betreft materiaal afk
 
 Meer informatie op de [Lassy website](https://www.let.rug.nl/vannoord/Lassy/).
 
-Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/taalmaterialen/2056-tstc-lassy-groot-corpus)
+Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://taalmaterialen.ivdnt.org/download/tstc-lassy-groot-corpus/)
 
 ## Lassy Klein
 
@@ -198,4 +198,4 @@ Nederlands.
 Meer informatie:
 [Wablieft: An Easy-to-Read Newspaper Corpus for Dutch](https://lirias.kuleuven.be/retrieve/548433) (PDF).
 
-Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/downloads/taalmaterialen/tstc-wablieft-corpus-1-2).
+Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://taalmaterialen.ivdnt.org/download/tstc-wablieft-corpus-1-2/).

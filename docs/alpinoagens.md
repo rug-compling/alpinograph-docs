@@ -148,7 +148,7 @@ attribuut   | type   | opmerkingen
 ...         | string | alle features uit het veld `FEATS` van CoNLL-U, met hoofdletters
 `_n_words` | int    | zie [hier](../attributen/#_n_words)
 `_np`      | bool   | zie [hier](../attributen/#_np)
-`_vorfeld` | bool   | zie [hier](../attributen/#_n_vorfeld)
+`_vorfeld` | bool   | zie [hier](../attributen/#_vorfeld)
 
 Bij het zoeken naar CoNLL-U-features dubbele aanhalingstekens
 gebruiken, vanwege de hoofdletters:
