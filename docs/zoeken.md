@@ -411,7 +411,7 @@ return p
 
 Hieraan wil je de voorwaarde toevoegen dat alle edges in `r` geen
 attribuut `id` hebben. Dit kun je doen met de functie `all`.
-Maar dit werkt niet:
+Maar zo werkt het niet:
 
 ```text
 match p = (n1)-[r:rel*1..3]->(n2)
