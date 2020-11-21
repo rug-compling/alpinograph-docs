@@ -168,7 +168,7 @@ resultaat. Met Cypher is veel meer mogelijk. Hieronder tonen we een
 paar veelgebruikte technieken, zonder de ambitie een tutorial voor
 Cypher te verzorgen.
 
-### meerdere patronen
+### Meerdere patronen
 
 Het argument van *match* is tot nu toe steeds één patroon. Je kunt ook meerdere patronen als argument van `match` gebruiken, gescheiden door een comma. Het volgende patroon zoekt naar knopen van category `sv1` waarbij in dezelfde zin een vraagteken voorkomt:
 
@@ -313,7 +313,7 @@ where w2.upos != 'PRON'
 return w1, w2
 ```
 
-### tellen en sorteren
+### Tellen en sorteren
 
 Vaak is het interessant om te aggregeren over de relevante delen van een match. Dat is natuurlijk makkelijk in een database te doen.
 
@@ -534,7 +534,7 @@ voor een ander attribuut dan `word` of `lemma` te kiezen.
 
 ## Geavanceerd zoeken met CYPHER
 
-### paden met `*`
+### Paden met `*`
 
 Een sequentie van edges (een pad) kan soms compact worden genoteerd met behulp van de `*`-operator. Om te zoeken naar een conjunct binnen een conjunct binnen een conjunct kun je formuleren:
 
