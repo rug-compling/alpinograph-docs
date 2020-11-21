@@ -76,7 +76,7 @@ zijn die voor `(:node)` of `(:word)` leeg.
 
 -- opeenvolgende tokens
 (:word)-[:next]->(:word)
-(:word{end: 1})-[:next*]->(:word{last: true})    -- de hele zin
+(:word{end: 1})-[:next*0..]->(:word{last: true})    -- de hele zin
 
 -- metadata
 (:meta)

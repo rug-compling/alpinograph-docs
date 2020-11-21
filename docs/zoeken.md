@@ -551,6 +551,8 @@ return n
 
 Niet alleen kun je in zo'n patroon het preciese aantal stappen aangeven dat vereist is, je kunt ook een interval specificeren `i..j`, waarbij `i` en `j` integers zijn. `*3..8` geeft dan een pad aan van tussen de 3 en de 8 edges. Je kunt `i` of `j` ook weglaten. Met `*..5` geef je een pad aan van hoogstens 5 edges, terwijl `*3..` alle paden aangeeft met minstens drie edges.
 
+TODO: ondergrens voor `*..5` ... 0 of 1?
+
 In het volgende voorbeeld zoeken we een knoop met daarin een woord dat je via minstens drie conjunct-relaties kunt bereiken:
 
 ```cypher
