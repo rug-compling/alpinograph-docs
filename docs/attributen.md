@@ -208,7 +208,8 @@ where x.sentid + ' ' + x.id in (
                   and
                   topic.end <= fin.begin
               )
-        match (topic)<-[:rel*1..]-(nt:node)<-[:rel*]-(n)
+        match (topic)<-[:rel*1..]-(nt:node)<-[:rel*]-(n)   -- TODO: vervangen door volgende regel?
+     -- match (topic)<-[:rel*1..{primary:true}]-(nt:node)<-[:rel*{primary:true}]-(n)
         match (nt)-[relt:rel*0..1]->(hnt:nw)
         where (( not hnt.lemma is null)
                   and hnt.begin < fin.begin
