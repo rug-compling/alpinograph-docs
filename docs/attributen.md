@@ -153,7 +153,6 @@ set n._np = true;
 
 Het ^^vorfeld^^ is het zinsdeel vóór het finiete werkwoord in een
 zin met de *verb second*-volgorde.
-(TODO, Gertjan: klopt deze omschrijving?)
 Zie [Wikipedia](https://de.wikipedia.org/wiki/Feldermodell_des_deutschen_Satzes#Das_Vorfeld)
 
 Voobeelden:
@@ -163,11 +162,6 @@ Voobeelden:
  * ^^Aan het slot^^ was de markt op het beste niveau van de dag en liep de ticker drie minuten achter .
  * ^^In een plaats hier vlakbij^^ werd onlangs een voorstel voor de gemeenteraad gebracht .
  * ^^Wie ironisch is^^ zegt het tegendeel van hetgeen hij meent .
-
-TODO: Is die laatste wel correct?
-
-TODO: Waarom niet dit soort dingen:
-
  * ^^Wie^^ loopt daar ?
 
 TODO, Gertjan: schematische weergave met vorfeld , mittelfeld, nachfeld (plaatje)?
@@ -182,15 +176,16 @@ where x.sentid + ' ' + x.id in (
 
         match (n:node{cat:'smain'})-[:rel{rel:'hd'}]->(fin:word)
         match (n)-[:rel*1..{primary:true}]->(topic:nw)-[rel:rel*0..1]->(htopic:nw)
-        where (( not htopic.lemma is null)
-                  and htopic.begin < fin.begin
-                  and   (  length(rel) = 0
-                        or rel[0].rel in ['hd','cmp','crd']
-                        )
-               ) or
-               (  topic.begin < fin.begin
-                  and
-                  topic.end <= fin.begin
+        where ( htopic.lemma is not null
+                and htopic.begin < fin.begin
+                and ( length(rel) = 0
+                      or rel[0].rel in ['hd','cmp','crd']
+                    )
+              )
+              or
+              ( topic.begin < fin.begin
+                and
+                topic.end <= fin.begin
               )
         return topic.sentid + ' ' + topic.id as sid, n.id as nid
 
@@ -198,27 +193,29 @@ where x.sentid + ' ' + x.id in (
 
         match (n:node{cat:'smain'})-[:rel{rel:'hd'}]->(fin:word)
         match (n)-[:rel*1..{primary:true}]->(topic:nw)-[rel:rel*0..1]->(htopic:nw)
-        where (( not htopic.lemma is null)
-                  and htopic.begin < fin.begin
-                  and   (  length(rel) = 0
-                        or rel[0].rel in ['hd','cmp','crd']
-                        )
-               ) or
-               (  topic.begin < fin.begin
-                  and
-                  topic.end <= fin.begin
+        where ( htopic.lemma is not null
+                and htopic.begin < fin.begin
+                and ( length(rel) = 0
+                      or rel[0].rel in ['hd','cmp','crd']
+                    )
+              )
+              or
+              ( topic.begin < fin.begin
+                and
+                topic.end <= fin.begin
               )
         match (topic)<-[:rel*1..]-(nt:node)<-[:rel*1..]-(n)
         match (nt)-[relt:rel*0..1]->(hnt:nw)
-        where (( not hnt.lemma is null)
-                  and hnt.begin < fin.begin
-                  and   (  length(relt) = 0
-                        or relt[0].rel in ['hd','cmp','crd']
-                        )
-               ) or
-               (  nt.begin < fin.begin
-                  and
-                  nt.end <= fin.begin
+        where ( hnt.lemma is not null
+                and hnt.begin < fin.begin
+                and ( length(relt) = 0
+                      or relt[0].rel in ['hd','cmp','crd']
+                    )
+              )
+              or
+              ( nt.begin < fin.begin
+                and
+                nt.end <= fin.begin
               )
         return topic.sentid + ' ' + topic.id as sid, n.id as nid
 
