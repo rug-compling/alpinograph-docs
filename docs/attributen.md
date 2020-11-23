@@ -181,7 +181,7 @@ where x.sentid + ' ' + x.id in (
     from (
 
         match (n:node{cat:'smain'})-[:rel{rel:'hd'}]->(fin:word)
-        match (n)-[:rel*{primary:true}]->(topic:nw)-[rel:rel*0..1]->(htopic:nw)
+        match (n)-[:rel*1..{primary:true}]->(topic:nw)-[rel:rel*0..1]->(htopic:nw)
         where (( not htopic.lemma is null)
                   and htopic.begin < fin.begin
                   and   (  length(rel) = 0
@@ -197,7 +197,7 @@ where x.sentid + ' ' + x.id in (
         except
 
         match (n:node{cat:'smain'})-[:rel{rel:'hd'}]->(fin:word)
-        match (n)-[:rel*{primary:true}]->(topic:nw)-[rel:rel*0..1]->(htopic:nw)
+        match (n)-[:rel*1..{primary:true}]->(topic:nw)-[rel:rel*0..1]->(htopic:nw)
         where (( not htopic.lemma is null)
                   and htopic.begin < fin.begin
                   and   (  length(rel) = 0
@@ -208,8 +208,7 @@ where x.sentid + ' ' + x.id in (
                   and
                   topic.end <= fin.begin
               )
-        match (topic)<-[:rel*1..]-(nt:node)<-[:rel*]-(n)   -- TODO: vervangen door volgende regel?
-     -- match (topic)<-[:rel*1..{primary:true}]-(nt:node)<-[:rel*{primary:true}]-(n)
+        match (topic)<-[:rel*1..]-(nt:node)<-[:rel*1..]-(n)
         match (nt)-[relt:rel*0..1]->(hnt:nw)
         where (( not hnt.lemma is null)
                   and hnt.begin < fin.begin
