@@ -173,36 +173,43 @@ match (x:nw)
 where x.sentid + ' ' + x.id in (
     select sid
     from (
-
-        match (n:node{cat:'smain'})-[:rel{rel:'hd'}]->(fin:word)
-        match (n)-[:rel*1..{primary:true}]->(topic:nw)-[rel:rel*0..1]->(htopic:nw)
-        where ( htopic.lemma is not null
-                and htopic.begin < fin.begin
-                and ( length(rel) = 0
-                      or rel[0].rel in ['hd','cmp','crd']
-                    )
-              )
-              or
-              ( topic.begin < fin.begin
-                and
-                topic.end <= fin.begin
+        match (n:node)-[r:rel*0..1{rel:'body'}]->(nn:node)-[:rel{rel:'hd'}]->(fin:word)
+        where ( n.cat = 'smain' and length(r) = 0 )
+           or ( n.cat = 'whq' and length(r) = 1 and nn.cat = 'sv1' )
+        match (n)-[r2:rel*1..{primary:true}]->(topic:nw)-[rel:rel*0..1]->(htopic:nw)
+        where ( n.cat = 'smain' or r2[0].rel = 'whd' )
+          and ( ( htopic.lemma is not null
+                  and htopic.begin < fin.begin
+                  and ( length(rel) = 0
+                        or rel[0].rel in ['hd','cmp','crd']
+                      )
+                )
+                or
+                ( topic.begin < fin.begin
+                  and
+                  topic.end <= fin.begin
+                )
               )
         return topic.sentid + ' ' + topic.id as sid, n.id as nid
 
         except
 
-        match (n:node{cat:'smain'})-[:rel{rel:'hd'}]->(fin:word)
-        match (n)-[:rel*1..{primary:true}]->(topic:nw)-[rel:rel*0..1]->(htopic:nw)
-        where ( htopic.lemma is not null
-                and htopic.begin < fin.begin
-                and ( length(rel) = 0
-                      or rel[0].rel in ['hd','cmp','crd']
-                    )
-              )
-              or
-              ( topic.begin < fin.begin
-                and
-                topic.end <= fin.begin
+        match (n:node)-[r:rel*0..1{rel:'body'}]->(nn:node)-[:rel{rel:'hd'}]->(fin:word)
+        where ( n.cat = 'smain' and length(r) = 0 )
+           or ( n.cat = 'whq' and length(r) = 1 and nn.cat = 'sv1' )
+        match (n)-[r2:rel*1..{primary:true}]->(topic:nw)-[rel:rel*0..1]->(htopic:nw)
+        where ( n.cat = 'smain' or r2[0].rel = 'whd' )
+          and ( ( htopic.lemma is not null
+                  and htopic.begin < fin.begin
+                  and ( length(rel) = 0
+                        or rel[0].rel in ['hd','cmp','crd']
+                      )
+                )
+                or
+                ( topic.begin < fin.begin
+                  and
+                  topic.end <= fin.begin
+                )
               )
         match (topic)<-[:rel*1..]-(nt:node)<-[:rel*1..]-(n)
         match (nt)-[relt:rel*0..1]->(hnt:nw)
@@ -221,7 +228,7 @@ where x.sentid + ' ' + x.id in (
 
     ) as foo
 )
-set x._vorfeld = true
+set x._vorfeld = true;
 ```
 
 ## Relaties
