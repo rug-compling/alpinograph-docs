@@ -171,7 +171,7 @@ Zie [Sonar](../recepten/#sonar) in het receptenboek.
 
 Meer informatie op de [Lassy website](https://www.let.rug.nl/vannoord/Lassy/).
 
-Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://ivdnt.org/downloads/tstc-lassy-klein-corpus).
+Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://taalmaterialen.ivdnt.org/download/tstc-lassy-klein-corpus/).
 
 ## NL-wiki 2017
 
