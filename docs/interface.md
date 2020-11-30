@@ -1,4 +1,4 @@
-# Overzicht van AlpinoGraph
+# De interface van AlpinoGraph
 
 De werking van de interface van AlpinoGraph spreekt grotendeels voor
 zich. Maar er zijn een aantal dingen waar je rekening mee moet houden.

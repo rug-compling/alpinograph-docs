@@ -12,12 +12,12 @@ AlpinoGraph is een tool om syntactisch geannoteerde corpora te doorzoeken. De to
 
 ## Overzicht van documentatie
 
-In [Overzicht van AlpinoGraph](interface/) leer je de interface
-kennen.
-
 In [Zoeken met AlpinoGraph](zoeken/) vind je een uitgebreide
 inleiding in de zoektaal Cypher en hoe je die in AlpinoGraph kunt
 toepassen.
+
+In [Interface](interface/) staan een paar bijzonderheden over het
+gebruik van AlpinoGraph beschreven.
 
 In het [Receptenboek](recepten/) vind je een verzameling
 voorbeelden van verschillende soorten zoekopdrachten.

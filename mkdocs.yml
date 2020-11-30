@@ -33,8 +33,8 @@ extra:
 
 nav:
     - 'Inleiding': 'index.md'
-    - 'Overzicht van AlpinoGraph': 'interface.md'
     - 'Zoeken met AlpinoGraph': 'zoeken.md'
+    - 'Interface': 'interface.md'
     - 'Receptenboek': 'recepten.md'
     - 'Alpino in AgensGraph': 'alpinoagens.md'
     - 'Hulpattributen': attributen.md
