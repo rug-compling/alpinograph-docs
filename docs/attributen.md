@@ -154,6 +154,19 @@ set n._np = true;
 Het ^^vorfeld^^ is het zinsdeel vóór het finiete werkwoord in een
 zin met de *verb second*-volgorde.
 Zie [Wikipedia](https://de.wikipedia.org/wiki/Feldermodell_des_deutschen_Satzes#Das_Vorfeld)
+De terminologie gaat terug op een oude traditie in Germaanse syntax. 
+
+In hoofdzinnen zoals:
+
+|vorfeld|persoonsvorm|mittelfeld|werkwoorden|nachfeld
+|:-----:|:----------:|:--------:|:---------:|:-------|
+|Ik     |heb         |de kinderen vandaag kadootjes|beloofd|omdat het feest is|
+|Hij    |moet        |zijn jas in de trein | hebben laten liggen | met zijn dronken kop|
+|De kinderen | roepen | scheldwoorden naar de stagiaire | | |
+
+staat de persoonsvorm op de tweede plaats. Het zinsdeel dat daaraan voorafgaat wordt ^^vorfeld^^ genoemd.
+De zinsdelen die volgen op de persoonsvorm en voorafgaan aan de eventuele overige werkwoorden staan in het ^^mittelfeld^^.
+Het vijfde en laatste deel van de hoofdzin is dan het ^^nachfeld^^.
 
 Voobeelden:
 
@@ -163,8 +176,6 @@ Voobeelden:
  * ^^In een plaats hier vlakbij^^ werd onlangs een voorstel voor de gemeenteraad gebracht .
  * ^^Wie ironisch is^^ zegt het tegendeel van hetgeen hij meent .
  * ^^Wie^^ loopt daar ?
-
-TODO, Gertjan: schematische weergave met vorfeld , mittelfeld, nachfeld (plaatje)?
 
 ^^Definitie^^
 
