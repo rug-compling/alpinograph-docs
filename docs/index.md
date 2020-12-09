@@ -36,3 +36,10 @@ In [Corpora](corpora/) vind je informatie over alle corpora die
 beschikbaar zijn in de officiële versie van AlpinoGraph.
 
 In [Links](links/) vind je nuttige externe informatie.
+
+## Publicatie
+
+Peter Kleiweg and Gertjan van Noord. 2020. <br>
+[AlpinoGraph: A Graph-based search engine for flexible and efficient treebank search.](https://www.aclweb.org/anthology/2020.tlt-1.13/) <br>
+In *Proceedings of the 19th International Workshop on Treebanks and Linguistic Theories*,
+pages 151–161, Düsseldorf, Germany, 27–28 October. Association for Computational Linguistics.

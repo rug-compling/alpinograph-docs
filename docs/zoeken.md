@@ -551,7 +551,12 @@ return n
 
 Niet alleen kun je in zo'n patroon het preciese aantal stappen aangeven dat vereist is, je kunt ook een interval specificeren `i..j`, waarbij `i` en `j` integers zijn. `*3..8` geeft dan een pad aan van tussen de 3 en de 8 edges. Je kunt `i` of `j` ook weglaten. Met `*..5` geef je een pad aan van hoogstens 5 edges, terwijl `*3..` alle paden aangeeft met minstens drie edges.
 
-TODO: ondergrens voor `*..5` ... 0 of 1?
+!!! warning "Let op"
+    Het weglaten van de ondergrens is niet verstandig als er ook paden
+    van lengte 0 kunnen zijn. Wil je die wel of niet? AgensGraph laat
+    die paden van lengte 0 weg, tenzij je expliciet 0 als ondergrens
+    geeft. Maar dit is niet gedocumenteerd. Het is momenteel niet
+    bekend of dit [een bug of een regel](https://github.com/bitnine-oss/agensgraph/issues/527) is.
 
 In het volgende voorbeeld zoeken we een knoop met daarin een woord dat je via minstens drie conjunct-relaties kunt bereiken:
 

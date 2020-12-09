@@ -20,6 +20,33 @@ Alpino Treebank is verschenen op CDROM en werd in november 2002
 feestelijk overhandigd aan de eerste computationeel-taalkundige van
 Nederland: Hugo Brandt Corstius.
 
+De volgende attributen op `(:word)` zijn wel automatisch gegenereerd:
+
+> aform
+> case
+> comparative
+> def
+> frame
+> gen
+> iets
+> infl
+> lcat
+> neclass
+> num
+> per
+> personalized
+> pron
+> refl
+> rnum
+> sc
+> sense
+> special
+> stype
+> tense
+> vform
+> wh
+> wk
+
 Meer informatie op de [Alpino Treebank website](https://www.let.rug.nl/~vannoord/trees/).
 
 Laatste versie beschikbaar op [GitHub](https://github.com/rug-compling/Alpino).
@@ -155,6 +182,33 @@ Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://
 
 Lassy Klein is een handmatig geannoteerd corpus van ongeveer 1 miljoen
 woorden. De huidige versie betreft een ontwikkelingsversie uit 2020.
+
+De volgende attributen op `(:word)` zijn wel automatisch gegenereerd:
+
+> aform
+> case
+> comparative
+> def
+> frame
+> gen
+> iets
+> infl
+> lcat
+> neclass
+> num
+> per
+> personalized
+> pron
+> refl
+> rnum
+> sc
+> sense
+> special
+> stype
+> tense
+> vform
+> wh
+> wk
 
 Lassy Klein bevat delen uit een voorlopige versie van het corpus SONAR500 (de
 codering in bestandsnamen
