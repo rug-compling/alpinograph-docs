@@ -377,7 +377,11 @@ order by lemma, root, pt, word
 
 ### Woorden die in verschillende soorten constructies gebruikt worden
 
-TODO: plek, titel, toelichting (Gertjan)
+Je kunt ook kijken of een bepaald woord of lemma in verschillende constructies
+voorkomt. In het volgende voorbeeld willen we werkwoorden terugvinden die vaker
+dan eenmalig voorkomen met zowel een whsub als vc ("hij vroeg waarom hij te laat was")
+als een whrel als obj1 ("hij bedroog wie hij maar wilde"). Dat gaat makkelijk door
+gebruik te maken van twee match clauses:
 
 ```cypher
 match (w1:word{pt:'ww'})<-[:rel{rel:'hd'}]-()
