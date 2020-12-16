@@ -3,6 +3,11 @@
 Een overzicht van corpora die beschikbaar zijn in de officiële versie
 van AlpinoGraph.
 
+!!! note
+    Als je Docker hebt kun je AlpinoGraph lokaal draaien, zodat je zelf
+    corpora toe kunt voegen.
+    Zie [AlpinoGraph in Docker](https://github.com/rug-compling/alpinograph-docker).
+
 !!! warning "Let op"
     De afleiding van Universal Dependencies is ook bij
     handmatig verwerkte corpora automatisch gedaan.
