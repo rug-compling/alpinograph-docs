@@ -186,7 +186,7 @@ Laatste versie beschikbaar bij het [Instituut voor de Nederlandse taal](https://
     Extra attributen: `dscmanual`, `dscsense`, `sonar_ne`, `sonar_ne_begin`, `sonar_ne_class`, `sonar_ne_end`
 
 Lassy Klein is een handmatig geannoteerd corpus van ongeveer 1 miljoen
-woorden. De huidige versie betreft een ontwikkelingsversie uit 2020.
+woorden. De huidige versie betreft release 6 uit 2021.
 
 De volgende attributen op `(:word)` zijn wel automatisch gegenereerd:
 
