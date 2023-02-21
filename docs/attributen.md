@@ -119,6 +119,106 @@ match (n2:nw{sentid:sentid,id:id})
 set n2._n_words = c;
 ```
 
+### _nachfeld
+
+!!! info "Is dit een nachfeld?"
+    Items: `(:node)`, `(:word)`  <br>
+    Type: bool <br>
+    Waarde: `true` of niet aanwezig
+
+Voor toelichting, zie beneden bij [_vorfeld](#_vorfeld)
+
+^^Algoritme^^
+
+```cypher
+(n1)<-[:rel{rel:'hd'}]-(vp)-[:rel*0..]->()-[r:rel]->(n)
+```
+
+n is nachfeld, mits...
+
+voorwaarden:
+
+ * `vp.cat in ['inf','ti','ssub','oti','ppart']`
+ * `not r.rel in ['hd','svp']`
+ * `n.cat is null or not n.cat in ['inf','ppart']`
+
+met:
+
+```cyper
+optional match (n)-[r2:rel]->(n2)
+where r2.rel in ['hd','cmp','mwp','crd','rhd','whd','nucl','dp']
+```
+
+voorwaarden:
+
+ * als n2 bestaat dan `n1.begin < n2.begin`
+ * als n2 niet bestaat dan `n1.begin < n.begin`
+
+meer voorwaarden:
+
+ * geen andere vp tussen vp en n
+ * geen nachfeld tussen vp en n
+
+^^Definitie^^
+
+De definitie maakt gebruik van een tijdelijk hulpattribuut op relaties:
+
+```cypher
+match ()-[r:rel]->()
+where r.rel in ['hd','cmp','mwp','crd','rhd','whd','nucl','dp']
+set r._head_rel = true;
+
+match (n1)<-[:rel{_head_rel:true}]-()-[r2:rel{_head_rel:true}]->(n2)
+where n1.begin < n2.begin
+set r2._head_rel = NULL;
+```
+
+Definitie met behulp van tijdelijk attribuut:
+
+```cypher
+match (x:nw)
+where x.sentid + ' ' + x.id in (
+  select sid
+  from (
+
+    match (vp)
+    where vp.cat in ['inf','ti','ssub','oti','ppart']
+    match (n1)<-[:rel{rel:'hd'}]-(vp)-[:rel*0..]->()-[r:rel]->(n)
+    where not r.rel in ['hd','svp']
+      and ( n.cat is null or not n.cat in ['inf','ppart'] )
+    optional match (n)-[:rel{_head_rel:true}]->(n2)
+    with n, n1, n2, vp
+    where n2 is not null and n1.begin < n2.begin
+       or n2 is     null and n1.begin < n.begin
+    return n.sentid + ' ' + n.id as sid, vp.id as vpid
+
+    except
+
+    match (vp)
+    where vp.cat in ['inf','ti','ssub','oti','ppart']
+    match (vp)-[:rel*1..]->(vp2)-[:rel*1..]->(n)
+    where vp2.cat in ['inf','ti','ssub','oti','ppart']
+    return n.sentid + ' ' + n.id as sid, vp.id as vpid
+
+    except
+
+    match (vp)
+    where vp.cat in ['inf','ti','ssub','oti','ppart']
+    match (n1)<-[:rel{rel:'hd'}]-(vp)-[:rel*0..]->()-[r:rel]->(n)
+    where not r.rel in ['hd','svp']
+      and ( n.cat is null or not n.cat in ['inf','ppart'] )
+    optional match (n)-[:rel{_head_rel:true}]->(n2)
+    with n, n1, n2, vp
+    where n2 is not null and n1.begin < n2.begin
+       or n2 is     null and n1.begin < n.begin
+    match (n)-[:rel*1..]->(nn)
+    return nn.sentid + ' ' + nn.id as sid, vp.id as vpid
+
+  ) as foo
+)
+set x._nachfeld = true;
+```
+
 ### `_np`
 
 !!! info "Is dit een NP?"
