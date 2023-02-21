@@ -144,7 +144,7 @@ voorwaarden:
 
 met:
 
-```cyper
+```cypher
 optional match (n)-[r2:rel]->(n2)
 where r2.rel in ['hd','cmp','mwp','crd','rhd','whd','nucl','dp']
 ```
