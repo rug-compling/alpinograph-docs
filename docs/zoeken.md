@@ -15,7 +15,7 @@ In AlpinoGraph zijn een aantal syntactisch geannoteerde corpora beschikbaar. Alp
 Hieronder volgt een beknopte inleiding, toegespitst op zoeken in
 corpora met AlpinoGraph. Voor een complete handleiding van AgensGraph,
 zie de
-[AgensGraph Developer Manual](https://bitnine.net/documentations/manual/agens_graph_developer_manual_en.html).
+[AgensGraph Developer Manual](https://www.skaiworldwide.com/resource).
 
 
 ## Syntactische analyse als graaf
@@ -241,7 +241,7 @@ Er gelden twee beperkingen voor exists:
  1. Je kunt geen nieuwe variabelen introduceren.
  1. Gebruik dit niet voor paden met een variabele lengte, zoals
     `()-[:rel*]->()` want daarmee komt de server in de
-    [problemen](https://github.com/bitnine-oss/agensgraph/issues/524).
+    [problemen](https://github.com/skaiworldwide-oss/agensgraph/issues/524).
 
 De functie `exists` is specifiek voor AgensGraph, en een van de dingen
 waarmee AgensGraph afwijkt van standaard openCypher.
@@ -431,9 +431,9 @@ return p
 
 Het gebruik van `any`, `none` en `single` is analoog aan het gebruik
 van `all`. Zie ook:
-[Predicates functions](https://bitnine.net/documentations/manual/agens_graph_developer_manual_en.html#predicates-functions)
+*Predicates functions*
 in de
-[AgensGraph Developer Manual](https://bitnine.net/documentations/manual/agens_graph_developer_manual_en.html).
+[AgensGraph Developer Manual](https://www.skaiworldwide.com/resource).
 
 Bovenstaand voorbeeld is slechts bedoeld als illustratie. Voor dit geval, als een `:rel` geen
 `id` heeft, dan heeft het `primary:true`, dus bovenstaande query kan
@@ -556,7 +556,7 @@ Niet alleen kun je in zo'n patroon het preciese aantal stappen aangeven dat vere
     van lengte 0 kunnen zijn. Wil je die wel of niet? AgensGraph laat
     die paden van lengte 0 weg, tenzij je expliciet 0 als ondergrens
     geeft. Maar dit is niet gedocumenteerd. Het is momenteel niet
-    bekend of dit [een bug of een regel](https://github.com/bitnine-oss/agensgraph/issues/527) is.
+    bekend of dit [een bug of een regel](https://github.com/skaiworldwide-oss/agensgraph/issues/527) is.
 
 In het volgende voorbeeld zoeken we een knoop met daarin een woord dat je via minstens drie conjunct-relaties kunt bereiken:
 
