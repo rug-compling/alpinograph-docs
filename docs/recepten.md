@@ -60,7 +60,7 @@ return n
 Het is iets ingewikkelder om te formuleren dat het woord *van* het laatste woord van de mwu moet zijn:
 
 ```cypher
-match (n:node{cat:'mwu'})-[:rel{rel:'mwp'}]->(w:word{lemma:'van', end: w.end})
+match (n:node{cat:'mwu'})-[:rel{rel:'mwp'}]->(w:word{lemma:'van', end: n.end})
 return n
 ```
 
