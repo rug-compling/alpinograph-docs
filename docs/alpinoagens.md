@@ -117,8 +117,8 @@ attribuut | type   | opmerkingen
 `begin`   | int    |
 `end`     | int    |
 ...       | string | alle overige attributen uit de Alpino-node behalve `rel` en `index`
-`_clause`  | bool   | zie [hier](../attributen/#_clause)
-`_clause_lvl` | int | zie [hier](../attributen/#_clause_lvl)
+`_clause`  | bool   | zie [hier](../attributen.md#_clause)
+`_clause_lvl` | int | zie [hier](../attributen.md#_clause_lvl)
 `_deste`   | bool   | zie [hier](../attributen/#_deste)
 `_n_words` | int    | zie [hier](../attributen/#_n_words)
 `_np`      | bool   | zie [hier](../attributen/#_np)
