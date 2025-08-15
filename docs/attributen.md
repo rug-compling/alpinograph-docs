@@ -253,7 +253,7 @@ set n._np = true;
 
 Het ^^vorfeld^^ is het zinsdeel vóór het finiete werkwoord in een
 zin met de *verb second*-volgorde.
-Zie [Wikipedia](https://de.wikipedia.org/wiki/Feldermodell_des_deutschen_Satzes#Das_Vorfeld)
+Zie [Wikipedia](https://de.wikipedia.org/wiki/Feldermodell_des_deutschen_Satzes#Das_Vorfeld).
 De terminologie gaat terug op een oude traditie in Germaanse syntax.
 
 In hoofdzinnen zoals:
