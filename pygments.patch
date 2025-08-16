@@ -1,0 +1,69 @@
+--- lib/python3.8/site-packages/pygments/lexers/graph.py.ori	2025-08-15 12:24:46.817103526 +0200
++++ lib/python3.8/site-packages/pygments/lexers/graph.py	2025-08-15 12:46:40.542793114 +0200
+@@ -6,6 +6,9 @@
+ 
+     :copyright: Copyright 2006-2025 by the Pygments team, see AUTHORS.
+     :license: BSD, see LICENSE for details.
++
++    Modified by P. Kleiweg for Cypher format AgensGraph
++
+ """
+ 
+ import re
+@@ -30,12 +33,13 @@
+     filenames = ['*.cyp', '*.cypher']
+     version_added = '2.0'
+ 
+-    flags = re.MULTILINE | re.IGNORECASE
++    flags = re.IGNORECASE
+ 
+     tokens = {
+         'root': [
+             include('clauses'),
+             include('keywords'),
++            include('macro'),
+             include('relations'),
+             include('strings'),
+             include('whitespace'),
+@@ -44,6 +48,7 @@
+         ],
+         'keywords': [
+             (r'(create|order|match|limit|set|skip|start|return|with|where|'
++             r'select|from|'
+              r'delete|foreach|not|by|true|false)\b', Keyword),
+         ],
+         'clauses': [
+@@ -77,10 +82,11 @@
+             (r'(using)(\s+)(range|text|point)(\s+)(index)\b',
+                 bygroups(Keyword, Whitespace, Name, Whitespace, Keyword)),
+             (words((
+-                'all', 'any', 'as', 'asc', 'ascending', 'assert', 'call', 'case', 'create',
+-                'delete', 'desc', 'descending', 'distinct', 'end', 'fieldterminator',
+-                'foreach', 'in', 'limit', 'match', 'merge', 'none', 'not', 'null',
++                'all', 'and', 'any', 'as', 'asc', 'ascending', 'assert', 'call', 'case', 'create',
++                'delete', 'desc', 'descending', 'distinct', 'exists', 'fieldterminator',
++                'foreach', 'in', 'limit', 'match', 'merge', 'none', 'not', 'null', 'or',
+                 'remove', 'return', 'set', 'skip', 'single', 'start', 'then', 'union',
++                'except', 'intersect',
+                 'unwind', 'yield', 'where', 'when', 'with', 'collect'), suffix=r'\b'), Keyword),
+         ],
+         'relations': [
+@@ -92,6 +98,8 @@
+             (r'[.*{}]', Punctuation),
+         ],
+         'strings': [
++            (r'"([^"\n]|"")*"', String),
++            (r"'([^'\n]|'')*'", String),  
+             (r'([\'"])(?:\\[tbnrf\'"\\]|[^\\])*?\1', String),
+             (r'`(?:``|[^`])+`', Name.Variable),
+         ],
+@@ -104,5 +112,9 @@
+         ],
+         'comment': [
+             (r'//.*$', Comment.Single),
++            (r'--.*$', Comment.Single),
+         ],
++        'macro': [
++            (r"%[^%\n]+%", Comment.Preproc),
++        ]
+     }
